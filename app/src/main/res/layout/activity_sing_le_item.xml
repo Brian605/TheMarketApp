@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SingLeItemActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        style="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+<com.google.android.material.appbar.CollapsingToolbarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+    app:toolbarId="@+id/toolbar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/singImage"
+        android:src="@drawable/img8"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:paddingBottom="0dp"
+        android:contentDescription="@string/item_image" />
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/singImage"
+        android:layout_alignBottom="@+id/singImage"
+        android:text="@string/_2"
+        android:textColor="@color/whiteTransparent"
+        android:id="@+id/counterText"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_circle_solid"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+    </RelativeLayout>
+    <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/loginheader"
+        app:layout_collapseMode="pin"
+        app:collapseIcon="@drawable/app_icon_512"
+            android:id="@+id/toolbar">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:id="@+id/singTitle"
+                android:text="@string/item"
+                android:textColor="#fff"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+</com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/appbar"
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:cardCornerRadius="5dp"
+        app:contentPadding="7dp"
+        app:cardElevation="10dp"
+        android:paddingBottom="10dp"
+        app:cardBackgroundColor="@color/colorwhite"
+        android:layout_margin="5dp">
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:id="@+id/linear"
+            android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/singDesc"
+        android:textColor="@color/black"
+        android:fontFamily="@font/opensans"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textColorLink="@color/lessGreen"
+        android:text="@string/category_description"
+        android:padding="5dp"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/singPrice"
+        android:textStyle="bold"
+        android:text="@string/ksh_500"
+        android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
+        android:fontFamily="@font/opensanssemibold"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="#039609" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/posterUserName"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/posted_by_brian"
+            android:layout_marginTop="10dp"
+            android:textColor="#039609"
+            android:layout_marginLeft="30dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorwhite"
+                android:background="@drawable/categback"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:fontFamily="@font/benardmtcondensed"
+                android:text="@string/tags"/>
+        </LinearLayout>
+         <androidx.recyclerview.widget.RecyclerView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@+id/linear"
+             android:id="@+id/recycler"
+             android:padding="3dp"/>
+     </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:fitsSystemWindows="true"
+            android:background="@color/loginheader"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
+     <com.google.android.material.bottomnavigation.BottomNavigationView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/nav_view"
+         app:menu="@menu/bottom_nav_menu"
+         app:itemIconTint="@color/colorwhite"
+         android:background="@color/loginheader"
+         android:foregroundGravity="center"
+         android:layout_marginEnd="10dp"
+         app:itemTextColor="@color/black"
+         app:itemTextAppearanceActive="@style/TextAppearance.MaterialComponents.Headline5"
+         app:labelVisibilityMode="labeled"
+         app:itemTextAppearanceInactive="@style/TextAppearance.MaterialComponents.Body1"
+        android:fitsSystemWindows="true"
+         />
+
+     </com.google.android.material.bottomappbar.BottomAppBar>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

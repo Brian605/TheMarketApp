@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextColor="@color/black"
+        android:hint="@string/type_here"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/pen_plus"
+        app:endIconTint="@color/loginheader"
+        app:startIconTint="@color/loginheader"
+        app:startIconDrawable="@drawable/pen_plus"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/loginheader"
+        android:layout_margin="10dp"
+        app:counterOverflowTextColor="@color/red"
+        app:counterEnabled="true"
+        app:counterTextColor="@color/loginheader"
+        app:counterMaxLength="254">
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:maxLength="254"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <com.google.android.material.button.MaterialButton
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:padding="5dp"
+           style="@style/Widget.MaterialComponents.Button"
+           app:cornerRadius="7dp"
+           app:backgroundTint="@color/loginheader"
+           android:textColor="#fff"
+           android:text="@string/send"
+           android:id="@+id/send"
+           android:fontFamily="@font/opensanssemibold"
+           android:layout_gravity="start|bottom"
+           android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+           android:layout_margin="10dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button"
+           app:backgroundTint="@color/loginheader"
+            android:textColor="@color/whiteTransparent"
+            android:text="@string/cancel"
+            android:fontFamily="@font/opensanssemibold"
+            android:id="@+id/cancel"
+            android:layout_gravity="end|bottom"
+            app:cornerRadius="7dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_margin="10dp"/>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</LinearLayout>

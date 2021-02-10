@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme"
+    android:layout_height="wrap_content"
+    tools:context=".activities.ItemPostActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/loginheader"
+            android:id="@+id/toolbar"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whiteTransparent"
+                android:id="@+id/categorytext"
+                android:text="@string/post_an_item"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:fontFamily="@font/inconsolata"
+                />
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+    <ImageView
+        android:id="@+id/imageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:tag="Click to select an image"
+        android:tooltipText="@string/select"
+        android:src="@drawable/img8"
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription,UnusedAttribute" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="0dp"
+            android:id="@+id/textview"
+            android:text="@string/select"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"/>
+        </RelativeLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal"
+    android:id="@+id/selectedItems">
+
+</LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+           style="@style/InputOutlineStyle"
+            app:boxStrokeColor="@color/loginheader"
+            android:hint="@string/item_title"
+            android:textColorHint="@color/black"
+            app:counterMaxLength="50"
+            app:counterEnabled="true"
+            app:counterTextColor="@color/loginheader"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textTitle"
+        android:padding="10dp"
+        android:textColor="@color/darkGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            style="@style/InputOutlineStyle"
+            android:hint="@string/item_description"
+            android:textColorHint="@color/black"
+            app:counterMaxLength="1250"
+            app:counterEnabled="true"
+            app:counterTextColor="@color/loginheader"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/black">
+    <com.google.android.material.textfield.TextInputEditText
+        android:textColor="#0C110C"
+        android:id="@+id/textDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:importantForAutofill="no"
+       />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            style="@style/InputOutlineStyle"
+            app:boxStrokeColor="@color/loginheader"
+            android:textColorHint="@color/black"
+            app:counterMaxLength="9"
+            app:counterEnabled="true"
+            app:counterTextColor="@color/loginheader"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/black">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemprice"
+                android:padding="10dp"
+                android:hint="@string/price"
+                android:inputType="number"
+                tools:ignore="Autofill"
+                app:textInputLayoutFocusedRectEnabled="true"
+               android:minLines="2"
+               />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_tags_yet"
+            android:padding="5dp"
+            android:id="@+id/tagText"/>
+<com.google.android.material.button.MaterialButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/add_tag"
+    android:layout_margin="10dp"
+    android:background="@color/colorwhite"
+    app:elevation="5dp"
+    android:fontFamily="@font/opensanssemibold"
+    android:textColor="@color/whiteTransparent"
+    app:icon="@drawable/ic_add"
+    android:id="@+id/addTag"/>
+    <com.google.android.material.button.MaterialButton
+        android:layout_marginTop="30dp"
+        android:id="@+id/postBtn"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:background="@color/loginheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_upload"
+        android:text="@string/post"/>
+
+    </LinearLayout>
+    </ScrollView>

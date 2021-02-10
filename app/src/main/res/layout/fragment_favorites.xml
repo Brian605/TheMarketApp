@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FragmentMe">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/loginheader"
+        android:text="@string/you_have_no_favorites_yet"
+        android:textSize="@dimen/field_text_size"
+        android:fontFamily="@font/inconsolata"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/text"
+        android:visibility="gone"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/matura_capitals"
+        android:background="@drawable/titleback"
+        android:textColor="@color/colorwhite"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginTop="20dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="10dp"
+        android:id="@+id/textView"
+        android:text="@string/favorites" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/textView"
+        android:id="@+id/recycler"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/search"
+        android:id="@+id/search_bar"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:orderInCategory="0"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item
+        android:title="@string/logout_now"
+        android:id="@+id/logout"
+        android:icon="@drawable/account_arrow_right"
+        android:orderInCategory="100"
+        />
+    <item
+        android:orderInCategory="200"
+        android:id="@+id/newPost"
+        android:title="@string/post_a_product"
+        android:icon="@drawable/pen_plus"/>
+    <item
+        android:title="@string/terms_and_conditions"
+        android:orderInCategory="400"
+        android:icon="@drawable/clipboard_account_outline"/>
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_refresh"/>
+
+
+
+</menu>

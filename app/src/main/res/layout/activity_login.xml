@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:theme="@style/AppTheme"
+    tools:context=".activities.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/loginheader">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/login_logo_width"
+            android:layout_height="@dimen/login_logo_height"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_the_market"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#fff"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_mail"
+        android:layout_margin="@dimen/field_margin_top"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/loginheader"
+        app:endIconDrawable="@drawable/email_edit"
+        app:endIconTint="@color/loginheader"
+        app:endIconMode="custom"
+        app:hintTextColor="@color/black"
+        android:textColorHint="@color/black"
+       style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/loginheader"
+        >
+     <com.google.android.material.textfield.TextInputEditText
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:inputType="textEmailAddress"
+         android:textColor="#000"
+         android:id="@+id/LoginUserMail"
+         android:textAlignment="center"
+         app:textInputLayoutFocusedRectEnabled="true"
+         tools:ignore="UnusedAttribute" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:layout_margin="@dimen/field_margin_top"
+            android:fontFamily="@font/opensanssemibold"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/loginheader"
+            app:endIconDrawable="@drawable/key"
+            app:endIconTint="@color/loginheader"
+            app:endIconMode="custom"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/loginheader"
+            >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:inputType="textPassword"
+            android:id="@+id/LoginPassword"
+            android:textAlignment="center"
+            />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/loginheader"
+                android:text="@string/sign_in"
+                android:fontFamily="@font/opensanssemibold"
+                android:textColor="@color/colorwhite"
+                app:elevation="@dimen/login_buttons_padding"
+                app:icon="@drawable/key_outline"
+                app:iconTint="@color/black"
+                app:cornerRadius="5dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:id="@+id/LoginLogin"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/darkGreen"
+                android:text="@string/register"
+                android:textColor="@color/loginheader"
+                android:fontFamily="@font/opensanssemibold"
+                android:id="@+id/LoginRegister"
+                android:layout_gravity="end"
+                app:elevation="15dp"
+                app:cornerRadius="5dp"
+                app:icon="@drawable/pen_plus"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_marginEnd="10dp" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/opensanssemibold"
+        android:text="@string/forgot_password_click_here_to_reset"
+        android:layout_marginTop="@dimen/field_margin_top"
+        android:padding="@dimen/login_buttons_padding"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/loginheader"
+        android:id="@+id/LoginReset"
+        android:clickable="true"
+        android:textSize="@dimen/field_text_size"
+        android:focusable="true" />
+    </LinearLayout>
+
+</ScrollView>

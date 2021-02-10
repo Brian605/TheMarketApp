@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#62FB03</color>
+    <color name="loginheader">#4CAF50</color>
+    <color name="colorwhite">#fff</color>
+    <color name="black">#000</color>
+    <color name="cardview_dark">#878484</color>
+    <color name="purple">#563395</color>
+    <color name="red">#F80303</color>
+    <color name="whiteTransparent">#FFFFFFFF</color>
+    <color name="greenTransParent">#2C4CAF50</color>
+    <color name="darkGreen">#0C110C</color>
+    <color name="lessGreen">#6AFA70</color>
+    <color name="darkGrey">#070101</color>
+    <color name="counter_bg">@color/loginheader</color>
+    <color name="counter_color">@color/whiteTransparent</color>
+    <color name="selector_color">@color/loginheader</color>
+    <color name="ripple_color">@color/colorAccent</color>
+    <color name="toolbar_bg">@color/loginheader</color>
+    <color name="done">@color/colorwhite</color>
+    <color name="permission_alert_color">@color/loginheader</color>
+</resources>

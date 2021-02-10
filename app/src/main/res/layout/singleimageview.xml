@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="115dp"
+    android:layout_height="130dp"
+    android:maxWidth="115dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:id="@+id/root"
+    android:background="@color/colorwhite"
+    android:layout_marginStart="5dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="115dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="5dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/img8"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:id="@+id/imageItem" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_delete"
+            android:layout_alignParentEnd="true"
+            app:elevation="10dp"
+            android:id="@+id/deleteImage"
+            app:civ_border_color="@color/loginheader"
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="@color/colorwhite"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="5dp"
+            android:visibility="gone"
+            android:layout_below="@+id/imageItem"
+                android:id="@+id/uriHolder"/>
+
+</RelativeLayout>

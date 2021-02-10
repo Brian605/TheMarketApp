@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login_to_tradeit">Login to TradeIt</string>
+    <string name="user_name">User Name:</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="forgot_password_click_here_to_reset">Forgot Password? Click here to reset</string>
+    <string name="tradeit_register">TradeIt Register</string>
+    <string name="name">Name:</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone :</string>
+    <string name="password1">Password :</string>
+    <string name="password2">Retype Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="log_in">Log In</string>
+    <string name="user_mail">User Email</string>
+    <string name="input_email_address_to_reset_password">Input Email address to reset Password</string>
+    <string name="reset">Reset</string>
+    <string name="pick_a_category_to_begin">Pick a category to begin</string>
+    <string name="post_title">Post Title</string>
+    <string name="post">Post</string>
+    <string name="select">Click to select images</string>
+    <string name="logout_now">Logout now</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="post_category">Post_Category</string>
+    <string name="category_description">Category_description</string>
+    <string name="ksh_500">Ksh.500</string>
+    <string name="price">Item price</string>
+    <string name="post_a_product">Post a Product</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="delete">Delete</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="shoes_and_footwear">Shoes and Footwear</string>
+    <string name="clothes_and_bodywear">Clothes and Bodywear</string>
+    <string name="a_wide_range_of_products">A wide Range of Products</string>
+    <string name="phones">Phones and Electronics</string>
+    <string name="item">Item</string>
+    <string name="message">Message</string>
+    <string name="refresh">Refresh</string>
+    <string name="shilling_notation">Ksh. %1$s</string>
+    <string name="category_image">Category Image</string>
+    <string name="uploading_data">Uploading data…%1$d </string>
+    <string name="item_image">Item Image</string>
+    <string name="posted_by_brian">posted by Brian</string>
+    <string name="add_tag">Add Tag</string>
+    <string name="tags">Tags</string>
+    <string name="posted_by_notation">Posted By %1$s</string>
+    <string name="no_tags_yet">No Tags Yet</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="phone_number">Phone Number</string>
+    <string name="_0748267133">0748267133</string>
+    <string name="location">Location</string>
+    <string name="user_rating">User Rating</string>
+    <string name="change_location">Change Location</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="user_details">User Details</string>
+    <string name="my_posts">My Posts</string>
+    <string name="main">Main</string>
+    <string name="call">Call</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_messages">My Messages</string>
+    <string name="tradeit_icon">TradeIt icon</string>
+    <string name="products_alert">Products Alert</string>
+    <string name="a_basic_product_ksh_3400">A basic product Ksh. 3400</string>
+    <string name="search">Search</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="favorites">Favorites</string>
+    <string name="you_have_no_favorites_yet">You have no favorites yet</string>
+    <string name="change_image">Change Image</string>
+    <string name="post_an_item">Post an Item</string>
+    <string name="item_title">Item Title</string>
+    <string name="item_description">Item Description</string>
+    <string name="_2">+2</string>
+    <string name="product_requests">Product Requests</string>
+    <string name="type_here">Type Here</string>
+    <string name="post_an_item_request">Post an item request</string>
+    <string name="my_requests">My Requests</string>
+    <string name="more_items_by_this_user">More Items By this User</string>
+    <string name="input_name">Input Name</string>
+    <string name="input_email">Input Email</string>
+    <string name="input_phone">Input Phone</string>
+    <string name="input_password">Input Password</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="hello_there">Hello There...,</string>
+    <string name="enter_the_market">Enter The Market</string>
+</resources>

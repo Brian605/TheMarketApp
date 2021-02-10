@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search_bar"
+        android:title="@string/search"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="0"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+<item
+    android:title="@string/post_an_item_request"
+    android:icon="@drawable/ic_baseline_add_circle_outline_24"
+    app:showAsAction="ifRoom|collapseActionView"
+    android:id="@+id/addRequest"/>
+<item
+    android:title="@string/my_requests"
+    android:icon="@drawable/ic_baseline_emoji_emotions_24"
+    android:id="@+id/myRequests"/>
+
+</menu>

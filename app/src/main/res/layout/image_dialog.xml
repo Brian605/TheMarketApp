@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/colorwhite"
+    app:cardElevation="6dp"
+    app:contentPadding="5dp"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@drawable/img11"
+        android:fadeScrollbars="true"
+        android:contentDescription="@string/item_image"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:id="@+id/imageItem"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit"
+        android:background="@drawable/image_change_back"
+        android:layout_margin="5dp"
+        android:layout_gravity="bottom">
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@drawable/pen_plus"
+    app:civ_border_width="2dp"
+    app:civ_border_color="@color/loginheader"
+    android:layout_margin="10dp"
+    android:id="@+id/edit_icon"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/change_image"
+    android:fontFamily="@font/matura_capitals"
+    android:layout_toEndOf="@+id/edit_icon"
+    android:gravity="center"
+    android:textColor="@color/loginheader"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="10dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

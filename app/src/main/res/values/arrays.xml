@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tag_keys">
+        <item>electronic</item>
+        <item>laptop</item>
+        <item>phone</item>
+        <item>chargers</item>
+        <item>shoes</item>
+        <item>vehicles</item>
+        <item>clothing</item>
+        <item>clothes</item>
+        <item>houses</item>
+        <item>real-estate</item>
+        <item>furniture</item>
+        <item>chairs</item>
+        <item>tables</item>
+        <item>software</item>
+        <item>carvings</item>
+        <item>wood works</item>
+        <item>building and construction</item>
+        <item>shop</item>
+        <item>retail</item>
+        <item>stones and stone works</item>
+        <item>Jewellery</item>
+        <item>LPG gas</item>
+        <item>bedding</item>
+    </string-array>
+    <string-array name="tab_names">
+        <item>Me</item>
+        <item>WishList</item>
+        <item>Messages</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+</resources>

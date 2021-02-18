@@ -8,6 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ShowCaseGreen" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">@color/greenMidTransparent</item>
+        <item name="sv_showcaseColor">@color/loginheader</item>
+        <item name="sv_titleTextAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="sv_titleTextColor">@color/whiteTransparent</item>
+        <item name="sv_detailTextColor">@color/colorPrimaryDark</item>
+        <item name="sv_buttonBackgroundColor">@color/colorPrimary</item>
+        <item name="sv_tintButtonColor">@color/colorPrimary</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="CalendarTheme" parent="Theme.AppCompat.Light.Dialog">

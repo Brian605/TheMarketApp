@@ -201,6 +201,7 @@ if (fromUser){
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild(Constants.USER_RATING)){
                     reference.removeEventListener(ratingListener);
+                    if(dialog.isShowing())dialog.dismiss();
                     return;
                 }
              String string=dataSnapshot.child(Constants.USER_RATING).getValue().toString();

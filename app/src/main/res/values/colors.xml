@@ -11,6 +11,7 @@
     <color name="red">#F80303</color>
     <color name="whiteTransparent">#FFFFFFFF</color>
     <color name="greenTransParent">#2C4CAF50</color>
+    <color name="greenMidTransparent">#B54CAF50</color>
     <color name="darkGreen">#0C110C</color>
     <color name="lessGreen">#6AFA70</color>
     <color name="darkGrey">#070101</color>

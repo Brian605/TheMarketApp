@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.FragmentPrivacy">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <WebView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/webView"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/priceback"
+        android:textColor="@color/whiteTransparent"
+        android:text="@string/terms_and_privacy_policy"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:gravity="center"/>
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:id="@+id/progress"
+            android:layout_marginTop="50dp"
+            style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
+
+
+           <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/webView"
+        android:layout_gravity="start|bottom"
+        android:layout_margin="20dp"
+        android:text="@string/i_agree"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@color/loginheader"
+        app:cornerRadius="10dp"
+        android:id="@+id/agree"
+        android:gravity="center"
+        android:textColor="@color/whiteTransparent"/>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/webView"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:text="@string/i_decline"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@color/loginheader"
+        app:cornerRadius="10dp"
+        android:id="@+id/decline"
+        android:gravity="center"
+        android:textColor="@color/whiteTransparent"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
+
+</RelativeLayout>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,7 +26,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.erkutaras.showcaseview.ShowcaseManager;
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,9 +36,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.returno.tradeit.R;
 import com.returno.tradeit.adapters.CategoriesRecyclerAdapter;
+import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
@@ -43,6 +46,8 @@ import com.returno.tradeit.services.FirebaseService;
 import com.returno.tradeit.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,19 +68,16 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private ValueEventListener AuctionListener, ItemListener;
-    private View recyclerShowView;
-
+    private TextView options,pickView;
+    List<View> views=new ArrayList<>();
+    HashMap<View,String> mainTutorial =new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //hide the default actionB
-        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
-
         getApplicationContext().startService(new Intent(getApplicationContext(), FirebaseService.class));
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.whiteTransparent));
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
@@ -96,12 +98,18 @@ public class MainActivity extends AppCompatActivity {
         flipper.startFlipping();
 
         recyclerView = findViewById(R.id.recycler);
-        recyclerShowView= findViewById(R.id.mainRecyclerShowcase);
+        options= findViewById(R.id.options);
+        pickView=findViewById(R.id.pick);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         categoryItems = new ArrayList<>();
 
+        views.addAll(Arrays.asList(options,pickView));
+        mainTutorial.put(options,"Click here for more \n 1. Main -> View favorites,Your items , messages, go to your profile \n" +
+                "2. Log out Now -> To log out of your account, you can log in anytime later \n" +
+                "3. Product Requests -> View items that other users have requested for. you can then contact them if you have the items");
+        mainTutorial.put(pickView," Click on a category in this list to view more and post your item");
         //Progress Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(R.layout.progressdialog);
@@ -154,28 +162,60 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpShowCase() {
      if (PreferenceManager.getInstance(this).isBoleanValueTrue(Constants.IS_MAIN_FIRST_LAUNCH)){
-         showCase();
+
+         showCase(views.get(0),new CompleteCallBacks() {
+             @Override
+             public void onComplete(Object... objects) {
+                 if (!views.isEmpty()){
+                     setUpShowCase();
+                 }
+             }
+         });
          disableNextShowCase();
      }
     }
 
     private void disableNextShowCase() {
-       // PreferenceManager.getInstance(this).storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false);
+       PreferenceManager.getInstance(this).storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false);
     }
 
-    private void showCase() {
-        ShowcaseManager.Builder builder=new ShowcaseManager.Builder();
-        builder.context(MainActivity.this)
-                .view(recyclerShowView)
-                .descriptionText("You can choose an item in the list to begin")
-                .key("KEY")
-                .descriptionImageRes(R.drawable.ic_baseline_help_outline_24)
-                .buttonText("OKAY")
-                .colorButtonBackground(R.color.loginheader)
-                .add()
-                .build()
-                .show();
-    }
+    private void showCase(View view, CompleteCallBacks callBacks) {
+
+           ShowcaseView.Builder builder = new ShowcaseView.Builder(this);
+           ViewTarget viewTarget = new ViewTarget(view);
+           builder.setTarget(viewTarget)
+                   .setContentTitle("Tips")
+                   .setContentText(mainTutorial.get(view))
+                   .withHoloShowcase()
+                   .setStyle(R.style.ShowCaseGreen)
+                   .setShowcaseEventListener(new OnShowcaseEventListener() {
+                       @Override
+                       public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                          // showcaseView.hide();
+                           views.remove(view);
+callBacks.onComplete(null);
+
+                       }
+
+                       @Override
+                       public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                          // callBacks.onComplete(null);
+
+                       }
+
+                       @Override
+                       public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                       }
+
+                       @Override
+                       public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+                       }
+                   })
+                   .build();
+       }
+
 
 
     private void gotoSingleCategory(View view) {

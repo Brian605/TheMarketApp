@@ -40,4 +40,18 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="safety_list">
+        <item>👍☛Ensure you upload an accurate picture of the Item</item>
+        <item>👍☛Ensure you give an active phone number and email address</item>
+        <item>👍☛Beware of spam posts</item>
+        <item>👍☛Meet Buyers/Sellers in a safe public place</item>
+        <item>👍☛Make sure you receive payment before releasing a product</item>
+        <item>👍☛Make sure your phone remains on so that potential buyers/sellers can reach you</item>
+        <item>👍☛Insist on inspecting a product before buying it</item>
+        <item>👍☛Inquire about the delivery before making a purchase</item>
+        <item>👍☛Check out the item and its price, is it too good to be true? </item>
+        <item>👍☛Only make payments through systems you\\`re familiar with</item>
+        <item>⚠Note that we will not be liable for any form of fraud/loss of money </item>
+    </string-array>
 </resources>

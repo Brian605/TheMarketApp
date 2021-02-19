@@ -113,4 +113,5 @@
     <string name="i_agree">I AGREE</string>
     <string name="i_decline">I Decline</string>
     <string name="terms_and_privacy_policy">Terms and Privacy Policy</string>
+    <string name="safety_first">Safety First…</string>
 </resources>

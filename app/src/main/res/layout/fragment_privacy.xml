@@ -8,6 +8,14 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:id="@+id/progress"
+        android:backgroundTint="@color/loginheader"
+        android:layout_marginTop="70dp"
+        style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
+
     <WebView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,15 +28,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/priceback"
         android:textColor="@color/whiteTransparent"
+            android:minHeight="?actionBarSize"
         android:text="@string/terms_and_privacy_policy"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:gravity="center"/>
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:id="@+id/progress"
-            android:layout_marginTop="50dp"
-            style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
 
 
            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

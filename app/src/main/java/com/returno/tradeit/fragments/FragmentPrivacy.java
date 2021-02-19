@@ -1,7 +1,6 @@
 package com.returno.tradeit.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.ProgressBar;
 import androidx.fragment.app.Fragment;
 
 import com.returno.tradeit.R;
-import com.returno.tradeit.activities.LoginActivity;
 
 public class FragmentPrivacy extends Fragment {
 private WebView webView;
@@ -57,7 +55,9 @@ private Button agree,decline;
         agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayouts,new FragmentSafety()).commit();
+
+
             }
         });
 

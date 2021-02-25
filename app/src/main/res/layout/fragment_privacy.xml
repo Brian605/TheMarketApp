@@ -29,6 +29,8 @@
         android:background="@drawable/priceback"
         android:textColor="@color/whiteTransparent"
             android:minHeight="?actionBarSize"
+
+            android:drawableStart="@drawable/ic_baseline_privacy_tip_24"
         android:text="@string/terms_and_privacy_policy"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:gravity="center"/>

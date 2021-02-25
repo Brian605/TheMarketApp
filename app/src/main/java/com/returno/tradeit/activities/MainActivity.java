@@ -42,7 +42,7 @@ import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
-import com.returno.tradeit.services.FirebaseService;
+import com.returno.tradeit.services.NotificationService;
 import com.returno.tradeit.utils.Constants;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getApplicationContext().startService(new Intent(getApplicationContext(), FirebaseService.class));
+        getApplicationContext().startService(new Intent(getApplicationContext(), NotificationService.class));
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

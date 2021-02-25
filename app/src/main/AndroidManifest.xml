@@ -27,7 +27,17 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label"
         tools:targetApi="n">
-        <activity android:name=".activities.LoginActivity"/>
+        <receiver
+            android:name=".services.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RequestsActivity" />
         <activity
             android:name=".activities.SettingsActivity"
@@ -47,13 +57,9 @@
         <activity android:name=".activities.ModuleActivity" />
 
         <service
-            android:name=".services.FirebaseService"
+            android:name=".services.NotificationService"
             android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+            android:exported="false" />
 
         <activity android:name=".activities.SingLeItemActivity" />
         <activity android:name=".activities.RegisterActivity" />

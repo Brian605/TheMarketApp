@@ -42,7 +42,6 @@ import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
-import com.returno.tradeit.services.NotificationService;
 import com.returno.tradeit.utils.Constants;
 
 import java.util.ArrayList;

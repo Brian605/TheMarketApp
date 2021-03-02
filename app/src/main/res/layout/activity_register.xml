@@ -20,8 +20,10 @@
             android:layout_width="@dimen/login_logo_width"
             android:layout_height="@dimen/login_logo_height"
             android:layout_gravity="center"
-            android:src="@drawable/logo"
+            android:src="@drawable/logo1"
             android:layout_marginTop="2dp"
+            app:civ_border_color="@color/whiteTransparent"
+            app:civ_border_width="2dp"
             android:layout_marginBottom="2dp"/>
         <TextView
             android:layout_width="wrap_content"

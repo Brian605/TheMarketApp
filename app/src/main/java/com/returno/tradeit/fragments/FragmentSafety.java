@@ -13,6 +13,8 @@ import com.google.android.material.button.MaterialButton;
 import com.returno.tradeit.R;
 import com.returno.tradeit.activities.LoginActivity;
 import com.returno.tradeit.adapters.SafetyAdapter;
+import com.returno.tradeit.local.PreferenceManager;
+import com.returno.tradeit.utils.Constants;
 
 
 public class FragmentSafety extends Fragment {
@@ -43,6 +45,7 @@ public class FragmentSafety extends Fragment {
         materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PreferenceManager.getInstance(getActivity()).storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false);
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });

@@ -59,4 +59,9 @@ public class Constants {
     public static final String IS_MAIN_FIRST_LAUNCH = "is_main_first_launch";
     public static final String SHARED_PREFERENCE = "the_market";
     public static final int PERMISSION_CALL_PHONE = 100;
+    public static final String FIRST_TIME_LAUNCH = "first_launch";
+
+    public static final String POLICY_ACCEPTED = "policy_accepted";
+
+    public static final String PRODUCTS_CHANNEL = "products";
 }

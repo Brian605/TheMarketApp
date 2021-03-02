@@ -27,16 +27,14 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label"
         tools:targetApi="n">
-        <receiver
-            android:name=".services.NotificationReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="999">
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.SCREEN_ON"/>
-            </intent-filter>
-        </receiver>
 
+        <service
+            android:name=".services.FirebaseMessenger"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RequestsActivity" />
         <activity
@@ -55,12 +53,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ModuleActivity" />
-
-        <service
-            android:name=".services.NotificationService"
-            android:enabled="true"
-            android:exported="false" />
-
         <activity android:name=".activities.SingLeItemActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.ItemPostActivity" />
@@ -74,6 +66,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.UserActivity" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo1" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/loginheader" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/app_name" />
+
     </application>
 
 </manifest>

@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import androidx.fragment.app.Fragment;
 
 import com.returno.tradeit.R;
+import com.returno.tradeit.local.PreferenceManager;
+import com.returno.tradeit.utils.Constants;
 
 public class FragmentPrivacy extends Fragment {
 private WebView webView;
@@ -55,6 +57,7 @@ private Button agree,decline;
         agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PreferenceManager.getInstance(getActivity()).storeBooleanValue(Constants.POLICY_ACCEPTED,true);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayouts,new FragmentSafety()).commit();
 
 

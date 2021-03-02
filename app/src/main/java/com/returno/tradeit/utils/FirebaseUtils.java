@@ -1,12 +1,9 @@
 package com.returno.tradeit.utils;
 
-import androidx.annotation.NonNull;
-
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.returno.tradeit.models.Notification;
 
@@ -17,6 +14,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+
+import timber.log.Timber;
 
 public class FirebaseUtils {
 
@@ -31,21 +30,22 @@ public class FirebaseUtils {
     }
 
     public void postAPushNotification(Notification notification){
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_MESSAGES).push();
-        listener=new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                notification.setNotification_id(snapshot.getKey());
-                reference.setValue(notification);
-                reference.removeEventListener(listener);
-       }
+        String body=notification.getTitle()+" Ksh."+notification.getPrice();
+        AndroidNetworking.post(Urls.NOTIFICATION_URL)
+                .addBodyParameter(Constants.NOTIFICATION_BRANCH,Constants.PRODUCTS_CHANNEL)
+                .addBodyParameter(Constants.ITEM_DESCRIPTION,body)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Timber.e(response);
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onError(ANError anError) {
 
-            }
-        };
-        reference.addListenerForSingleValueEvent(listener);
+                    }
+                });
     }
 
     public static boolean isInternetAvailable() {

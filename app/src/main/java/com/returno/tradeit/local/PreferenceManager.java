@@ -30,4 +30,13 @@ editor.putBoolean(key,value);
 editor.apply();
     }
 
+    public boolean isFirstTimeLaunch(){
+        SharedPreferences preferences =context.getSharedPreferences(Constants.SHARED_PREFERENCE,Context.MODE_PRIVATE);
+        return preferences.getBoolean(Constants.FIRST_TIME_LAUNCH,true);
+    }
+
+    public boolean isPolicyAccepted(){
+        SharedPreferences preferences =context.getSharedPreferences(Constants.SHARED_PREFERENCE,Context.MODE_PRIVATE);
+        return preferences.getBoolean(Constants.POLICY_ACCEPTED,true);
+    }
 }

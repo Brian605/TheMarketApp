@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getApplicationContext().startService(new Intent(getApplicationContext(), NotificationService.class));
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -85,15 +84,15 @@ public class MainActivity extends AppCompatActivity {
         }
         //new DBHelper(MainActivity.this).onUpgrade();
 
-        Animation animin = AnimationUtils.loadAnimation(this, R.anim.animin);
-        Animation animout = AnimationUtils.loadAnimation(this, R.anim.animout);
+        Animation animIn = AnimationUtils.loadAnimation(this, R.anim.animin);
+        Animation animOut = AnimationUtils.loadAnimation(this, R.anim.animout);
 
         // startService(new Intent(MainActivity.this, NotificationWorker.class));
         ViewFlipper flipper = (ViewFlipper) findViewById(R.id.FlipV);
         flipper.setFlipInterval(5000);
         flipper.setAutoStart(true);
-        flipper.setInAnimation(animin);
-        flipper.setOutAnimation(animout);
+        flipper.setInAnimation(animIn);
+        flipper.setOutAnimation(animOut);
         flipper.startFlipping();
 
         recyclerView = findViewById(R.id.recycler);

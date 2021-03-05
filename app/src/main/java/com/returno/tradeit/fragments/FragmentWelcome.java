@@ -12,6 +12,7 @@ import com.google.android.material.button.MaterialButton;
 import com.returno.tradeit.R;
 import com.returno.tradeit.activities.LoginActivity;
 import com.returno.tradeit.local.PreferenceManager;
+import com.returno.tradeit.utils.Constants;
 
 public class FragmentWelcome extends Fragment {
 private MaterialButton nextBtn;
@@ -45,7 +46,7 @@ private MaterialButton nextBtn;
     @Override
     public void onStart() {
         super.onStart();
-        if (!PreferenceManager.getInstance(getActivity()).isFirstTimeLaunch() && PreferenceManager.getInstance(getActivity()).isPolicyAccepted()){
+        if (!PreferenceManager.getInstance(getActivity()).isFirstTimeLaunch() && PreferenceManager.getInstance(getActivity()).isBoleanValueTrue(Constants.POLICY_ACCEPTED)){
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }
     }

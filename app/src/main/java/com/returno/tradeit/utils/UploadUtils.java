@@ -13,6 +13,7 @@ import com.returno.tradeit.callbacks.DeleteCallBacks;
 import com.returno.tradeit.callbacks.FetchCallBacks;
 import com.returno.tradeit.callbacks.UploadCallBacks;
 import com.returno.tradeit.models.Item;
+import com.returno.tradeit.models.Notification;
 import com.returno.tradeit.models.Request;
 
 import org.json.JSONArray;
@@ -64,7 +65,12 @@ public class UploadUtils {
                         try {
                            /* if (response.has("upload") && response.has("post") && response.getString("upload").equals("success")
                              && response.getString("post").equals("success")){
-                */                callBacks.onUploadSuccess();
+
+                */
+                            Notification notification=new Notification(item.getItemId(),item.getItemPrice()+"".trim(),Constants.PRODUCTS_CHANNEL,item.getItemName(),null);
+                           new FirebaseUtils().postAPushNotification(notification);
+
+                            callBacks.onUploadSuccess();
                         } catch (Exception e) {
                             onError(new ANError(e));
                         }

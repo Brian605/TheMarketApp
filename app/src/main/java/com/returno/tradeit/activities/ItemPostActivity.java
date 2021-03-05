@@ -33,8 +33,6 @@ import com.opensooq.supernova.gligar.GligarPicker;
 import com.returno.tradeit.R;
 import com.returno.tradeit.callbacks.UploadCallBacks;
 import com.returno.tradeit.models.Item;
-import com.returno.tradeit.models.Notification;
-import com.returno.tradeit.utils.Constants;
 import com.returno.tradeit.utils.FirebaseUtils;
 import com.returno.tradeit.utils.ItemUtils;
 import com.returno.tradeit.utils.Reducer;
@@ -222,8 +220,6 @@ public class ItemPostActivity extends AppCompatActivity  {
 if (dialog.isShowing())dialog.dismiss();
 Toast.makeText(getApplicationContext(),"Upload Success",Toast.LENGTH_LONG).show();
 ItemUtils.clearUploadCache();
-                            Notification notification=new Notification(itemId,PostPrice, Constants.PRODUCTS_CHANNEL,PostTitle,null);
-                            new FirebaseUtils().postAPushNotification(notification);
                      pathList.clear();
                      selectedItemsLayout.removeAllViewsInLayout();
                      priceEdit.setText("");

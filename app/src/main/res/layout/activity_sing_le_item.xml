@@ -51,7 +51,7 @@
             android:minHeight="?attr/actionBarSize"
             android:background="@color/loginheader"
         app:layout_collapseMode="pin"
-        app:collapseIcon="@drawable/app_icon_512"
+        app:collapseIcon="@drawable/logo1"
             android:id="@+id/toolbar">
             <TextView
                 android:layout_width="wrap_content"

@@ -46,6 +46,7 @@ public class FragmentSafety extends Fragment {
             @Override
             public void onClick(View v) {
                 PreferenceManager.getInstance(getActivity()).storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false);
+                PreferenceManager.getInstance(getActivity()).storeBooleanValue(Constants.FIRST_TIME_LAUNCH,false);
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });

@@ -1,11 +1,17 @@
 package com.returno.tradeit.utils;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ValueEventListener;
 import com.returno.tradeit.models.Notification;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -29,11 +35,43 @@ public class FirebaseUtils {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public void postAPushNotification(Notification notification){
+    public void postAPushNotification(@NotNull Notification notification){
+        Timber.e("Posting Notification");
+        JSONObject payLoad=new JSONObject();
+        JSONObject notificationObject=new JSONObject();
+        try {
+            payLoad.put("to","/topics/"+Constants.PRODUCTS_CHANNEL);
+            notificationObject.put("title","New Product Posted");
+            notificationObject.put("body",notification.getTitle()+" Ksh."+notification.getPrice());
+            payLoad.put("notification",notificationObject);
+
+            AndroidNetworking.post(Urls.FCM_URL)
+                    .setContentType("application/json; charset=utf-8")
+                    .addJSONObjectBody(payLoad)
+                    .addHeaders("Authorization",Constants.SERVER_KEY)
+                    .setPriority(Priority.HIGH)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Timber.e(response.toString());
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+Timber.e(anError.toString());
+                        }
+                    });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         String body=notification.getTitle()+" Ksh."+notification.getPrice();
         AndroidNetworking.post(Urls.NOTIFICATION_URL)
                 .addBodyParameter(Constants.NOTIFICATION_BRANCH,Constants.PRODUCTS_CHANNEL)
                 .addBodyParameter(Constants.ITEM_DESCRIPTION,body)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
@@ -43,7 +81,7 @@ public class FirebaseUtils {
 
                     @Override
                     public void onError(ANError anError) {
-
+Timber.e(anError.getMessage());
                     }
                 });
     }

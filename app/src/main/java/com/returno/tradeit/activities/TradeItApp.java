@@ -11,7 +11,6 @@ import com.returno.tradeit.utils.Constants;
 
 import timber.log.Timber;
 
-//import android.support.v7.app.AppCompatActivity;
 
 public class TradeItApp extends Application {
 

@@ -42,7 +42,9 @@ import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
+import com.returno.tradeit.models.Notification;
 import com.returno.tradeit.utils.Constants;
+import com.returno.tradeit.utils.FirebaseUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -142,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
                         if (dialog.isShowing()) {
                             dialog.dismiss();
                         }
+                        Notification notification=new Notification("Hello","300","electro","Hey there",null);
+                        new FirebaseUtils().postAPushNotification(notification);
                         setUpShowCase();
 
                     }

@@ -1,6 +1,7 @@
 package com.returno.tradeit.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -202,6 +203,7 @@ public class ItemPostActivity extends AppCompatActivity  {
 
     }
 
+    @SuppressLint("InflateParams")
     public void uploadData() {
 
         View view=LayoutInflater.from(ItemPostActivity.this).inflate(R.layout.uploaddialog,null,false);
@@ -247,6 +249,8 @@ progressView.setText(String.format(Locale.getDefault(),"Uploading %d %%", newVal
 
     }
     //<editor-fold desc="Getting the image from gallery">
+
+    @SuppressLint("InflateParams")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

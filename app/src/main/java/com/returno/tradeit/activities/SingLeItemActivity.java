@@ -2,6 +2,7 @@ package com.returno.tradeit.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -28,12 +30,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -50,6 +56,7 @@ import com.returno.tradeit.callbacks.DeleteCallBacks;
 import com.returno.tradeit.callbacks.FetchCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.DatabaseManager;
+import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.Item;
 import com.returno.tradeit.utils.Commons;
 import com.returno.tradeit.utils.Constants;
@@ -63,6 +70,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 import timber.log.Timber;
 
@@ -140,6 +148,7 @@ String imageToLoad= Urls.BASE_URL+images.get(0);
     }
 }
 setItemTags();
+showTutorial();
         itemTitleView.setText(itemTitle);
         itemDescriptionView.setText(itemDescription);
         itemPriceView.setText(getResources().getString(R.string.shilling_notation,itemPrice));
@@ -157,14 +166,13 @@ setItemTags();
             bottomNavigationView.findViewById(R.id.whatsapp).setVisibility(View.GONE);
         }
 
-       final DatabaseReference reference= FirebaseDatabase.getInstance().getReference("AllUsers").child(posterId);
+       final DatabaseReference reference= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USERS_DIR).child(posterId);
        listener=new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    Username= Objects.requireNonNull(dataSnapshot.child("Username").getValue()).toString();
-                    UserPhone= Objects.requireNonNull(dataSnapshot.child("phone").getValue()).toString();
-
+                    Username= Objects.requireNonNull(dataSnapshot.child(Constants.USER_NAME).getValue()).toString();
+                    UserPhone= Objects.requireNonNull(dataSnapshot.child(Constants.USER_PHONE).getValue()).toString();
                     posterNameView.setText(getResources().getString(R.string.posted_by_notation,Username));
                     posterNameView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -199,8 +207,7 @@ reference.removeEventListener(listener);
           int i=menuItem.getItemId();
           if(i==R.id.call){
          Commons.getInstance().callUser(SingLeItemActivity.this,UserPhone) ;
-Timber.e("call clicked");
-Timber.e(UserPhone);
+
           }else
               if(i==R.id.Delete){
                   deleteItem();
@@ -221,6 +228,44 @@ Timber.e(UserPhone);
                 return false;
             }
         });
+    }
+
+    private void showTutorial() {
+        if (!PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_SINGLE_FIRST_LAUNCH,this)){
+            return;
+        }
+        ShowcaseView.Builder builder = new ShowcaseView.Builder(this);
+        ViewTarget viewTarget = new ViewTarget(posterNameView);
+        builder.setTarget(viewTarget)
+                .setContentTitle("Tips")
+                .setContentText("Click here to view this User's Profile")
+                .withHoloShowcase()
+                .setStyle(R.style.ShowCaseGreen)
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+                    @Override
+                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                        // showcaseView.hide();
+                        PreferenceManager.getInstance().storeBooleanValue(Constants.IS_SINGLE_FIRST_LAUNCH,false,SingLeItemActivity.this);
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                        // callBacks.onComplete(null);
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+                    }
+                })
+                .build();
     }
 
     private void setCounter() {
@@ -383,6 +428,7 @@ Timber.e(UserPhone);
                         new UploadUtils().deleteItem(imagesUri, itemId, new DeleteCallBacks() {
                             @Override
                             public void onDelete() {
+                                showDeleteSuccessNotification();
                                 if (dialog.isShowing())dialog.dismiss();
                                 new ItemUtils().showMessageDialog(SingLeItemActivity.this,0,false,"Item Deleted");
                                 Intent intent=new Intent(SingLeItemActivity.this,CategoryViewActivity.class);
@@ -405,6 +451,22 @@ Timber.e(UserPhone);
         );
         thread.start();
 
+    }
+
+    private void showDeleteSuccessNotification() {
+        Bitmap icon= BitmapFactory.decodeResource(getResources(),R.drawable.logo1);
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(this, getResources().getString(R.string.app_name))
+                .setAutoCancel(true)
+                .setContentTitle("Background Tasks")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setColor(getResources().getColor(R.color.loginheader))
+                .setLargeIcon(icon)
+                .setContentText("The Item was Deleted Successfully");
+
+        NotificationManager manager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.notify(new Random().nextInt(),builder.build());
+        }
     }
 
     @Override
@@ -469,4 +531,5 @@ Timber.e(UserPhone);
             }
         });
     }
+
 }

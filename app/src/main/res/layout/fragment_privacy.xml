@@ -4,65 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentPrivacy">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:id="@+id/progress"
-        android:backgroundTint="@color/loginheader"
-        android:layout_marginTop="70dp"
-        style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
-
-    <WebView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/webView"/>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/priceback"
         android:textColor="@color/whiteTransparent"
-            android:minHeight="?actionBarSize"
-
-            android:drawableStart="@drawable/ic_baseline_privacy_tip_24"
+        android:minHeight="?actionBarSize"
+        android:drawableStart="@drawable/ic_baseline_privacy_tip_24"
         android:text="@string/terms_and_privacy_policy"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/header"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:gravity="center"/>
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/progress"
+        android:layout_below="@id/header"
+        app:indicatorColor="@color/loginheader"
+        app:indeterminateAnimationType="contiguous"
+        app:trackColor="@color/loginheader"
+        app:trackThickness="10dp"
+        style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/progress" />
 
            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/webView"
-        android:layout_gravity="start|bottom"
-        android:layout_margin="20dp"
-        android:text="@string/i_agree"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:backgroundTint="@color/loginheader"
-        app:cornerRadius="10dp"
-        android:id="@+id/agree"
-        android:gravity="center"
-        android:textColor="@color/whiteTransparent"/>
+               android:id="@+id/agree"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentStart="true"
+               android:layout_alignParentBottom="true"
+               android:layout_margin="20dp"
+               android:gravity="center"
+               android:text="@string/i_agree"
+               android:textColor="@color/whiteTransparent"
+               app:backgroundTint="@color/loginheader"
+               app:cornerRadius="10dp" />
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/decline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/webView"
-        android:layout_gravity="bottom|end"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
+        android:gravity="center"
         android:text="@string/i_decline"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:textColor="@color/whiteTransparent"
         app:backgroundTint="@color/loginheader"
         app:cornerRadius="10dp"
-        android:id="@+id/decline"
-        android:gravity="center"
-        android:textColor="@color/whiteTransparent"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
-</RelativeLayout>
-
+        tools:ignore="RelativeOverlap" />
 </RelativeLayout>

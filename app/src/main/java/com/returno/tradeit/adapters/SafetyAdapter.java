@@ -35,9 +35,14 @@ public class SafetyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view= LayoutInflater.from(context).inflate(R.layout.safety_list_item,parent,false);
-        TextView textView=view.findViewById(R.id.text);
-        textView.setText(items[position]);
-        return view;
+        if (convertView==null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.safety_list_item, parent, false);
+            TextView textView = convertView.findViewById(R.id.text);
+            textView.setText(items[position]);
+        }else {
+            TextView textView = convertView.findViewById(R.id.text);
+            textView.setText(items[position]);
+        }
+        return convertView;
     }
 }

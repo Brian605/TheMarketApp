@@ -3,7 +3,6 @@ package com.returno.tradeit.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -151,14 +150,6 @@ Toast.makeText(getApplicationContext(),"Could Not Register :"+e.getMessage(),Toa
 
             }
         }).addOnSuccessListener(authResult -> {
-
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("LocalUser", 0);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString(Constants.USER_EMAIL, email);
-            editor.putString(Constants.USER_NAME, name);
-            editor.putString(Constants.USER_PHONE, phone);
-            editor.putString(Constants.USER_ID,authResult.getUser().getUid());
-            editor.apply();
             setResult(Activity.RESULT_OK);
             dialog.dismiss();
             Toast.makeText(RegisterActivity.this,"Registration Successful",Toast.LENGTH_LONG) .show();

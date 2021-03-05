@@ -24,6 +24,8 @@ public class FirebaseMessenger extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         sendNotification(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
+
+        //TODO: Fetch the last notification data
     }
     private void sendNotification(String notiBody, String notiTitle) {
 

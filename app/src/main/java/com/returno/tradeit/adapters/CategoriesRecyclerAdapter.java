@@ -33,8 +33,8 @@ private RecyclerCallBacks listener;
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleritem,parent,false);
-        final ViewHolder viewHolder=new ViewHolder(view);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.category_recycler_item,parent,false);
+        final ViewHolder viewHolder= new ViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +58,7 @@ Glide.with(context).load(categoryItem.getPost_url()).into(holder.imageView);
         return list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
 TextView categoryName,categoryId;
 ImageView imageView;

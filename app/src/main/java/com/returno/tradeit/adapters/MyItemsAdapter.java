@@ -47,7 +47,7 @@ public MyItemsAdapter(Context context, List<Item> list, RecyclerCallBacks listen
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.category_recycler_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.items_recycler_item,parent,false);
         final ViewHolder viewHolder= new ViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

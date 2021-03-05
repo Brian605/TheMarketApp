@@ -5,4 +5,8 @@ public interface CompleteCallBacks {
     default void onFailure(String error){
 
     }
+
+    default void onStringData(String data){
+
+    }
 }

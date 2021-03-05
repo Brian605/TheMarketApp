@@ -6,7 +6,6 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.CounterCallBacks;
 import com.returno.tradeit.callbacks.DeleteCallBacks;
@@ -21,22 +20,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class UploadUtils {
@@ -178,6 +164,7 @@ fetchCallBacks.fetchError(anError.getMessage());
                 });
     }
     //</editor-fold>
+/*
 
     //<editor-fold defaultstate="collapsed" desc="Unsafe OkHttpClient to force insecure connections">
     public static OkHttpClient getUnsafeClient() {
@@ -221,6 +208,7 @@ fetchCallBacks.fetchError(anError.getMessage());
         }
     }
     //</editor-fold>
+*/
 
     //<editor-fold defaultstate="collapsed" desc="Delete an item from the online database as well as its imges">
     public void deleteItem(String image, String itemId, DeleteCallBacks listener){

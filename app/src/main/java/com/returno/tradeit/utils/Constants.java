@@ -62,7 +62,6 @@ public class Constants {
     public static final String FIRST_TIME_LAUNCH = "first_launch";
 
     public static final String POLICY_ACCEPTED = "policy_accepted";
-
     public static final String PRODUCTS_CHANNEL = "products";
-    public static final String SERVER_KEY="key=AAAAbpoJlPk:APA91bG5_kFyqIeLQg9GKHYfoqJpae55602aC7vght-T820b7FZQu-NtomIL6HxMqQAcKy4DXyVtQQtX-ixzznkO52OPpErMeQR-7BCx2XBVIoFyzRqbI5J7wIm-c7AukhaOOHh52QHV";
+    public static final String IS_SINGLE_FIRST_LAUNCH = "is_single_first_launch";
 }

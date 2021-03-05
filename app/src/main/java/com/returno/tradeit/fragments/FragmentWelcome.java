@@ -46,7 +46,7 @@ private MaterialButton nextBtn;
     @Override
     public void onStart() {
         super.onStart();
-        if (!PreferenceManager.getInstance(getActivity()).isFirstTimeLaunch() && PreferenceManager.getInstance(getActivity()).isBoleanValueTrue(Constants.POLICY_ACCEPTED)){
+        if (!PreferenceManager.getInstance().isFirstTimeLaunch(getActivity()) && PreferenceManager.getInstance().isBoleanValueTrue(Constants.POLICY_ACCEPTED,getActivity())){
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }
     }

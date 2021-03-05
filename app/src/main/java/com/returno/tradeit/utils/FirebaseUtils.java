@@ -7,6 +7,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ValueEventListener;
+import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.models.Notification;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,52 +37,69 @@ public class FirebaseUtils {
     }
 
     public void postAPushNotification(@NotNull Notification notification){
-        Timber.e("Posting Notification");
-        JSONObject payLoad=new JSONObject();
-        JSONObject notificationObject=new JSONObject();
-        try {
-            payLoad.put("to","/topics/"+Constants.PRODUCTS_CHANNEL);
-            notificationObject.put("title","New Product Posted");
-            notificationObject.put("body",notification.getTitle()+" Ksh."+notification.getPrice());
-            payLoad.put("notification",notificationObject);
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-            AndroidNetworking.post(Urls.FCM_URL)
-                    .setContentType("application/json; charset=utf-8")
-                    .addJSONObjectBody(payLoad)
-                    .addHeaders("Authorization",Constants.SERVER_KEY)
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
+                JSONObject payLoad=new JSONObject();
+                JSONObject notificationObject=new JSONObject();
+                try {
+                    payLoad.put("to","/topics/"+Constants.PRODUCTS_CHANNEL);
+                    notificationObject.put("title","New Product Posted");
+                    notificationObject.put("body",notification.getTitle()+" Ksh."+notification.getPrice());
+                    payLoad.put("notification",notificationObject);
+
+                    getApiKey(new CompleteCallBacks(){
                         @Override
-                        public void onResponse(JSONObject response) {
-                            Timber.e(response.toString());
+                        public void onComplete(Object... objects) {
+
                         }
 
                         @Override
-                        public void onError(ANError anError) {
-Timber.e(anError.toString());
+                        public void onStringData(String data) {
+                            AndroidNetworking.post(Urls.FCM_URL)
+                                    .setContentType("application/json; charset=utf-8")
+                                    .addJSONObjectBody(payLoad)
+                                    .addHeaders("Authorization",data)
+                                    .setPriority(Priority.HIGH)
+                                    .build()
+                                    .getAsJSONObject(new JSONObjectRequestListener() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            Timber.e(response.toString());
+                                        }
+
+                                        @Override
+                                        public void onError(ANError anError) {
+                                            Timber.e(anError.toString());
+                                        }
+                                    });
                         }
                     });
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        String body=notification.getTitle()+" Ksh."+notification.getPrice();
-        AndroidNetworking.post(Urls.NOTIFICATION_URL)
-                .addBodyParameter(Constants.NOTIFICATION_BRANCH,Constants.PRODUCTS_CHANNEL)
-                .addBodyParameter(Constants.ITEM_DESCRIPTION,body)
-                .setPriority(Priority.HIGH)
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+
+    }
+
+    private void getApiKey(CompleteCallBacks authorization) {
+        AndroidNetworking.get(Urls.API_KEY_URL)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
-                        Timber.e(response);
+                        authorization.onStringData(response);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-Timber.e(anError.getMessage());
+
                     }
                 });
     }

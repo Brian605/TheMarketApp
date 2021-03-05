@@ -1,125 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="9dp"
-    app:cardBackgroundColor="@color/loginheader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
-    android:layout_margin="5dp">
+    app:cardCornerRadius="2dp"
+    app:cardElevation="10dp"
+    android:background="@color/colorwhite"
+    app:cardBackgroundColor="@color/colorwhite"
+    app:contentPadding="5dp"
+    android:layout_margin="10dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorwhite"
-            android:orientation="vertical">
-            <com.facebook.drawee.view.SimpleDraweeView
+
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:maxHeight="200dp"
-                app:placeholderImage="@drawable/img7"
-               app:placeholderImageScaleType="centerCrop"
-                app:actualImageScaleType="centerCrop"
-                android:id="@+id/itemImage"
-                />
+                android:layout_height="170dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/img7"
+                android:scaleType="centerCrop"
+                android:id="@+id/categImg"
+                android:contentDescription="@string/category_image" />
 
             <TextView
-                android:id="@+id/itemTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-               android:textColor="@color/colorwhite"
-                android:textStyle="bold"
-                android:gravity="start"
-                android:background="@drawable/titleback"
-                android:fontFamily="@font/inconsolata"
-                android:paddingStart="15dp"
-                android:paddingEnd="3dp"
-                android:maxWidth="170dp"
-                android:layout_alignBottom="@+id/itemImage"
-                android:text="@string/post_title"
-                android:maxLines="2"
-                 />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="20dp"
+            android:id="@+id/categ"
+                android:fontFamily="@font/benardmtcondensed"
+                android:textColor="@color/colorwhite"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:background="@drawable/categback"
+            android:layout_below="@+id/categImg"
+
+            android:text="@string/post_category"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorwhite"
-            android:fontFamily="@font/inconsolata"
+            android:textColor="#fff"
             android:layout_margin="5dp"
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
+            android:padding="10dp"
             android:visibility="gone"
-            android:id="@+id/itemDescription"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/categ"
+            android:id="@+id/desc"
             android:text="@string/category_description"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/itemImageUrl"
-                android:visibility="gone"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/postUserId"
-                android:visibility="gone"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/itemId"
-                android:visibility="gone"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/itemCategory"/>
-            <TextView
-                android:id="@+id/itemPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/priceback"
-                android:gravity="center"
-                android:fontFamily="@font/inconsolataexpandedbold"
-                android:text="@string/ksh_500"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_gravity="end"
-                android:layout_alignBottom="@id/itemImage"
-                android:layout_alignEnd="@id/itemImage"
-                android:textColor="@color/black"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/emiter"
-                android:layout_gravity="center"
-                android:visibility="gone"/>
 
-<TextView
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:layout_alignStart="@+id/itemImage"
-    android:layout_alignTop="@+id/itemImage"
-    android:text="@string/_2"
-    android:textColor="@color/whiteTransparent"
-    android:id="@+id/counterText"
-    android:layout_margin="5dp"
-    android:background="@drawable/bg_circle_solid"
-    android:gravity="center"
-    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
-
-        </RelativeLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/favorite"
-        android:layout_margin="10dp"
-        android:layout_gravity="end"
-        android:contentDescription="@string/add_to_favorites"
-        android:src="@drawable/ic_favorite_border"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tagsView"
-        android:visibility="gone"/>
 </androidx.cardview.widget.CardView>

@@ -45,8 +45,8 @@ public class FragmentSafety extends Fragment {
         materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PreferenceManager.getInstance(getActivity()).storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false);
-                PreferenceManager.getInstance(getActivity()).storeBooleanValue(Constants.FIRST_TIME_LAUNCH,false);
+                PreferenceManager.getInstance().storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false,getActivity());
+                PreferenceManager.getInstance().storeBooleanValue(Constants.FIRST_TIME_LAUNCH,false,getActivity());
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });

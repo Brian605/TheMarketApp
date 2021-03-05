@@ -1,5 +1,6 @@
 package com.returno.tradeit.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.agrawalsuneet.dotsloader.loaders.PullInLoader;
 import com.androidnetworking.AndroidNetworking;
@@ -133,17 +133,15 @@ public class ItemUtils {
         }
     }
 
+    @SuppressLint("InflateParams")
     public void showMessageDialog(Context context, int theme, boolean isThemed, String message) {
-        MaterialAlertDialogBuilder builder;
-        if (!isThemed) {
-            builder = new MaterialAlertDialogBuilder(context);
-        } else {
-            builder = new MaterialAlertDialogBuilder(context, theme);
-        }
-        builder.setMessage(message);
-        builder.setIcon(ContextCompat.getDrawable(context, R.drawable.ic_notification_important));
-        Dialog dialog = builder.create();
-        dialog.show();
+        View view=LayoutInflater.from(context).inflate(R.layout.toast_view,null,false);
+        TextView messageView=view.findViewById(R.id.body);
+        messageView.setText(message);
+     Toast toast=new Toast(context);
+     toast.setDuration(Toast.LENGTH_LONG);
+     toast.setView(view);
+     toast.show();
     }
 
     public static String getImageName(String s) {
@@ -476,7 +474,7 @@ Timber.e(imagesList.get(0));
         for (String s : images) {
             String url = Urls.BASE_URL + s;
             Timber.e(url);
-            View multiItem = LayoutInflater.from(context).inflate(R.layout.multi_image_item, null, false);
+            @SuppressLint("InflateParams") View multiItem = LayoutInflater.from(context).inflate(R.layout.multi_image_item, null, false);
             ImageView itemView = multiItem.findViewById(R.id.multiItem);
             Glide.with(context).load(url).into(itemView);
             rootLayout.addView(itemView);

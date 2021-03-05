@@ -3,7 +3,6 @@ package com.returno.tradeit.activities;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +38,6 @@ import com.returno.tradeit.utils.Tagger;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import timber.log.Timber;
 
 @SuppressWarnings("ConstantConditions")
 public class LoginActivity extends AppCompatActivity {
@@ -141,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestPermissions() {
+        //TODO: Show Permission Information
         Dexter.withActivity(LoginActivity.this)
                 .withPermissions(Manifest.permission.SEND_SMS,Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -189,7 +187,6 @@ token.continuePermissionRequest();
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-Timber.e(authResult.getUser().getUid());
 
                 DatabaseReference reference= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USERS_DIR).child(authResult.getUser().getUid());
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -197,13 +194,7 @@ Timber.e(authResult.getUser().getUid());
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                     final String  Username=snapshot.child(Constants.USER_NAME).getValue().toString();
                     final String phone=snapshot.child(Constants.USER_PHONE).getValue().toString();
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("LocalUser", 0);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString(Constants.USER_EMAIL, email);
-                        editor.putString(Constants.USER_NAME,Username);
-                        editor.putString(Constants.USER_PHONE,phone);
-                        editor.putString(Constants.USER_ID,authResult.getUser().getUid());
-                        editor.apply();
+
                         dialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

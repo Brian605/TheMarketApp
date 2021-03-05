@@ -1,17 +1,11 @@
 <resources>
     <string name="app_name">The Market</string>
-    <string name="login_to_tradeit">Login to TradeIt</string>
     <string name="user_name">User Name:</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="register">Register</string>
     <string name="forgot_password_click_here_to_reset">Forgot Password? Click here to reset</string>
     <string name="tradeit_register">Welcome to the Market</string>
-    <string name="name">Name:</string>
-    <string name="email">Email</string>
-    <string name="phone">Phone :</string>
-    <string name="password1">Password :</string>
-    <string name="password2">Retype Password</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="log_in">Log In</string>
     <string name="user_mail">User Email</string>
@@ -79,8 +73,6 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="my_profile">My Profile</string>
     <string name="my_messages">My Messages</string>
-    <string name="tradeit_icon">TradeIt icon</string>
-    <string name="products_alert">Products Alert</string>
     <string name="a_basic_product_ksh_3400">A basic product Ksh. 3400</string>
     <string name="search">Search</string>
     <string name="add_to_favorites">Add to favorites</string>
@@ -105,9 +97,7 @@
     <string name="hello_there">Hello There...,</string>
     <string name="enter_the_market">Enter The Market</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_the_market">Welcome to The Market!</string>
-    <string name="intro_text">You can easily buy and sell items for FREE on the app without extra charges</string>
     <string name="intro_text2"> Hello 😂✌ you buy ♥😝  and sell 💲☝ items 👌☯  for free 😝 on the app without extra costs👊</string>
     <string name="continue_next">Continue👍☞</string>
     <string name="i_agree">I AGREE</string>
@@ -115,4 +105,7 @@
     <string name="terms_and_privacy_policy">Terms and Privacy Policy</string>
     <string name="safety_first">Safety First…</string>
     <string name="image_of_a_light_bulb">Image of a light bulb</string>
+    <string name="flipper_image">Flipper Image</string>
+    <string name="fab_icon">fab_icon</string>
+    <string name="none">none</string>
 </resources>

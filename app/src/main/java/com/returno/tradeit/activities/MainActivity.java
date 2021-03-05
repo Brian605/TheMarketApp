@@ -42,9 +42,7 @@ import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
-import com.returno.tradeit.models.Notification;
 import com.returno.tradeit.utils.Constants;
-import com.returno.tradeit.utils.FirebaseUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,8 +142,6 @@ public class MainActivity extends AppCompatActivity {
                         if (dialog.isShowing()) {
                             dialog.dismiss();
                         }
-                        Notification notification=new Notification("Hello","300","electro","Hey there",null);
-                        new FirebaseUtils().postAPushNotification(notification);
                         setUpShowCase();
 
                     }
@@ -163,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpShowCase() {
-     if (PreferenceManager.getInstance(this).isBoleanValueTrue(Constants.IS_MAIN_FIRST_LAUNCH)){
+     if (PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_MAIN_FIRST_LAUNCH,this)){
 
          showCase(views.get(0),new CompleteCallBacks() {
              @Override
@@ -178,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void disableNextShowCase() {
-       PreferenceManager.getInstance(this).storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false);
+       PreferenceManager.getInstance().storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false,this);
     }
 
     private void showCase(View view, CompleteCallBacks callBacks) {

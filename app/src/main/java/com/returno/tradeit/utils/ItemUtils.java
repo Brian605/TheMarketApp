@@ -134,7 +134,7 @@ public class ItemUtils {
     }
 
     @SuppressLint("InflateParams")
-    public void showMessageDialog(Context context, int theme, boolean isThemed, String message) {
+    public void showMessageDialog(Context context, String message) {
         View view=LayoutInflater.from(context).inflate(R.layout.toast_view,null,false);
         TextView messageView=view.findViewById(R.id.body);
         messageView.setText(message);

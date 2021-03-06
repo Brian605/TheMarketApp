@@ -25,7 +25,6 @@
         android:id="@+id/progress"
         android:layout_below="@id/header"
         app:indicatorColor="@color/loginheader"
-        app:indeterminateAnimationType="contiguous"
         app:trackColor="@color/loginheader"
         app:trackThickness="10dp"
         style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>

@@ -415,39 +415,32 @@ reference.removeEventListener(listener);
 
         }catch (Exception e){
             if (dialog.isShowing())dialog.dismiss();
-            new ItemUtils().showMessageDialog(SingLeItemActivity.this,0,false,e.getMessage());
+            new ItemUtils().showMessageDialog(SingLeItemActivity.this, e.getMessage());
         }
 
        String imagesUri=ItemUtils.getExtraImagesString(imageUrisVar);
         Timber.e(imagesUri);
         Thread thread=new Thread(
-                new Runnable() {
+                () -> new UploadUtils().deleteItem(imagesUri, itemId, new DeleteCallBacks() {
                     @Override
-                    public void run() {
+                    public void onDelete() {
+                        showDeleteSuccessNotification();
+                        if (dialog.isShowing())dialog.dismiss();
+                        new ItemUtils().showMessageDialog(SingLeItemActivity.this, "Item Deleted");
+                        Intent intent=new Intent(SingLeItemActivity.this,CategoryViewActivity.class);
+                        intent.putExtra(Constants.ITEM_CATEGORY,Category);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
 
-                        new UploadUtils().deleteItem(imagesUri, itemId, new DeleteCallBacks() {
-                            @Override
-                            public void onDelete() {
-                                showDeleteSuccessNotification();
-                                if (dialog.isShowing())dialog.dismiss();
-                                new ItemUtils().showMessageDialog(SingLeItemActivity.this,0,false,"Item Deleted");
-                                Intent intent=new Intent(SingLeItemActivity.this,CategoryViewActivity.class);
-                                intent.putExtra(Constants.ITEM_CATEGORY,Category);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
-                            }
-
-                            @Override
-                            public void onError(String message) {
-                                if (dialog.isShowing())dialog.dismiss();
-                                new ItemUtils().showMessageDialog(SingLeItemActivity.this,0,false,"Could not Delete");
-
-                            }
-                        });
+                    @Override
+                    public void onError(String message) {
+                        if (dialog.isShowing())dialog.dismiss();
+                        new ItemUtils().showMessageDialog(SingLeItemActivity.this, "Could not Delete");
 
                     }
-                }
+                })
         );
         thread.start();
 

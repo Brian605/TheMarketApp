@@ -1,27 +1,27 @@
 package com.returno.tradeit.utils;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.dmgdesignuk.locationutils.easylocationutility.EasyLocationUtility;
-import com.dmgdesignuk.locationutils.easylocationutility.LocationRequestCallback;
 import com.returno.tradeit.callbacks.LocationCallBacks;
+import com.yayandroid.locationmanager.LocationManager;
+import com.yayandroid.locationmanager.configuration.DefaultProviderConfiguration;
+import com.yayandroid.locationmanager.configuration.GooglePlayServicesConfiguration;
+import com.yayandroid.locationmanager.configuration.LocationConfiguration;
+import com.yayandroid.locationmanager.configuration.PermissionConfiguration;
+import com.yayandroid.locationmanager.listener.LocationListener;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -46,47 +46,56 @@ public class Commons {
         return commons;
     }
 
-    public boolean checkLocationEnabled(Context context) {
-        final LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            return true;
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setCancelable(false)
-                .setMessage("Your gps is off, Click ok to turn it on")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                });
-        Dialog dialog = builder.create();
-
-        return false;
-
-    }
-
     public void getLocation(AppCompatActivity activity, LocationCallBacks callBacks) {
 
-        EasyLocationUtility easyLocationUtility = new EasyLocationUtility(activity);
-        if (!checkEasyPermissions(easyLocationUtility)) {
-            Timber.e("Not enabled");
-            return;
-        }
+        LocationConfiguration configuration=new LocationConfiguration.Builder()
+                .keepTracking(false)
+                .askForPermission(new PermissionConfiguration.Builder().build())
+                .useGooglePlayServices(new GooglePlayServicesConfiguration.Builder().build())
+                .useDefaultProviders(new DefaultProviderConfiguration.Builder().build()).build();
 
-        easyLocationUtility.getSmartLocation(new LocationRequestCallback() {
-            @Override
-            public void onLocationResult(Location location) {
-                Timber.e(location.toString());
-                callBacks.onLocation(geoCode(location, activity));
-            }
+        LocationManager manager=new LocationManager.Builder(activity.getApplicationContext())
+                .activity(activity)
+                .configuration(configuration)
+                .notify(new LocationListener() {
+                    @Override
+                    public void onProcessTypeChanged(int processType) {
 
-            @Override
-            public void onFailedRequest(String s) {
-                Timber.e(s);
-                new ItemUtils().showMessageDialog(activity, 0, false, s);
-            }
-        });
+                    }
+
+                    @Override
+                    public void onLocationChanged(Location location) {
+Timber.e(location.toString());
+callBacks.onLocation(geoCode(location,activity));
+                    }
+
+                    @Override
+                    public void onLocationFailed(int type) {
+new ItemUtils().showMessageDialog(activity,"Could not fetch your location");
+                    }
+
+                    @Override
+                    public void onPermissionGranted(boolean alreadyHadPermission) {
+
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                })
+                .build();
+        manager.get();
 
     }
 
@@ -101,19 +110,13 @@ public class Commons {
 
                 return cityName;
             }
+            Timber.e("Null address list");
+
             return null;
         } catch (IOException e) {
             Toast.makeText(context, "Could not decode location try again", Toast.LENGTH_LONG).show();
             return null;
         }
-    }
-
-    private boolean checkEasyPermissions(EasyLocationUtility utility) {
-        if (utility.permissionIsGranted()) {
-            return true;
-        }
-        utility.requestPermission(100);
-        return false;
     }
 
     public boolean isValidUserName(String userName) {

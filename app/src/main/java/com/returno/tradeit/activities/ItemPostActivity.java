@@ -241,7 +241,7 @@ progressView.setText(String.format(Locale.getDefault(),"Uploading %d %%", newVal
                         public void onError(String message) {
                             Timber.e(message);
                             if (dialog.isShowing())dialog.dismiss();
-                            new ItemUtils().showMessageDialog(ItemPostActivity.this,0,false,message);
+                            new ItemUtils().showMessageDialog(ItemPostActivity.this, message);
                              }
                     });
 

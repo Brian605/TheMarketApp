@@ -225,7 +225,7 @@ if (fromUser){
         UserUtils.getInstance().fetchLocation(UserId, new CompleteCallBacks() {
             @Override
             public void onComplete(Object... objects) {
-                String userLocation=(String)objects[0];
+                UserLocation=(String)objects[0];
                 locationText.setText(UserLocation);
                 fetchRating();
             }
@@ -233,7 +233,8 @@ if (fromUser){
             @Override
             public void onFailure(String error) {
                 if (dialog.isShowing())dialog.dismiss();
-                new ItemUtils().showMessageDialog(UserActivity.this,0,false,error);
+                new ItemUtils().showMessageDialog(UserActivity.this, error);
+                fetchRating();
 
             }
         });
@@ -378,6 +379,7 @@ dialog.show();
                     @Override
                     public void onSuccess(Void aVoid) {
                         reference.removeEventListener(locationlistener);
+                        new ItemUtils().showMessageDialog(UserActivity.this,"Success");
                         fetchLocation();
                     }
                 });
@@ -438,7 +440,7 @@ dialog.show();
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if (!task.isSuccessful()){
-new ItemUtils().showMessageDialog(UserActivity.this,0,false,task.getException().getMessage());
+new ItemUtils().showMessageDialog(UserActivity.this, task.getException().getMessage());
 return null;
                 }
                 return reference.getDownloadUrl();
@@ -479,6 +481,7 @@ reference.addValueEventListener(listener1);
 
     }
 
+    //<editor-fold desc="Fetch user Image" defaultstate="collapsed">
     private void fetchUserImage() {
         UserUtils.getInstance().fetchUserImage(UserId, new CompleteCallBacks() {
             @Override
@@ -491,9 +494,11 @@ fetchLocation();
             @Override
             public void onFailure(String error) {
                 if (dialog.isShowing())dialog.dismiss();
-                new ItemUtils().showMessageDialog(UserActivity.this,0,false,error);
+                new ItemUtils().showMessageDialog(UserActivity.this, error);
+                fetchLocation();
             }
         });
 
     }
+    //</editor-fold>
 }

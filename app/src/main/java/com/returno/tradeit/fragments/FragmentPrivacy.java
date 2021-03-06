@@ -18,10 +18,12 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.returno.tradeit.R;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.utils.Constants;
+import com.returno.tradeit.utils.FirebaseUtils;
+import com.returno.tradeit.utils.ItemUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 public class FragmentPrivacy extends Fragment {
-private WebView webView;
-private Button agree,decline;
     public FragmentPrivacy() {
         // Required empty public constructor
     }
@@ -37,12 +39,15 @@ private Button agree,decline;
 
     @SuppressLint("SetJavascriptEnabled")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if (!FirebaseUtils.isInternetAvailable()){
+            new ItemUtils().showMessageDialog(getActivity(),"No Internet. Check your connection and try again");
+        }
         View view= inflater.inflate(R.layout.fragment_privacy, container, false);
         LinearProgressIndicator progressBar=view.findViewById(R.id.progress);
-        webView=view.findViewById(R.id.webView);
+        WebView webView = view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
@@ -56,8 +61,8 @@ private Button agree,decline;
         webView.setWebViewClient(new MyClient(progressBar,getActivity()));
         webView.loadUrl("https://themarket.co.ke/privacy-terms.html");
 
-        agree=view.findViewById(R.id.agree);
-        decline=view.findViewById(R.id.decline);
+        Button agree = view.findViewById(R.id.agree);
+        Button decline = view.findViewById(R.id.decline);
 
         agree.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -208,7 +208,7 @@ runOnUiThread(new Runnable() {
     @Override
     public void run() {
         if (dialog.isShowing())dialog.dismiss();
-        new ItemUtils().showMessageDialog(RequestsActivity.this,0,false,message);
+        new ItemUtils().showMessageDialog(RequestsActivity.this, message);
     }
 });
             }
@@ -257,7 +257,7 @@ runOnUiThread(new Runnable() {
                           @Override
                           public void run() {
                               if (dialog.isShowing())dialog.dismiss();
-                              new ItemUtils().showMessageDialog(RequestsActivity.this,0,false,message);
+                              new ItemUtils().showMessageDialog(RequestsActivity.this, message);
                           }
                       });
                   }
@@ -291,7 +291,7 @@ runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                    if (dialog.isShowing())dialog.dismiss();
-                   new ItemUtils().showMessageDialog(RequestsActivity.this,0,false,error);
+                   new ItemUtils().showMessageDialog(RequestsActivity.this, error);
                     }
                 });
             }

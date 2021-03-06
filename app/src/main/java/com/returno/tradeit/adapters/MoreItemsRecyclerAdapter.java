@@ -27,21 +27,20 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
+@SuppressWarnings("unchecked")
 public class MoreItemsRecyclerAdapter extends RecyclerView.Adapter<MoreItemsRecyclerAdapter.ViewHolder>  implements Filterable {
 
 private Context context;
 private ArrayList<Item> list,filterList;
 private RecyclerCallBacks listener;
-private boolean isFav;
 
-public MoreItemsRecyclerAdapter(){ }
+    public MoreItemsRecyclerAdapter(){ }
 
 public MoreItemsRecyclerAdapter(boolean isFav, Context context, ArrayList<Item> list, RecyclerCallBacks listener){
     this.context=context;
     this.list=list;
     this.listener=listener;
     this.filterList=list;
-    this.isFav=isFav;
 }
 
     @NonNull
@@ -50,12 +49,7 @@ public MoreItemsRecyclerAdapter(boolean isFav, Context context, ArrayList<Item> 
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_recycler,parent,false);
         final ViewHolder viewHolder= new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view,viewHolder.getAdapterPosition());
-            }
-        });
+        view.setOnClickListener(view1 -> listener.onItemClick(view1,viewHolder.getAdapterPosition()));
         return viewHolder;
     }
 
@@ -76,21 +70,18 @@ if (ItemUtils.isItemInFavorites(item.getItemId())){
     holder.favView.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite));
 }
 
-holder.favView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (ItemUtils.isItemInFavorites(item.getItemId())){
-            ItemUtils.removeFromFavorites(item.getItemId());
-            holder.favView.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border));
-            Toast.makeText(context,"Removed From Wish list",Toast.LENGTH_LONG).show();
-           notifyItemChanged(position);
-            return;
+holder.favView.setOnClickListener(v -> {
+    if (ItemUtils.isItemInFavorites(item.getItemId())){
+        ItemUtils.removeFromFavorites(item.getItemId());
+        holder.favView.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border));
+        Toast.makeText(context,"Removed From Wish list",Toast.LENGTH_LONG).show();
+       notifyItemChanged(position);
+        return;
 
-        }
-        ItemUtils.addToFavorites(item.getItemId());
-        notifyItemChanged(position);
-        Toast.makeText(context,"Added to Wish list",Toast.LENGTH_LONG).show();
     }
+    ItemUtils.addToFavorites(item.getItemId());
+    notifyItemChanged(position);
+    Toast.makeText(context,"Added to Wish list",Toast.LENGTH_LONG).show();
 });
         Timber.e(item.getItemImage());
     }
@@ -138,9 +129,17 @@ holder.favView.setOnClickListener(new View.OnClickListener() {
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-TextView itemName,itemDescription,itemPrice,imageurl,itemPosterId,itemDbId,itemId,tagsView,categoryView;
-ImageView favView;
-CircleImageView imageView;
+final TextView itemName;
+        final TextView itemDescription;
+        final TextView itemPrice;
+        final TextView imageurl;
+        final TextView itemPosterId;
+        TextView itemDbId;
+        final TextView itemId;
+        final TextView tagsView;
+        final TextView categoryView;
+final ImageView favView;
+final CircleImageView imageView;
 
 ViewHolder(View itemview){
     super(itemview);

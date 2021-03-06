@@ -18,7 +18,7 @@ import timber.log.Timber;
 public class DatabaseManager {
 
     SQLiteDatabase database;
-    Context context;
+    final Context context;
     DBHelper helper;
 
    public DatabaseManager (Context c){

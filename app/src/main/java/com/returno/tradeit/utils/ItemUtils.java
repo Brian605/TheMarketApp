@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agrawalsuneet.dotsloader.loaders.PullInLoader;
@@ -26,20 +25,16 @@ import com.androidnetworking.interfaces.DownloadListener;
 import com.bumptech.glide.Glide;
 import com.facebook.common.util.Hex;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.plattysoft.leonids.ParticleSystem;
 import com.returno.tradeit.R;
 import com.returno.tradeit.activities.SingLeItemActivity;
-import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.DownloadCallBacks;
 import com.returno.tradeit.callbacks.FetchCallBacks;
 import com.returno.tradeit.local.DatabaseManager;
@@ -64,11 +59,11 @@ import java.util.UUID;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"unchecked", "ResultOfMethodCallIgnored"})
 public class ItemUtils {
     private static Item itemCopy;
     private static int counter = 0;
     private int count = 0;
-    private static Dialog dialog;
     static final String favoritesFile = "favorites.ser";
 
     //Creates
@@ -80,38 +75,35 @@ public class ItemUtils {
             file.mkdirs();
         }
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Item item : itemList) {
-                    String singleUrl = getSingleUrlFromString(item.getItemImage());
-                    Timber.e("singleUrl " + singleUrl);
-                    String urlToLoad = Urls.BASE_URL + singleUrl;
-                    AndroidNetworking.download(urlToLoad, Constants.IMAGE_STORAGE_DIR, getImageName(singleUrl))
-                            .setPriority(Priority.HIGH)
-                            .build()
-                            .startDownload(new DownloadListener() {
-                                @Override
-                                public void onDownloadComplete() {
-                                    String itemNewImageUri = Constants.IMAGE_STORAGE_DIR + "/" + getImageName(singleUrl);
-                                    itemNewImageUri = itemNewImageUri + "___" + item.getItemImage();
-                                    itemCopy = item;
-                                    itemCopy.setItemImage(itemNewImageUri);
-                                    DatabaseManager manager = new DatabaseManager(context).open();
-                                    manager.insertItems(itemCopy, itemCopy.getItemCategory());
-                                    counter++;
-                                    if (counter == size) {
-                                        callBacks.onComplete(null);
-                                    }
-
+        Thread thread = new Thread(() -> {
+            for (Item item : itemList) {
+                String singleUrl = getSingleUrlFromString(item.getItemImage());
+                Timber.e("singleUrl " + singleUrl);
+                String urlToLoad = Urls.BASE_URL + singleUrl;
+                AndroidNetworking.download(urlToLoad, Constants.IMAGE_STORAGE_DIR, getImageName(singleUrl))
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .startDownload(new DownloadListener() {
+                            @Override
+                            public void onDownloadComplete() {
+                                String itemNewImageUri = Constants.IMAGE_STORAGE_DIR + "/" + getImageName(singleUrl);
+                                itemNewImageUri = itemNewImageUri + "___" + item.getItemImage();
+                                itemCopy = item;
+                                itemCopy.setItemImage(itemNewImageUri);
+                                DatabaseManager manager = new DatabaseManager(context).open();
+                                manager.insertItems(itemCopy, itemCopy.getItemCategory());
+                                counter++;
+                                if (counter == size) {
+                                    callBacks.onComplete(null);
                                 }
 
-                                @Override
-                                public void onError(ANError anError) {
+                            }
 
-                                }
-                            });
-                }
+                            @Override
+                            public void onError(ANError anError) {
+
+                            }
+                        });
             }
         });
         thread.start();
@@ -171,17 +163,9 @@ public class ItemUtils {
                 newFile.createNewFile();
             }
 
-            reference.getFile(newFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+            reference.getFile(newFile).addOnSuccessListener(taskSnapshot -> {
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context, "One or more files not Downloaded", Toast.LENGTH_SHORT).show();
-                }
-            });
+            }).addOnFailureListener(e -> Toast.makeText(context, "One or more files not Downloaded", Toast.LENGTH_SHORT).show());
 
             return name;
         } catch (IOException e) {
@@ -396,24 +380,21 @@ Timber.e(imagesList.get(0));
                 .oneShot(view.findViewById(R.id.emiter), 100);
 
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(context, SingLeItemActivity.class);
-                intent.putExtra(Constants.POSTER_ID, userId);
-                intent.putExtra(Constants.ITEM_IMAGE, imageUrl);
-                intent.putExtra(Constants.ITEM_TITLE, itemTitle);
-                intent.putExtra(Constants.ITEM_DESCRIPTION, itemDesc);
-                intent.putExtra(Constants.ITEM_PRICE, itemPrice);
-                intent.putExtra(Constants.ITEM_ID, itemId);
-                intent.putExtra(Constants.ITEM_CATEGORY, category);
-                intent.putExtra(Constants.ITEM_TAG, itemTags);
-                intent.putExtra(Constants.MODE, mode);
-                context.startActivity(intent);
-                ((AppCompatActivity) context).finish();
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(context, SingLeItemActivity.class);
+            intent.putExtra(Constants.POSTER_ID, userId);
+            intent.putExtra(Constants.ITEM_IMAGE, imageUrl);
+            intent.putExtra(Constants.ITEM_TITLE, itemTitle);
+            intent.putExtra(Constants.ITEM_DESCRIPTION, itemDesc);
+            intent.putExtra(Constants.ITEM_PRICE, itemPrice);
+            intent.putExtra(Constants.ITEM_ID, itemId);
+            intent.putExtra(Constants.ITEM_CATEGORY, category);
+            intent.putExtra(Constants.ITEM_TAG, itemTags);
+            intent.putExtra(Constants.MODE, mode);
+            context.startActivity(intent);
+            ((AppCompatActivity) context).finish();
 
 
-            }
         }, 4000);
     }
     //</editor-fold>
@@ -487,21 +468,18 @@ Timber.e(imagesList.get(0));
         }
 
 
-        dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.show();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Fetch local items by Id">
     public void fetchLocalItemsById(Context context, String userId, FetchCallBacks callBacks) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DatabaseManager manager = new DatabaseManager(context).open();
-                List<Item> itemList = manager.getMyItems(userId);
-                manager.close();
-                callBacks.fetchComplete(itemList);
-            }
+        Thread thread = new Thread(() -> {
+            DatabaseManager manager = new DatabaseManager(context).open();
+            List<Item> itemList = manager.getMyItems(userId);
+            manager.close();
+            callBacks.fetchComplete(itemList);
         });
         thread.start();
 
@@ -510,43 +488,26 @@ Timber.e(imagesList.get(0));
 
     //<editor-fold defaultstate="collapsed" desc="Fetch favorites from local db">
     public void fetchFavoritesFromDb(Context context, FetchCallBacks callBacks) {
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<String> itemIds = getLastFavoritesList();
-                Timber.e(String.valueOf(itemIds.size()));
-                if (itemIds.isEmpty()){
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callBacks.fetchError("No favorites yet");
+        Thread thread=new Thread(() -> {
+            List<String> itemIds = getLastFavoritesList();
+            Timber.e(String.valueOf(itemIds.size()));
+            if (itemIds.isEmpty()){
+                ((AppCompatActivity)context).runOnUiThread(() -> callBacks.fetchError("No favorites yet"));
+             return;
+            }
+            DatabaseManager manager = new DatabaseManager(context).open();
+            List<Item> items = new ArrayList<>();
 
-                        }
-                    });
-                 return;
-                }
-                DatabaseManager manager = new DatabaseManager(context).open();
-                List<Item> items = new ArrayList<>();
-
-                for (String s : itemIds) {
-                    manager.getFavourites(s, new CompleteCallBacks() {
-                        @Override
-                        public void onComplete(Object... objects) {
-                            Item item = (Item) objects[0];
-                            Timber.e(item.getItemImage());
-                            items.add(item);
-                            count++;
-                            if (count == itemIds.size()) {
-                                ( (AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        callBacks.fetchComplete(items);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
+            for (String s : itemIds) {
+                manager.getFavourites(s, objects -> {
+                    Item item = (Item) objects[0];
+                    Timber.e(item.getItemImage());
+                    items.add(item);
+                    count++;
+                    if (count == itemIds.size()) {
+                        ((AppCompatActivity) context).runOnUiThread(() -> callBacks.fetchComplete(items));
+                    }
+                });
             }
         });
         thread.start();

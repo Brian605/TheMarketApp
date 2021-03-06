@@ -37,50 +37,47 @@ public class FirebaseUtils {
     }
 
     public void postAPushNotification(@NotNull Notification notification){
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
+        Thread thread=new Thread(() -> {
 
-                JSONObject payLoad=new JSONObject();
-                JSONObject notificationObject=new JSONObject();
-                try {
-                    payLoad.put("to","/topics/"+Constants.PRODUCTS_CHANNEL);
-                    notificationObject.put("title","New Product Posted");
-                    notificationObject.put("body",notification.getTitle()+" Ksh."+notification.getPrice());
-                    payLoad.put("notification",notificationObject);
+            JSONObject payLoad=new JSONObject();
+            JSONObject notificationObject=new JSONObject();
+            try {
+                payLoad.put("to","/topics/"+Constants.PRODUCTS_CHANNEL);
+                notificationObject.put("title","New Product Posted");
+                notificationObject.put("body",notification.getTitle()+" Ksh."+notification.getPrice());
+                payLoad.put("notification",notificationObject);
 
-                    getApiKey(new CompleteCallBacks(){
-                        @Override
-                        public void onComplete(Object... objects) {
+                getApiKey(new CompleteCallBacks(){
+                    @Override
+                    public void onComplete(Object... objects) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onStringData(String data) {
-                            AndroidNetworking.post(Urls.FCM_URL)
-                                    .setContentType("application/json; charset=utf-8")
-                                    .addJSONObjectBody(payLoad)
-                                    .addHeaders("Authorization",data)
-                                    .setPriority(Priority.HIGH)
-                                    .build()
-                                    .getAsJSONObject(new JSONObjectRequestListener() {
-                                        @Override
-                                        public void onResponse(JSONObject response) {
-                                            Timber.e(response.toString());
-                                        }
+                    @Override
+                    public void onStringData(String data) {
+                        AndroidNetworking.post(Urls.FCM_URL)
+                                .setContentType("application/json; charset=utf-8")
+                                .addJSONObjectBody(payLoad)
+                                .addHeaders("Authorization",data)
+                                .setPriority(Priority.HIGH)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        Timber.e(response.toString());
+                                    }
 
-                                        @Override
-                                        public void onError(ANError anError) {
-                                            Timber.e(anError.toString());
-                                        }
-                                    });
-                        }
-                    });
+                                    @Override
+                                    public void onError(ANError anError) {
+                                        Timber.e(anError.toString());
+                                    }
+                                });
+                    }
+                });
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
         thread.start();

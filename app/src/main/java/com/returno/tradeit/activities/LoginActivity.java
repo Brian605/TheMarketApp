@@ -15,11 +15,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +34,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("ConstantConditions")
 public class LoginActivity extends AppCompatActivity {
     private AppCompatEditText EmailEditText, PassWordEditText;
     private String email, password;
@@ -59,35 +53,29 @@ public class LoginActivity extends AppCompatActivity {
 
         requestPermissions();
         //Add event listeners
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        login.setOnClickListener(view -> {
 
-                email = EmailEditText.getText().toString().trim();
-                password = PassWordEditText.getText().toString().trim();
+            email = EmailEditText.getText().toString().trim();
+            password = PassWordEditText.getText().toString().trim();
 
-                if (isValidPassword(password)) {
-                    PassWordEditText.setError("Field cannot be blank");
-                    Tagger.forceFocus(PassWordEditText);
-                    return;
-                } else if (isValidEmail(email)) {
-                    EmailEditText.setError("Invalid email format");
-                    Tagger.forceFocus(EmailEditText);
-                    return;
-                }
-
-                LoginUser(email, password);
-
+            if (isValidPassword(password)) {
+                PassWordEditText.setError("Field cannot be blank");
+                Tagger.forceFocus(PassWordEditText);
+                return;
+            } else if (isValidEmail(email)) {
+                EmailEditText.setError("Invalid email format");
+                Tagger.forceFocus(EmailEditText);
+                return;
             }
+
+            LoginUser(email, password);
+
         });
 
         //Register
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        register.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
         reset.setClickable(true);
@@ -108,29 +96,23 @@ public class LoginActivity extends AppCompatActivity {
             final AppCompatEditText Em = view1.findViewById(R.id.ResetEmail);
 
             assert bt != null;
-            bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            bt.setOnClickListener(view22 -> {
 
-                    assert Em != null;
-                    String email = Em.getText().toString().trim();
-                    if (isValidEmail(email)) {
-                        Em.setError("This email format is invalid");
-                        return;
-                    }
-                    resetUserPass(email);
-
-
+                assert Em != null;
+                String email = Em.getText().toString().trim();
+                if (isValidEmail(email)) {
+                    Em.setError("This email format is invalid");
+                    return;
                 }
+                resetUserPass(email);
+
+
             });
 
             //assert cancel != null;
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                    dialog.dismiss();
-                }
+            cancel.setOnClickListener(view2 -> {
+                dialog.cancel();
+                dialog.dismiss();
             });
             dialog.show();
         });
@@ -179,59 +161,39 @@ token.continuePermissionRequest();
         dialog.show();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInWithEmailAndPassword(userName, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-               // Toast.makeText(LoginActivity.this, "Login Complete", Toast.LENGTH_LONG).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
+        auth.signInWithEmailAndPassword(userName, Pass).addOnCompleteListener(task -> {
+           // Toast.makeText(LoginActivity.this, "Login Complete", Toast.LENGTH_LONG).show();
+        }).addOnSuccessListener(authResult -> {
 
-                DatabaseReference reference= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USERS_DIR).child(authResult.getUser().getUid());
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    final String  Username=snapshot.child(Constants.USER_NAME).getValue().toString();
-                    final String phone=snapshot.child(Constants.USER_PHONE).getValue().toString();
+            DatabaseReference reference= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USERS_DIR).child(authResult.getUser().getUid());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final String  Username=snapshot.child(Constants.USER_NAME).getValue().toString();
+                final String phone=snapshot.child(Constants.USER_PHONE).getValue().toString();
 
-                        dialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        setResult(100);
-                    }
+                    dialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    setResult(100);
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                }
+            });
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-                Toast.makeText(LoginActivity.this, "Cannot Login " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
+        }).addOnFailureListener(e -> {
+            dialog.dismiss();
+            Toast.makeText(LoginActivity.this, "Cannot Login " + e.getMessage(), Toast.LENGTH_LONG).show();
         });
     }
 
     private void resetUserPass(final String s) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.sendPasswordResetEmail(s).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(LoginActivity.this, "A password reset email was sent to " + s, Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @SuppressWarnings("StringOperationCanBeSimplified")
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, "Failed to generate reset email " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
+        auth.sendPasswordResetEmail(s).addOnSuccessListener(aVoid -> Toast.makeText(LoginActivity.this, "A password reset email was sent to " + s, Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Failed to generate reset email " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
     @Override

@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:id="@+id/toolbar"
-                android:background="@color/loginheader"
+                android:background="@color/login_header"
                 app:title="Requests"
                 app:titleTextColor="@color/whiteTransparent"
                 app:subtitleTextColor="@color/whiteTransparent"

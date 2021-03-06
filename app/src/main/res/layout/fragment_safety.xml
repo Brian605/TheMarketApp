@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        android:textColor="@color/loginheader"
+        android:textColor="@color/login_header"
         android:text="@string/safety_first"
         android:layout_margin="10dp"
         android:id="@+id/text"
@@ -24,7 +24,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:divider="@color/loginheader"
+        android:divider="@color/login_header"
         android:dividerHeight="3dp"
         android:layout_marginBottom="50dp"/>
     <androidx.coordinatorlayout.widget.CoordinatorLayout

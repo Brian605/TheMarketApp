@@ -5,7 +5,7 @@
     <string name="sign_in">Sign In</string>
     <string name="register">Register</string>
     <string name="forgot_password_click_here_to_reset">Forgot Password? Click here to reset</string>
-    <string name="tradeit_register">Welcome to the Market</string>
+    <string name="the_market_register">Welcome to the Market</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="log_in">Log In</string>
     <string name="user_mail">User Email</string>
@@ -27,7 +27,7 @@
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
     <string name="shoes_and_footwear">Shoes and Footwear</string>
-    <string name="clothes_and_bodywear">Clothes and Bodywear</string>
+    <string name="clothes_and_body_wear">Clothes and Bodywear</string>
     <string name="a_wide_range_of_products">A wide Range of Products</string>
     <string name="phones">Phones and Electronics</string>
     <string name="item">Item</string>

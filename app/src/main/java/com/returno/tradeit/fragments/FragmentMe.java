@@ -3,7 +3,6 @@ package com.returno.tradeit.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,18 +79,15 @@ private String currentUserId;
             // Log.wtf("1","2");
             String[] items = new String[]{"Share", "View more"};
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setItems(items, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (which == 0) {
-                        dialog.dismiss();
-                        TextView categView=view1.findViewById(R.id.itemCategory);
-                        ItemUtils.share(view1,getActivity(),categView.getText().toString());
-                    } else if (which == 1) {
-                        TextView categView=view1.findViewById(R.id.itemCategory);
-                        ItemUtils.goToSingleView(view1,getActivity(),categView.getText().toString(),Constants.MODE_LOCAL);
-                        dialog.dismiss();
-                    }
+            builder.setItems(items, (dialog, which) -> {
+                if (which == 0) {
+                    dialog.dismiss();
+                    TextView categView=view1.findViewById(R.id.itemCategory);
+                    ItemUtils.share(view1,getActivity(),categView.getText().toString());
+                } else if (which == 1) {
+                    TextView categView=view1.findViewById(R.id.itemCategory);
+                    ItemUtils.goToSingleView(view1,getActivity(),categView.getText().toString(),Constants.MODE_LOCAL);
+                    dialog.dismiss();
                 }
             });
             Dialog dialog = builder.create();
@@ -110,12 +106,7 @@ fetchMyData();
          public void fetchComplete(List<Item> itemsList) {
              itemList.clear();
              itemList.addAll(itemsList);
-             getActivity().runOnUiThread(new Runnable() {
-                 @Override
-                 public void run() {
-                     myItemsAdapter.notifyDataSetChanged();
-                 }
-             });
+             getActivity().runOnUiThread(() -> myItemsAdapter.notifyDataSetChanged());
 
          }
 
@@ -142,11 +133,6 @@ fetchMyData();
         itemList.clear();
         fetchMyData();
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

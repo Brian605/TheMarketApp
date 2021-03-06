@@ -77,7 +77,6 @@ public class FavoritesFragment extends Fragment {
            @Override
            public void fetchError(String message) {
                textView.setVisibility(View.VISIBLE);
-               return;
            }
        });
 

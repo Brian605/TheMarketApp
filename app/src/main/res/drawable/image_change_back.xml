@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid
-        android:color="@color/colorwhite"/>
+        android:color="@color/color_white"/>
     <corners
         android:topRightRadius="15dp"
         android:bottomLeftRadius="15dp"/>
     <stroke
-        android:color="@color/loginheader"
+        android:color="@color/login_header"
         android:width="0.1dp"/>
 
 </shape>

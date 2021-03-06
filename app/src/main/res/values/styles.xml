@@ -3,14 +3,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/loginheader</item>
+        <item name="colorPrimary">@color/login_header</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="ShowCaseGreen" parent="ShowcaseView.Light">
         <item name="sv_backgroundColor">@color/greenMidTransparent</item>
-        <item name="sv_showcaseColor">@color/loginheader</item>
+        <item name="sv_showcaseColor">@color/login_header</item>
         <item name="sv_titleTextAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
         <item name="sv_titleTextColor">@color/whiteTransparent</item>
         <item name="sv_detailTextColor">@color/colorPrimaryDark</item>
@@ -20,23 +20,31 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="CalendarTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/loginheader</item>
+        <item name="colorAccent">@color/login_header</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="RatingBar" parent="AppTheme">
         <item name="colorControlNormal">@color/colorPrimary</item>
-        <item name="colorControlActivated">@color/loginheader</item>
+        <item name="colorControlActivated">@color/login_header</item>
 
     </style>
-
+<style name="TransparentDialog" parent="Theme.AppCompat.Light.Dialog">
+    <item name="background">@color/white_full_transparent</item>
+    <item name="android:background">@color/white_full_transparent</item>
+</style>
     <style name="InputOutlineStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/loginheader</item>
+        <item name="boxStrokeColor">@color/login_header</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
 
     <style name="RatingBarStyle" parent="Widget.AppCompat.RatingBar.Small">
-        <item name="colorControlNormal">@color/colorwhite</item>
-        <item name="colorControlActivated">@color/loginheader</item>
-       <item name="colorControlHighlight">@color/loginheader</item>
+        <item name="colorControlNormal">@color/color_white</item>
+        <item name="colorControlActivated">@color/login_header</item>
+       <item name="colorControlHighlight">@color/login_header</item>
+    </style>
+
+    <style name="ZoomingDialogAnims">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
 </resources>

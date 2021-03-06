@@ -1,8 +1,11 @@
 package com.returno.tradeit.models;
 
 public class User {
-private String userId,userName,phoneNumber,location;
-private float userRating;
+private final String userId;
+    private final String userName;
+    private final String phoneNumber;
+    private final String location;
+private final float userRating;
 private String userStatus;
 
     public User(String userId, String userName, String phoneNumber, String location, float userRating) {

@@ -6,7 +6,7 @@
     android:id="@+id/tagText"
     android:gravity="center"
     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorwhite"
+    android:textColor="@color/color_white"
     android:fontFamily="@font/inconsolataexpandedbold"
     android:padding="3dp"
     android:layout_margin="3dp"

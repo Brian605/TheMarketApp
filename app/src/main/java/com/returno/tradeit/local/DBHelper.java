@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     static final String USERS_TABLE="TABLE_USERS";
 
-    private static int DB_VERSION=2;
+    private static final int DB_VERSION=2;
 
 
     DBHelper(Context context){

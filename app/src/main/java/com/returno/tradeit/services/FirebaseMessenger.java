@@ -34,7 +34,7 @@ public class FirebaseMessenger extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setContentTitle(notiTitle)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setColor(getResources().getColor(R.color.loginheader))
+                .setColor(getResources().getColor(R.color.login_header))
                 .setLargeIcon(icon)
                 .setContentText(notiBody)
                 .setContentInfo("The Market Goods. Click to view");

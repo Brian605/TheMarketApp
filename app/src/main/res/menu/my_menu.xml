@@ -7,6 +7,6 @@
         android:enabled="true"
         android:icon="@drawable/ic_account_circle"
         app:showAsAction="ifRoom"
-        app:iconTint="@color/colorwhite"
+        app:iconTint="@color/color_white"
         android:title="@string/my_profile"/>
 </menu>

@@ -29,21 +29,20 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+@SuppressWarnings("unchecked")
 public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ViewHolder>  implements Filterable {
 
 private Context context;
 private ArrayList<Item> list,filterList;
 private RecyclerCallBacks listener;
-private boolean isFav;
 
-public ItemRecyclerAdapter(){ }
+    public ItemRecyclerAdapter(){ }
 
 public ItemRecyclerAdapter(boolean isFav, Context context, ArrayList<Item> list, RecyclerCallBacks listener){
     this.context=context;
     this.list=list;
     this.listener=listener;
     this.filterList=list;
-    this.isFav=isFav;
 }
 
     @NonNull
@@ -52,19 +51,10 @@ public ItemRecyclerAdapter(boolean isFav, Context context, ArrayList<Item> list,
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.items_recycler_item,parent,false);
         final ViewHolder viewHolder= new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view,viewHolder.getAdapterPosition());
-            }
-
-        });
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listener.onLongClick(v,viewHolder.getAdapterPosition());
-                return true;
-            }
+        view.setOnClickListener(view1 -> listener.onItemClick(view1,viewHolder.getAdapterPosition()));
+        view.setOnLongClickListener(v -> {
+            listener.onLongClick(v,viewHolder.getAdapterPosition());
+            return true;
         });
         return viewHolder;
     }
@@ -87,50 +77,33 @@ holder.categoryView.setText(item.getItemCategory());
             holder.counterView.setVisibility(View.VISIBLE);
             int extra=ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(item.getItemImage())).size();
             holder.counterView.setText(String.format(Locale.getDefault(),"+%d", extra));
-            Thread thread=new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            RotateAnimation rotateAnimation=new RotateAnimation(0,180, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-                            rotateAnimation.setDuration(1000);
-                            rotateAnimation.setRepeatCount(Animation.INFINITE);
-                            //rotateAnimation.setInterpolator(new LinearInterpolator());
-                            holder. counterView.startAnimation(rotateAnimation);
-                        }
-                    });
-
-                }
-            });
+            Thread thread=new Thread(() -> ((AppCompatActivity)context).runOnUiThread(() -> {
+                RotateAnimation rotateAnimation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotateAnimation.setDuration(1000);
+                rotateAnimation.setRepeatCount(Animation.INFINITE);
+                //rotateAnimation.setInterpolator(new LinearInterpolator());
+                holder.counterView.startAnimation(rotateAnimation);
+            }));
             thread.start();
-holder.counterView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-ItemUtils.showMultipleImages(ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(item.getItemImage())),context);
-    }
-});
+holder.counterView.setOnClickListener(v -> ItemUtils.showMultipleImages(ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(item.getItemImage())),context));
         }
 
 if (ItemUtils.isItemInFavorites(item.getItemId())){
     holder.favView.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite));
 }
 
-holder.favView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (ItemUtils.isItemInFavorites(item.getItemId())){
-            ItemUtils.removeFromFavorites(item.getItemId());
-            holder.favView.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border));
-            Toast.makeText(context,"Removed From Wish list",Toast.LENGTH_LONG).show();
-           notifyItemChanged(position);
-            return;
+holder.favView.setOnClickListener(v -> {
+    if (ItemUtils.isItemInFavorites(item.getItemId())){
+        ItemUtils.removeFromFavorites(item.getItemId());
+        holder.favView.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border));
+        Toast.makeText(context,"Removed From Wish list",Toast.LENGTH_LONG).show();
+       notifyItemChanged(position);
+        return;
 
-        }
-        ItemUtils.addToFavorites(item.getItemId());
-        notifyItemChanged(position);
-        Toast.makeText(context,"Added to Wish list",Toast.LENGTH_LONG).show();
     }
+    ItemUtils.addToFavorites(item.getItemId());
+    notifyItemChanged(position);
+    Toast.makeText(context,"Added to Wish list",Toast.LENGTH_LONG).show();
 });
 
     }
@@ -185,9 +158,18 @@ holder.favView.setOnClickListener(new View.OnClickListener() {
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-TextView itemName,itemDescription,itemPrice,imageurl,itemPosterId,itemDbId,itemId,tagsView,counterView,categoryView;
-ImageView favView;
-SimpleDraweeView imageView;
+final TextView itemName;
+        final TextView itemDescription;
+        final TextView itemPrice;
+        final TextView imageurl;
+        final TextView itemPosterId;
+        TextView itemDbId;
+        final TextView itemId;
+        final TextView tagsView;
+        final TextView counterView;
+        final TextView categoryView;
+final ImageView favView;
+final SimpleDraweeView imageView;
 
 ViewHolder(View itemview){
     super(itemview);

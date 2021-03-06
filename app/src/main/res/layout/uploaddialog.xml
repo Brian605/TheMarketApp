@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:alliance_drawOnlyStroke="true"
-        app:alliance_firstDotsColor="@color/loginheader"
+        app:alliance_firstDotsColor="@color/login_header"
         app:alliance_secondDotsColor="@color/colorPrimary"
         app:alliance_thirdDotsColor="@color/black"
         app:alliance_dotsRadius="15dp"

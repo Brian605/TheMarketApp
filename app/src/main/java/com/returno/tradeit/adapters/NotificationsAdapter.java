@@ -31,11 +31,8 @@ public NotificationsAdapter( List<String> list){
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_item,parent,false);
         final ViewHolder viewHolder=new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // listener.itemclick(view,viewHolder.getAdapterPosition());
-            }
+        view.setOnClickListener(view1 -> {
+           // listener.itemclick(view,viewHolder.getAdapterPosition());
         });
         return viewHolder;
     }
@@ -57,8 +54,9 @@ params.leftMargin=10;
 
    static class ViewHolder extends RecyclerView.ViewHolder{
 
-TextView messageView,dateView;
-LinearLayout linearLayout;
+final TextView messageView;
+       final TextView dateView;
+final LinearLayout linearLayout;
 
 
 ViewHolder(View itemview){

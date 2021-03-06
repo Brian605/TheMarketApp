@@ -12,7 +12,7 @@
         app:alliance_dotsRadius="10dp"
         app:alliance_thirdDotsColor="@color/colorPrimary"
         app:alliance_secondDotsColor="@color/black"
-        app:alliance_firstDotsColor="@color/loginheader"
+        app:alliance_firstDotsColor="@color/login_header"
         android:layout_margin="5dp"
         app:alliance_drawOnlyStroke="true"/>
 

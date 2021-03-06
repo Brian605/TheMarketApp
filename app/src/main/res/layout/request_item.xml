@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="@string/user_name"
         android:layout_margin="5dp"
-        android:textColor="@color/loginheader"
+        android:textColor="@color/login_header"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/username"/>

@@ -87,37 +87,31 @@ callBacks.onError(anError.getMessage());
 
     //<editor-fold defaultstate="collapsed" desc="Get the number of category items online">
     public void getOnlineItemsCount(String category, CounterCallBacks counterCallBacks){
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AndroidNetworking.post(Urls.ITEM_COUNT_URL)
-                        .addBodyParameter(Constants.ITEM_CATEGORY,category)
-                        .setPriority(Priority.HIGH)
-                        .build()
-                        .getAsString(new StringRequestListener() {
-                            @Override
-                            public void onResponse(String response) {
-                                Timber.e(response);
-                                try {
-                                    if (Integer.parseInt(response)>0){
-                                        counterCallBacks.counterResult(Integer.parseInt(response));
-                                    }else {
-                                        counterCallBacks.noData();
-                                    }
-                                }catch (NumberFormatException e){
-                                    counterCallBacks.onError(e.getMessage());
-                                }
-
+        Thread thread=new Thread(() -> AndroidNetworking.post(Urls.ITEM_COUNT_URL)
+                .addBodyParameter(Constants.ITEM_CATEGORY,category)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Timber.e(response);
+                        try {
+                            if (Integer.parseInt(response)>0){
+                                counterCallBacks.counterResult(Integer.parseInt(response));
+                            }else {
+                                counterCallBacks.noData();
                             }
+                        }catch (NumberFormatException e){
+                            counterCallBacks.onError(e.getMessage());
+                        }
 
-                            @Override
-                            public void onError(ANError anError) {
-                                counterCallBacks.onError(anError.getMessage());
-                            }
-                        });
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(ANError anError) {
+                        counterCallBacks.onError(anError.getMessage());
+                    }
+                }));
         thread.start();
 
     }
@@ -237,38 +231,33 @@ fetchCallBacks.fetchError(anError.getMessage());
 
     //<editor-fold defaultstate="collapsed" desc="Get requests from database">
     public void fetchRequests(CompleteCallBacks listener){
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AndroidNetworking.post(Urls.FETCH_REQUEST_URL)
-                        .build()
-                        .getAsJSONArray(new JSONArrayRequestListener() {
-                            @Override
-                            public void onResponse(JSONArray response) {
+        Thread thread=new Thread(() -> AndroidNetworking.post(Urls.FETCH_REQUEST_URL)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
 try{
-    List<Request>requests=new ArrayList<>();
+List<Request>requests=new ArrayList<>();
 for (int i=0;i<response.length();i++) {
-    JSONObject object = response.getJSONObject(i);
-    String userId=object.getString(Constants.USER_ID);
-    String userName=object.getString(Constants.USER_NAME);
-    String userPhone=object.getString(Constants.USER_PHONE);
-    String requestItem=object.getString(Constants.ITEM_TITLE);
-    String requestId=object.getString(Constants.ITEM_ID);
- requests.add(new Request(userName,userPhone,requestItem,userId,requestId));
+JSONObject object = response.getJSONObject(i);
+String userId=object.getString(Constants.USER_ID);
+String userName=object.getString(Constants.USER_NAME);
+String userPhone=object.getString(Constants.USER_PHONE);
+String requestItem=object.getString(Constants.ITEM_TITLE);
+String requestId=object.getString(Constants.ITEM_ID);
+requests.add(new Request(userName,userPhone,requestItem,userId,requestId));
 }
 listener.onComplete(requests);
 }catch (JSONException e){
-    onError(new ANError(e.getMessage()));
+onError(new ANError(e.getMessage()));
 }
-                            }
+                    }
 
-                            @Override
-                            public void onError(ANError anError) {
+                    @Override
+                    public void onError(ANError anError) {
 listener.onFailure(anError.getMessage());
-                            }
-                        });
-            }
-        });
+                    }
+                }));
         thread.start();
 
     }
@@ -276,33 +265,28 @@ listener.onFailure(anError.getMessage());
 
     //<editor-fold defaultstate="collapsed" desc="Post an item request to the database">
     public void postRequest(Request request,UploadCallBacks callBacks){
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AndroidNetworking.post(Urls.POST_REQUEST_URL)
-                        .addBodyParameter(Constants.ITEM_ID,request.getRequestId())
-                        .addBodyParameter(Constants.ITEM_TITLE,request.getRequestItem())
-                        .addBodyParameter(Constants.USER_NAME,request.getUserName())
-                        .addBodyParameter(Constants.USER_ID,request.getUserId())
-                        .addBodyParameter(Constants.USER_PHONE,request.getUserPhone())
-                        .build()
-                        .getAsString(new StringRequestListener() {
-                            @Override
-                            public void onResponse(String response) {
-                                if (response.equals("success")){
-                                    callBacks.onUploadSuccess();
-                                }else {
-                                    onError(new ANError(response));
-                                }
-                            }
+        Thread thread=new Thread(() -> AndroidNetworking.post(Urls.POST_REQUEST_URL)
+                .addBodyParameter(Constants.ITEM_ID,request.getRequestId())
+                .addBodyParameter(Constants.ITEM_TITLE,request.getRequestItem())
+                .addBodyParameter(Constants.USER_NAME,request.getUserName())
+                .addBodyParameter(Constants.USER_ID,request.getUserId())
+                .addBodyParameter(Constants.USER_PHONE,request.getUserPhone())
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("success")){
+                            callBacks.onUploadSuccess();
+                        }else {
+                            onError(new ANError(response));
+                        }
+                    }
 
-                            @Override
-                            public void onError(ANError anError) {
+                    @Override
+                    public void onError(ANError anError) {
 callBacks.onError(anError.getMessage());
-                            }
-                        });
-            }
-        });
+                    }
+                }));
         thread.start();
 
     }
@@ -310,34 +294,28 @@ callBacks.onError(anError.getMessage());
 
     //<editor-fold defaultstate="collapsed" desc="Delete a Request from database">
     public synchronized void deleteRequest(String id, DeleteCallBacks listener){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-               AndroidNetworking.post(Urls.DELETE_REQUEST_URL)
-                       .addBodyParameter(Constants.ITEM_ID,id)
-                       .build()
-                       .getAsString(new StringRequestListener() {
-                           @Override
-                           public void onResponse(String response) {
-                               if (response.equals("Deleted")){
-                                   listener.onDelete();
-                                   return;
-                               }
-                               if (response.isEmpty()){
-                                   response="An error occurred while processing";
-                               }
-                               onError(new ANError(response));
+        new Thread(() -> AndroidNetworking.post(Urls.DELETE_REQUEST_URL)
+                .addBodyParameter(Constants.ITEM_ID,id)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("Deleted")){
+                            listener.onDelete();
+                            return;
+                        }
+                        if (response.isEmpty()){
+                            response="An error occurred while processing";
+                        }
+                        onError(new ANError(response));
 
-                           }
+                    }
 
-                           @Override
-                           public void onError(ANError anError) {
+                    @Override
+                    public void onError(ANError anError) {
 listener.onError(anError.getLocalizedMessage());
-                           }
-                       });
-
-            }
-        }).start();
+                    }
+                })).start();
     }
     //</editor-fold>
 }

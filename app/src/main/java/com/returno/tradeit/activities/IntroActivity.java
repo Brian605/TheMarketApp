@@ -11,12 +11,11 @@ import com.returno.tradeit.R;
 import com.returno.tradeit.fragments.FragmentWelcome;
 
 public class IntroActivity extends AppCompatActivity {
-private LinearLayout rootLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        rootLayout=findViewById(R.id.fragmentLayouts);
+        LinearLayout rootLayout = findViewById(R.id.fragmentLayouts);
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.replace(R.id.fragmentLayouts, new FragmentWelcome()).commit();

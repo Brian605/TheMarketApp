@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/loginheader"
+            android:background="@color/login_header"
             android:id="@+id/toolbar">
             <TextView
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorwhite"
+        android:background="@color/color_white"
         android:orientation="vertical">
     
     <RelativeLayout
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="@string/hello_there"
             android:padding="5dp"
-            android:textColor="@color/loginheader"
+            android:textColor="@color/login_header"
             android:fontFamily="@font/inconsolata"
             android:id="@+id/userprev"
             android:layout_marginStart="10dp"
@@ -103,7 +103,7 @@
             android:layout_below="@+id/username"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
-            android:id="@+id/whatsapp"/>
+            android:id="@+id/whatsApp"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -142,7 +142,7 @@
             android:id="@+id/phoneprev"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:textColor="@color/loginheader"
+            android:textColor="@color/login_header"
             android:fontFamily="@font/benardmtcondensed"
            />
         <TextView
@@ -176,7 +176,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="10dp"
             android:id="@+id/locationprev"
-            android:textColor="@color/loginheader"
+            android:textColor="@color/login_header"
             android:fontFamily="@font/benardmtcondensed"
            />
         <TextView
@@ -205,7 +205,7 @@
             app:drawableStartCompat="@drawable/ic_star_outline"
             android:layout_marginTop="20dp"
             android:padding="5dp"
-            android:textColor="@color/loginheader"
+            android:textColor="@color/login_header"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"

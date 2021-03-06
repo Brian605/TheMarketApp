@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
     android:title="@string/change_location"
-    app:iconTint="@color/loginheader"
+    app:iconTint="@color/login_header"
     android:icon="@drawable/ic_edit_location"
     android:id="@+id/location"/>
 
@@ -11,11 +11,11 @@
         android:title="@string/change_profile_picture"
         android:id="@+id/profilechange"
         android:icon="@drawable/ic_account_circle"
-        app:iconTint="@color/loginheader"/>
+        app:iconTint="@color/login_header"/>
 
     <item
         android:title="@string/my_messages"
         android:id="@+id/messages"
         android:icon="@drawable/ic_message"
-        app:iconTint="@color/loginheader"/>
+        app:iconTint="@color/login_header"/>
 </menu>

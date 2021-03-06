@@ -11,10 +11,10 @@ import com.returno.tradeit.fragments.FragmentNotice;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    int totalTabs;
+    final int totalTabs;
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int totalTabs) {
-        super(fm);
+        super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.totalTabs=totalTabs;
     }
 

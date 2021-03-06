@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/loginheader"
+        android:background="@color/login_header"
         android:id="@+id/toolbar"
         app:elevation="6dp"
-        app:titleTextColor="@color/colorwhite"
+        app:titleTextColor="@color/color_white"
         app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:minHeight="?attr/actionBarSize"
        />
@@ -20,12 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:id="@+id/tablayout"
+        android:id="@+id/tabLayout"
         app:elevation="6dp"
-        app:tabIndicatorColor="@color/colorwhite"
+        app:tabIndicatorColor="@color/color_white"
         app:tabIndicatorHeight="5dp"
         android:minHeight="?attr/actionBarSize"
-        android:background="@color/loginheader"
+        android:background="@color/login_header"
         app:tabSelectedTextColor="@color/black"
         app:tabTextColor="@color/whiteTransparent"
         app:tabIconTint="@color/whiteTransparent"
@@ -33,7 +31,7 @@
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/tablayout"
+        android:layout_below="@+id/tabLayout"
         android:id="@+id/viewpager"/>
 
 </RelativeLayout>

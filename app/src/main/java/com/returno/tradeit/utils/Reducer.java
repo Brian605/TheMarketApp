@@ -14,6 +14,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class Reducer {
 
     private static String path=null;

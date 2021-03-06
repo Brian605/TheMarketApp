@@ -15,8 +15,8 @@ import com.returno.tradeit.utils.Tagger;
 import java.util.List;
 
 public class TagAdapter extends RecyclerView.Adapter<TagAdapter.TagHolder> {
-    private Context context;
-   private List<String> tagList;
+    private final Context context;
+   private final List<String> tagList;
 
     public TagAdapter(Context context, List<String> tagList) {
         this.context = context;
@@ -27,7 +27,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.TagHolder> {
     @Override
     public TagHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        return new TagHolder(LayoutInflater.from(context).inflate(R.layout.tag,parent,false));
+        return new TagHolder(LayoutInflater.from(context).inflate(R.layout.tag, parent, false));
     }
 
     @Override
@@ -49,8 +49,8 @@ holder.textView.setBackground(context.getResources().getDrawable(id));
         return tagList.size();
     }
 
-    public class TagHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+    public static class TagHolder extends RecyclerView.ViewHolder {
+        final TextView textView;
         public TagHolder(@NonNull View itemView) {
             super(itemView);
             textView=itemView.findViewById(R.id.tagText);

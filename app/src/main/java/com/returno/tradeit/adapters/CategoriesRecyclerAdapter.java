@@ -19,9 +19,9 @@ import java.util.List;
 
 public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRecyclerAdapter.ViewHolder> {
 
-private Context context;
-private List<CategoryItem> list;
-private RecyclerCallBacks listener;
+private final Context context;
+private final List<CategoryItem> list;
+private final RecyclerCallBacks listener;
 
     public CategoriesRecyclerAdapter(Context context, List<CategoryItem> list, RecyclerCallBacks listener){
     this.context=context;
@@ -35,12 +35,7 @@ private RecyclerCallBacks listener;
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.category_recycler_item,parent,false);
         final ViewHolder viewHolder= new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view,viewHolder.getAdapterPosition());
-            }
-        });
+        view.setOnClickListener(view1 -> listener.onItemClick(view1,viewHolder.getAdapterPosition()));
         return new ViewHolder(view);
     }
 
@@ -60,15 +55,16 @@ Glide.with(context).load(categoryItem.getPost_url()).into(holder.imageView);
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-TextView categoryName,categoryId;
-ImageView imageView;
+final TextView categoryName;
+        final TextView categoryId;
+final ImageView imageView;
 
-ViewHolder(View itemview){
-    super(itemview);
+ViewHolder(View itemView){
+    super(itemView);
 
-    categoryName=itemview.findViewById(R.id.categ);
-    categoryId=itemview.findViewById(R.id.desc);
-    imageView=itemview.findViewById(R.id.categImg);
+    categoryName=itemView.findViewById(R.id.categ);
+    categoryId=itemView.findViewById(R.id.desc);
+    imageView=itemView.findViewById(R.id.categoryImage);
 }
 
 

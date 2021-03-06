@@ -21,7 +21,7 @@
             app:pullin_bigCircleRadius="30dp"
             app:pullin_dotsRadius="7dp"
             android:layout_gravity="center"
-            app:pullin_dotsColor="@color/loginheader"
+            app:pullin_dotsColor="@color/login_header"
             android:id="@+id/dotLoader"/>
     </LinearLayout>
 

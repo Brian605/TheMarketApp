@@ -39,12 +39,12 @@ public class Tagger {
        int id=random.nextInt(4);
 
        switch (id){
-           case 0:return R.color.loginheader;
+           case 0:return R.color.login_header;
            case 1:return R.color.colorPrimary;
            case 2:return R.color.colorPrimaryDark;
            case 3:return R.color.colorAccent;
            case 4:return R.color.purple;
-           default:return R.color.cardview_dark;
+           default:return R.color.card_view_dark;
        }
    }
    public float getRating(float total){

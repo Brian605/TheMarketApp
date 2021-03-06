@@ -54,7 +54,6 @@ import com.returno.tradeit.adapters.MoreItemsRecyclerAdapter;
 import com.returno.tradeit.adapters.TagAdapter;
 import com.returno.tradeit.callbacks.DeleteCallBacks;
 import com.returno.tradeit.callbacks.FetchCallBacks;
-import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.DatabaseManager;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.Item;
@@ -117,7 +116,7 @@ private List<Item> itemList;
         tagList=new ArrayList<>();
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
-        Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(getResources().getColor(R.color.colorwhite), PorterDuff.Mode.SRC_ATOP);
+        Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_ATOP);
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.nav_view);
 
@@ -163,7 +162,7 @@ showTutorial();
         if (currentUser.equals(posterId)){
             bottomNavigationView.findViewById(R.id.call).setVisibility(View.GONE);
             bottomNavigationView.findViewById(R.id.message).setVisibility(View.GONE);
-            bottomNavigationView.findViewById(R.id.whatsapp).setVisibility(View.GONE);
+            bottomNavigationView.findViewById(R.id.whatsApp).setVisibility(View.GONE);
         }
 
        final DatabaseReference reference= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USERS_DIR).child(posterId);
@@ -174,12 +173,7 @@ showTutorial();
                     Username= Objects.requireNonNull(dataSnapshot.child(Constants.USER_NAME).getValue()).toString();
                     UserPhone= Objects.requireNonNull(dataSnapshot.child(Constants.USER_PHONE).getValue()).toString();
                     posterNameView.setText(getResources().getString(R.string.posted_by_notation,Username));
-                    posterNameView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            viewUser(Username);
-                        }
-                    });
+                    posterNameView.setOnClickListener(v -> viewUser(Username));
 
 
                 }catch (Exception e){
@@ -201,32 +195,29 @@ reference.removeEventListener(listener);
        reference.addListenerForSingleValueEvent(listener);
 
       // bottomNavigationView.set
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-          int i=menuItem.getItemId();
-          if(i==R.id.call){
-         Commons.getInstance().callUser(SingLeItemActivity.this,UserPhone) ;
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+      int i=menuItem.getItemId();
+      if(i==R.id.call){
+     Commons.getInstance().callUser(SingLeItemActivity.this,UserPhone) ;
 
-          }else
-              if(i==R.id.Delete){
-                  deleteItem();
-              }
-          else
-              if (i==R.id.message){
-                  buyItem();
-              }
-           else
-               if (i==R.id.whatsapp){
-                   try {
-                       Commons.getInstance().openWhatsApp(SingLeItemActivity.this,UserPhone);
-                   } catch (UnsupportedEncodingException e) {
-                       e.printStackTrace();
-                   }
+      }else
+          if(i==R.id.Delete){
+              deleteItem();
+          }
+      else
+          if (i==R.id.message){
+              buyItem();
+          }
+       else
+           if (i==R.id.whatsApp){
+               try {
+                   Commons.getInstance().openWhatsApp(SingLeItemActivity.this,UserPhone);
+               } catch (UnsupportedEncodingException e) {
+                   e.printStackTrace();
                }
+           }
 
-                return false;
-            }
+            return false;
         });
     }
 
@@ -273,23 +264,15 @@ reference.removeEventListener(listener);
             counterView.setVisibility(View.VISIBLE);
             int extra=ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(imageUrisVar)).size();
             counterView.setText(String.format(Locale.getDefault(),"+%d", extra));
-            Thread thread=new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    RotateAnimation rotateAnimation=new RotateAnimation(0,180, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-                    rotateAnimation.setDuration(1000);
-                    rotateAnimation.setRepeatCount(Animation.INFINITE);
-                    //rotateAnimation.setInterpolator(new LinearInterpolator());
-                    counterView.startAnimation(rotateAnimation);
-                }
+            Thread thread=new Thread(() -> {
+                RotateAnimation rotateAnimation=new RotateAnimation(0,180, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+                rotateAnimation.setDuration(1000);
+                rotateAnimation.setRepeatCount(Animation.INFINITE);
+                //rotateAnimation.setInterpolator(new LinearInterpolator());
+                counterView.startAnimation(rotateAnimation);
             });
             thread.start();
-            counterView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ItemUtils.showMultipleImages(ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(imageUrisVar)),SingLeItemActivity.this);
-                }
-            });
+            counterView.setOnClickListener(v -> ItemUtils.showMultipleImages(ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(imageUrisVar)),SingLeItemActivity.this));
 
         }
     }
@@ -324,23 +307,15 @@ reference.removeEventListener(listener);
         buy=view.findViewById(R.id.send);
         cancel=view.findViewById(R.id.cancel);
 
-        buy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String sms= Objects.requireNonNull(mess.getText()).toString();
+        buy.setOnClickListener(view12 -> {
+            String sms= Objects.requireNonNull(mess.getText()).toString();
 
-                if (!TextUtils.isEmpty(sms)){
-                    Commons.getInstance().sendMessage(sms,UserPhone,SingLeItemActivity.this);}
+            if (!TextUtils.isEmpty(sms)){
+                Commons.getInstance().sendMessage(sms,UserPhone,SingLeItemActivity.this);}
 
-            }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        cancel.setOnClickListener(view1 -> dialog.dismiss());
 
         dialog.show();
     }
@@ -351,7 +326,7 @@ reference.removeEventListener(listener);
         sentStatus=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-         String s="An Error Occured" ;
+         String s;
          switch (getResultCode()){
              case Activity
                   .RESULT_OK  :s="Message Sent" ;
@@ -362,7 +337,7 @@ reference.removeEventListener(listener);
                  default:s="Sms Not Sent";
                  break;
          }
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show(); ;
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
 
             }
         };
@@ -370,7 +345,7 @@ reference.removeEventListener(listener);
         deleveredStatus=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String s="An Error Occured" ;
+                String s;
                 switch (getResultCode()){
                     case Activity
                             .RESULT_OK  :s="Message Sent" ;
@@ -452,7 +427,7 @@ reference.removeEventListener(listener);
                 .setAutoCancel(true)
                 .setContentTitle("Background Tasks")
                 .setSmallIcon(R.drawable.ic_notification)
-                .setColor(getResources().getColor(R.color.loginheader))
+                .setColor(getResources().getColor(R.color.login_header))
                 .setLargeIcon(icon)
                 .setContentText("The Item was Deleted Successfully");
 
@@ -482,20 +457,11 @@ reference.removeEventListener(listener);
         View dialogView=LayoutInflater.from(SingLeItemActivity.this).inflate(R.layout.recyclerview_dialog,null,false);
         moreRecycler=dialogView.findViewById(R.id.recycler);
         SwipeRefreshLayout refreshLayout=dialogView.findViewById(R.id.swipeRefresh);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dialog.isShowing())dialog.dismiss();
-                        showMoreDialog();
-                        refreshLayout.setRefreshing(false);
-                    }
-                },3000);
-
-            }
-        });
+        refreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> {
+            if (dialog.isShowing()) dialog.dismiss();
+            showMoreDialog();
+            refreshLayout.setRefreshing(false);
+        },3000));
         moreRecycler.setHasFixedSize(true);
         moreRecycler.setLayoutManager(new LinearLayoutManager(this));
         builder.setView(dialogView);
@@ -504,18 +470,10 @@ reference.removeEventListener(listener);
         new ItemUtils().fetchLocalItemsById(SingLeItemActivity.this, posterId, new FetchCallBacks() {
             @Override
             public void fetchComplete(List<Item> list) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        moreRecycler.setAdapter(new MoreItemsRecyclerAdapter(false, SingLeItemActivity.this, (ArrayList<Item>) list, new RecyclerCallBacks() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                if (dialog.isShowing())dialog.dismiss();
-                               ItemUtils.goToSingleView(view,SingLeItemActivity.this,Category,Constants.MODE_LOCAL);
-                            }
-                        }));
-                    }
-                });
+                runOnUiThread(() -> moreRecycler.setAdapter(new MoreItemsRecyclerAdapter(false, SingLeItemActivity.this, (ArrayList<Item>) list, (view, position) -> {
+                    if (dialog.isShowing()) dialog.dismiss();
+                    ItemUtils.goToSingleView(view, SingLeItemActivity.this, Category, Constants.MODE_LOCAL);
+                })));
             }
 
             @Override

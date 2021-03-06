@@ -7,13 +7,13 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/loginheader"
+        android:background="@color/login_header"
         android:id="@+id/toolbar">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:id="@+id/categorytext"
+            android:id="@+id/categoryText"
             android:text="@string/category_description"
            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:fontFamily="@font/inconsolataexpandedbold"
@@ -34,7 +34,7 @@
             app:fabSize="normal"
             android:contentDescription="@string/fab_icon"
             android:layout_margin="10dp"
-            app:backgroundTint="@color/loginheader"
+            app:backgroundTint="@color/login_header"
            android:src="@drawable/ic_add"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"

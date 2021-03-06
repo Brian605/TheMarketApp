@@ -15,7 +15,6 @@ import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.utils.Constants;
 
 public class FragmentWelcome extends Fragment {
-private MaterialButton nextBtn;
 
     public FragmentWelcome() {
         // Required empty public constructor
@@ -32,13 +31,8 @@ private MaterialButton nextBtn;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_welcome, container, false);
-        nextBtn=view.findViewById(R.id.buttonNext1);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayouts, new FragmentPrivacy()).commit();
-            }
-        });
+        MaterialButton nextBtn = view.findViewById(R.id.buttonNext1);
+        nextBtn.setOnClickListener(v -> getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayouts, new FragmentPrivacy()).commit());
 
         return view;
     }

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/colorwhite"
+    app:cardBackgroundColor="@color/color_white"
     app:cardElevation="6dp"
     app:contentPadding="5dp"
     >
@@ -29,7 +29,7 @@
     android:layout_height="50dp"
     android:src="@drawable/pen_plus"
     app:civ_border_width="2dp"
-    app:civ_border_color="@color/loginheader"
+    app:civ_border_color="@color/login_header"
     android:layout_margin="10dp"
     android:id="@+id/edit_icon"/>
 <TextView
@@ -39,7 +39,7 @@
     android:fontFamily="@font/matura_capitals"
     android:layout_toEndOf="@+id/edit_icon"
     android:gravity="center"
-    android:textColor="@color/loginheader"
+    android:textColor="@color/login_header"
     android:layout_marginTop="20dp"
     android:layout_marginEnd="10dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"/>

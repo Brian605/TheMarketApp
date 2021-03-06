@@ -42,13 +42,10 @@ public class FragmentSafety extends Fragment {
         listView.setAdapter(adapter);
 
         MaterialButton materialButton=view.findViewById(R.id.buttonNext2);
-        materialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PreferenceManager.getInstance().storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false,getActivity());
-                PreferenceManager.getInstance().storeBooleanValue(Constants.FIRST_TIME_LAUNCH,false,getActivity());
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
+        materialButton.setOnClickListener(v -> {
+            PreferenceManager.getInstance().storeBooleanValue(Constants.IS_MAIN_FIRST_LAUNCH,false,getActivity());
+            PreferenceManager.getInstance().storeBooleanValue(Constants.FIRST_TIME_LAUNCH,false,getActivity());
+            startActivity(new Intent(getActivity(), LoginActivity.class));
         });
 
         return view;

@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="2dp"
     app:cardElevation="10dp"
-    android:background="@color/colorwhite"
-    app:cardBackgroundColor="@color/colorwhite"
+    android:background="@color/color_white"
+    app:cardBackgroundColor="@color/color_white"
     app:contentPadding="5dp"
     android:layout_margin="10dp">
 
@@ -17,7 +17,7 @@
                 android:layout_marginTop="5dp"
                 android:src="@drawable/img7"
                 android:scaleType="centerCrop"
-                android:id="@+id/categImg"
+                android:id="@+id/categoryImage"
                 android:contentDescription="@string/category_image" />
 
             <TextView
@@ -29,11 +29,11 @@
                 android:layout_marginBottom="20dp"
             android:id="@+id/categ"
                 android:fontFamily="@font/benardmtcondensed"
-                android:textColor="@color/colorwhite"
+                android:textColor="@color/color_white"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:background="@drawable/categback"
-            android:layout_below="@+id/categImg"
+                android:background="@drawable/category_back"
+            android:layout_below="@+id/categoryImage"
 
             android:text="@string/post_category"/>
         <TextView

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.returno.tradeit.R;
 
 public class SafetyAdapter extends BaseAdapter {
-    String[] items;
-    Context context;
+    final String[] items;
+    final Context context;
 
     public SafetyAdapter(String[] items, Context context) {
         this.items = items;

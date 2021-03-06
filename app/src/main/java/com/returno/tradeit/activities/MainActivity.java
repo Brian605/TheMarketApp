@@ -39,7 +39,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.returno.tradeit.R;
 import com.returno.tradeit.adapters.CategoriesRecyclerAdapter;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
-import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
 import com.returno.tradeit.utils.Constants;
@@ -64,23 +63,21 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
 
     private Uri ImagePath;
-    private Toolbar toolbar;
 
     private ValueEventListener AuctionListener, ItemListener;
-    private TextView options,pickView;
-    List<View> views=new ArrayList<>();
-    HashMap<View,String> mainTutorial =new HashMap<>();
+    final List<View> views=new ArrayList<>();
+    final HashMap<View,String> mainTutorial =new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
            // getSupportActionBar().setTitle("");
-            Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(getResources().getColor(R.color.colorwhite), PorterDuff.Mode.SRC_ATOP);
+            Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_ATOP);
         }
         //new DBHelper(MainActivity.this).onUpgrade();
 
@@ -96,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
         flipper.startFlipping();
 
         recyclerView = findViewById(R.id.recycler);
-        options= findViewById(R.id.options);
-        pickView=findViewById(R.id.pick);
+        TextView options = findViewById(R.id.options);
+        TextView pickView = findViewById(R.id.pick);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         categoryItems = new ArrayList<>();
 
-        views.addAll(Arrays.asList(options,pickView));
+        views.addAll(Arrays.asList(options, pickView));
         mainTutorial.put(options,"Click here for more \n 1. Main -> View favorites,Your items , messages, go to your profile \n" +
                 "2. Log out Now -> To log out of your account, you can log in anytime later \n" +
                 "3. Product Requests -> View items that other users have requested for. you can then contact them if you have the items");
@@ -115,43 +112,32 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Categories");
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            CategoryItem categoryItem = dataSnapshot1.getValue(CategoryItem.class);
-                            categoryItems.add(categoryItem);
-
-                        }
-
-                        adapter = new CategoriesRecyclerAdapter(getApplicationContext(), categoryItems, new RecyclerCallBacks() {
-
-                            @Override
-                            public void onItemClick(View view, int position) {
-
-                                gotoSingleCategory(view);
-
-                            }
-                        });
-                        recyclerView.setAdapter(adapter);
-
-                        if (dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
-                        setUpShowCase();
+        Thread thread = new Thread(() -> {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Categories");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        CategoryItem categoryItem = dataSnapshot1.getValue(CategoryItem.class);
+                        categoryItems.add(categoryItem);
 
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                    adapter = new CategoriesRecyclerAdapter(getApplicationContext(), categoryItems, (view, position) -> gotoSingleCategory(view));
+                    recyclerView.setAdapter(adapter);
 
-            }
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    setUpShowCase();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+
         });
         thread.start();
 
@@ -161,12 +147,9 @@ public class MainActivity extends AppCompatActivity {
     private void setUpShowCase() {
      if (PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_MAIN_FIRST_LAUNCH,this)){
 
-         showCase(views.get(0),new CompleteCallBacks() {
-             @Override
-             public void onComplete(Object... objects) {
-                 if (!views.isEmpty()){
-                     setUpShowCase();
-                 }
+         showCase(views.get(0), objects -> {
+             if (!views.isEmpty()){
+                 setUpShowCase();
              }
          });
          disableNextShowCase();
@@ -191,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                        public void onShowcaseViewHide(ShowcaseView showcaseView) {
                           // showcaseView.hide();
                            views.remove(view);
-callBacks.onComplete(null);
+callBacks.onComplete((Object[]) null);
 
                        }
 

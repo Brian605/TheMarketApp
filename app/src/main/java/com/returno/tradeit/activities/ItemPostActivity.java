@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -51,7 +50,6 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
-@SuppressWarnings("ConstantConditions")
 public class ItemPostActivity extends AppCompatActivity  {
     // imports
     private ImageView imageBtn;
@@ -91,8 +89,8 @@ public class ItemPostActivity extends AppCompatActivity  {
         Button postBtn = findViewById(R.id.postBtn);
         descEdit = findViewById(R.id.textDesc);
         titleEdit= findViewById(R.id.textTitle);
-        priceEdit=findViewById(R.id.itemprice);
-        hintView=findViewById(R.id.textview);
+        priceEdit=findViewById(R.id.itemPrice);
+        hintView=findViewById(R.id.textView);
         tagView=findViewById(R.id.tagText);
         Button tagButton = findViewById(R.id.addTag);
         selectedItemsLayout=findViewById(R.id.selectedItems);
@@ -104,12 +102,7 @@ public class ItemPostActivity extends AppCompatActivity  {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_arrow_ios));
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            toolbar.setNavigationOnClickListener(v -> finish());
 
         }
 
@@ -124,37 +117,26 @@ public class ItemPostActivity extends AppCompatActivity  {
        FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         imageBtn = findViewById(R.id.imageBtn);
 
-        tagButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] items=getResources().getStringArray(R.array.tag_keys);
-                AlertDialog.Builder builder=new AlertDialog.Builder(ItemPostActivity.this);
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (isFirst){
-                            tag.append(items[which]);
-                            isFirst=false;
-                        }else {
-                            tag.append("__").append(items[which]);
-                        }
-                        tagView.setText(tag.toString());
-                        dialog.dismiss();
-                    }
-                });
+        tagButton.setOnClickListener(v -> {
+            String[] items=getResources().getStringArray(R.array.tag_keys);
+            AlertDialog.Builder builder=new AlertDialog.Builder(ItemPostActivity.this);
+            builder.setItems(items, (dialog, which) -> {
+                if (isFirst) {
+                    tag.append(items[which]);
+                    isFirst = false;
+                } else {
+                    tag.append("__").append(items[which]);
+                }
+                tagView.setText(tag.toString());
+                dialog.dismiss();
+            });
 
-                Dialog dialog=builder.create();
-                dialog.show();
+            Dialog dialog=builder.create();
+            dialog.show();
 
-            }
         });
         //<editor-fold defaultstate="collapsed" desc="picking image from gallery">
-        imageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               new GligarPicker().requestCode(GALLERY_REQUEST_CODE).withActivity(ItemPostActivity.this).limit(3).show();
-            }
-        });
+        imageBtn.setOnClickListener(view -> new GligarPicker().requestCode(GALLERY_REQUEST_CODE).withActivity(ItemPostActivity.this).limit(3).show());
         // </editor-fold>
 
 
@@ -275,32 +257,24 @@ progressView.setText(String.format(Locale.getDefault(),"Uploading %d %%", newVal
                 view.getLayoutParams().width = (int) getResources().getDimension(R.dimen.image_item_max_width);
                 view.requestLayout();
 
-                itemImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showChangeDialog(uriView.getText().toString(), view);
-                    }
-                });
+                itemImage.setOnClickListener(v -> showChangeDialog(uriView.getText().toString(), view));
                 CircleImageView circleImageView = view.findViewById(R.id.deleteImage);
                 circleImageView.setFocusable(true);
                 circleImageView.setClickable(true);
 
-                circleImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        selectedItemsLayout.removeView(view);
-                        TextView textView1 = view.findViewById(R.id.uriHolder);
-                        String uri = textView1.getText().toString();
-                        int currentPosition = pathList.indexOf(uri);
-                        pathList.remove(uri);
+                circleImageView.setOnClickListener(v -> {
+                    selectedItemsLayout.removeView(view);
+                    TextView textView1 = view.findViewById(R.id.uriHolder);
+                    String uri = textView1.getText().toString();
+                    int currentPosition = pathList.indexOf(uri);
+                    pathList.remove(uri);
 
-                        if (pathList.size() != 0) {
-                            imageBtn.setImageURI(Uri.fromFile(new File(pathList.get(0))));
-                        } else {
-                            imageBtn.setImageDrawable(ContextCompat.getDrawable(ItemPostActivity.this, R.drawable.img7));
-                        }
-
+                    if (pathList.size() != 0) {
+                        imageBtn.setImageURI(Uri.fromFile(new File(pathList.get(0))));
+                    } else {
+                        imageBtn.setImageDrawable(ContextCompat.getDrawable(ItemPostActivity.this, R.drawable.img7));
                     }
+
                 });
             }
 

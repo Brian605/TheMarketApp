@@ -17,7 +17,7 @@
         android:title="@string/message" />
 
     <item
-        android:id="@+id/whatsapp"
+        android:id="@+id/whatsApp"
         android:icon="@drawable/ic_whatsapp"
         android:title="@string/whatsapp" />
 

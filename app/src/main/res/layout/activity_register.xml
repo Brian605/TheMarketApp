@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/loginheader">
+        android:background="@color/login_header">
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="@dimen/login_logo_width"
             android:layout_height="@dimen/login_logo_height"
@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tradeit_register"
+            android:text="@string/the_market_register"
             android:layout_gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#fff"/>
@@ -43,9 +43,9 @@
             android:hint="@string/input_name"
            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColor="@color/black"
-            app:boxStrokeColor="@color/loginheader"
+            app:boxStrokeColor="@color/login_header"
             app:startIconDrawable="@drawable/account"
-            app:startIconTint="@color/loginheader"
+            app:startIconTint="@color/login_header"
             android:layout_margin="5dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -64,9 +64,9 @@
             android:hint="@string/input_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColor="@color/black"
-            app:boxStrokeColor="@color/loginheader"
+            app:boxStrokeColor="@color/login_header"
             app:startIconDrawable="@drawable/email_edit"
-            app:startIconTint="@color/loginheader"
+            app:startIconTint="@color/login_header"
             android:layout_margin="5dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -84,12 +84,12 @@
             android:hint="@string/input_phone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColor="@color/black"
-            app:boxStrokeColor="@color/loginheader"
+            app:boxStrokeColor="@color/login_header"
             app:startIconDrawable="@drawable/phone_in_talk"
-            app:startIconTint="@color/loginheader"
+            app:startIconTint="@color/login_header"
             app:counterMaxLength="10"
             app:counterEnabled="true"
-            app:counterTextColor="@color/loginheader"
+            app:counterTextColor="@color/login_header"
             app:counterOverflowTextColor="@color/red"
             android:layout_margin="5dp" >
         <com.google.android.material.textfield.TextInputEditText
@@ -109,13 +109,13 @@
             android:hint="@string/input_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColor="@color/black"
-            app:boxStrokeColor="@color/loginheader"
+            app:boxStrokeColor="@color/login_header"
             app:startIconDrawable="@drawable/key"
-            app:startIconTint="@color/loginheader"
+            app:startIconTint="@color/login_header"
             app:counterMaxLength="16"
             app:counterEnabled="true"
             app:counterOverflowTextColor="@color/red"
-            app:counterTextColor="@color/loginheader"
+            app:counterTextColor="@color/login_header"
             android:layout_margin="5dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -135,14 +135,14 @@
             android:hint="@string/retype_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColor="@color/black"
-            app:boxStrokeColor="@color/loginheader"
+            app:boxStrokeColor="@color/login_header"
             app:startIconDrawable="@drawable/key_outline"
-            app:startIconTint="@color/loginheader"
+            app:startIconTint="@color/login_header"
             android:layout_margin="5dp" >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_marginEnd="5dp"
-            app:backgroundTint="@color/loginheader"
+            app:backgroundTint="@color/login_header"
             android:padding="5dp"
             android:drawableEnd="@drawable/key_outline"
             android:layout_height="wrap_content"
@@ -157,13 +157,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-       app:backgroundTint="@color/loginheader"
+       app:backgroundTint="@color/login_header"
         android:text="@string/register"
         app:cornerRadius="7dp"
         app:icon="@drawable/pen_plus"
         app:iconTint="@color/whiteTransparent"
         android:id="@+id/RegisterRegister"
-        android:textColor="@color/colorwhite"
+        android:textColor="@color/color_white"
        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:fontFamily="@font/opensanssemibold"/>
     <TextView
@@ -180,7 +180,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/registerloginbac"
+            android:background="@drawable/register_login_back"
             android:layout_margin="5dp"
             android:id="@+id/RegisterLogin"
             android:text="@string/log_in"
@@ -190,7 +190,7 @@
             app:icon="@drawable/pen_plus"
             app:iconTint="@color/whiteTransparent"
             android:fontFamily="@font/opensanssemibold"
-            android:textColor="@color/loginheader" />
+            android:textColor="@color/login_header" />
 
     </LinearLayout>
 

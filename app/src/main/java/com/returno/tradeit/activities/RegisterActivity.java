@@ -5,18 +5,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -58,51 +52,45 @@ PhoneText=findViewById(R.id.RegisterPhone);
         MaterialButton login = findViewById(R.id.RegisterLogin);
         MaterialButton register = findViewById(R.id.RegisterRegister);
 
-login.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
-        startActivity(intent);
-    }
+login.setOnClickListener(view -> {
+    Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+    startActivity(intent);
 });
 
-register.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        UserName=UserNameText.getText().toString().trim();
-        UserEmail=UserMailText.getText().toString().trim();
-        Password1=PassWord1Text.getText().toString().trim();
-        Password2=Password2Text.getText().toString().trim();
-        UserPhone=PhoneText.getText().toString().trim();
+register.setOnClickListener(view -> {
+    UserName=UserNameText.getText().toString().trim();
+    UserEmail=UserMailText.getText().toString().trim();
+    Password1=PassWord1Text.getText().toString().trim();
+    Password2=Password2Text.getText().toString().trim();
+    UserPhone=PhoneText.getText().toString().trim();
 
 
 if(!Commons.getInstance().isValidUserName(UserName)){
-    UserNameText.setError("Wrong Username Format Use 4-6 characters with both lower and capital letters");
-    Tagger.forceFocus(UserNameText);
-    return;
+UserNameText.setError("Wrong Username Format Use 4-6 characters with both lower and capital letters");
+Tagger.forceFocus(UserNameText);
+return;
 
 }
-    if(!Commons.getInstance().isValidEmail(UserEmail)){
-        UserMailText.setError("Wrong email format");
-        Tagger.forceFocus(UserMailText);
+if(!Commons.getInstance().isValidEmail(UserEmail)){
+    UserMailText.setError("Wrong email format");
+    Tagger.forceFocus(UserMailText);
 return;
-    }
-      if (!isValidPass(Password1,Password2)){
-          PassWord1Text.setError("Use more than 8 characters for password");
-          Tagger.forceFocus(PassWord1Text);
+}
+  if (!isValidPass(Password1,Password2)){
+      PassWord1Text.setError("Use more than 8 characters for password");
+      Tagger.forceFocus(PassWord1Text);
+      return;
+
+  }
+      if (!isValidPhone(UserPhone) && !TextUtils.isDigitsOnly(UserPhone)){
+          PhoneText.setError("The phone number must begin with a 0 and contain only 10 digits");
+          Tagger.forceFocus(PhoneText);
           return;
 
       }
-          if (!isValidPhone(UserPhone) && !TextUtils.isDigitsOnly(UserPhone)){
-              PhoneText.setError("The phone number must begin with a 0 and contain only 10 digits");
-              Tagger.forceFocus(PhoneText);
-              return;
-
-          }
-              registerUser(UserName,UserEmail,UserPhone,Password1);
+          registerUser(UserName,UserEmail,UserPhone,Password1);
 
 
-    }
 });
     }
 
@@ -126,47 +114,29 @@ return;
         dialog.show();
 
         final FirebaseAuth auth=FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-               auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                   @Override
-                   public void onSuccess(AuthResult authResult) {
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+           auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(authResult -> saveUser(authResult, name)).addOnFailureListener(e -> {
+               dialog.dismiss();
+               Toast.makeText(getApplicationContext(), "Could Not Register :" + e.getMessage(), Toast.LENGTH_LONG).show();
 
-                      saveUser(authResult,name) ;
-                   }
-               }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                    dialog.dismiss();
-Toast.makeText(getApplicationContext(),"Could Not Register :"+e.getMessage(),Toast.LENGTH_LONG).show();
-
-                   }
-               });
+           });
 
 
-                //UserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            //UserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-            }
         }).addOnSuccessListener(authResult -> {
             setResult(Activity.RESULT_OK);
             dialog.dismiss();
             Toast.makeText(RegisterActivity.this,"Registration Successful",Toast.LENGTH_LONG) .show();
             Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
             startActivity(intent);
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegisterActivity.this,"Cannot Register "+ e.getMessage(),Toast.LENGTH_LONG).show();
-                dialog.dismiss();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(RegisterActivity.this,"Cannot Register "+ e.getMessage(),Toast.LENGTH_LONG).show();
+            dialog.dismiss();
 
-            }
-        }).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                
-            }
+        }).addOnCanceledListener(() -> {
+
         });
     }
 

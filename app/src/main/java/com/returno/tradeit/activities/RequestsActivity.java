@@ -2,7 +2,6 @@ package com.returno.tradeit.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -40,7 +39,6 @@ import com.returno.tradeit.adapters.ArrayIconAdapter;
 import com.returno.tradeit.adapters.RequestsAdapter;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.DeleteCallBacks;
-import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.callbacks.UploadCallBacks;
 import com.returno.tradeit.models.Notification;
 import com.returno.tradeit.models.Request;
@@ -59,6 +57,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
+@SuppressWarnings("unchecked")
 public class RequestsActivity extends AppCompatActivity {
 
 
@@ -89,80 +88,62 @@ public class RequestsActivity extends AppCompatActivity {
         manager.setReverseLayout(true);
         manager.setStackFromEnd(true);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                       if (!dialog.isShowing()){
-                           dialog.show();
-                           fetchRequests();
-                           swipeRefreshLayout.setRefreshing(false);
-                       }
-                    }
-                }, 3000);
+        swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> {
+            if (!dialog.isShowing()) {
+                dialog.show();
+                fetchRequests();
+                swipeRefreshLayout.setRefreshing(false);
             }
-        });
+        }, 3000));
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setBackground(new ColorDrawable(Color.TRANSPARENT));
 
         requestList=new ArrayList<>();
 
-        adapter=new RequestsAdapter(RequestsActivity.this, requestList, new RecyclerCallBacks() {
-            @Override
-            public void onItemClick(View view1, int position) {
-                TextView idView=view1.findViewById(R.id.requestId);
-                TextView userIdView=view1.findViewById(R.id.userId);
-                TextView phoneNumberView=view1.findViewById(R.id.userphone);
+        adapter=new RequestsAdapter(RequestsActivity.this, requestList, (view1, position) -> {
+            TextView idView=view1.findViewById(R.id.requestId);
+            TextView userIdView=view1.findViewById(R.id.userId);
+            TextView phoneNumberView=view1.findViewById(R.id.userphone);
 
-                String userId=userIdView.getText().toString();
-                String requestId=idView.getText().toString();
-                String phoneNumber=phoneNumberView.getText().toString();
+            String userId=userIdView.getText().toString();
+            String requestId=idView.getText().toString();
+            String phoneNumber=phoneNumberView.getText().toString();
 
-                Timber.e(phoneNumber);
-                MaterialAlertDialogBuilder builder=new MaterialAlertDialogBuilder(RequestsActivity.this,R.style.MaterialAlertDialog_MaterialComponents_Title_Text_CenterStacked);
-                builder.setTitle("Choose Action");
+            Timber.e(phoneNumber);
+            MaterialAlertDialogBuilder builder=new MaterialAlertDialogBuilder(RequestsActivity.this,R.style.MaterialAlertDialog_MaterialComponents_Title_Text_CenterStacked);
+            builder.setTitle("Choose Action");
 
-                String[] actions;
-                Integer[] icons;
-                boolean isUser=new FirebaseUtils().isCurrentUser(userId);
-                if (isUser){
-                   actions=new String[]{"Delete Item"};
-                   icons=new Integer[]{R.drawable.ic_delete};
-                }else {
-                    actions=new String[]{"WhatsApp","Message","Call"};
-                    icons=new Integer[]{R.drawable.whatsapp,R.drawable.ic_message,R.drawable.phone_in_talk};
+            String[] actions;
+            Integer[] icons;
+            boolean isUser=new FirebaseUtils().isCurrentUser(userId);
+            if (isUser){
+               actions=new String[]{"Delete Item"};
+               icons=new Integer[]{R.drawable.ic_delete};
+            }else {
+                actions=new String[]{"WhatsApp","Message","Call"};
+                icons=new Integer[]{R.drawable.whatsapp,R.drawable.ic_message,R.drawable.phone_in_talk};
+            }
+
+            ListAdapter listAdapter= new  ArrayIconAdapter(RequestsActivity.this,actions,icons);
+            builder.setAdapter(listAdapter, (dialogInterface, i) -> {
+                Timber.e(String.valueOf(i));
+                if (isUser && i == 0) {
+                    Timber.e(String.valueOf(isUser));
+                    deleteRequest(requestId);
+                    return;
                 }
-
-                ListAdapter listAdapter= new  ArrayIconAdapter(RequestsActivity.this,actions,icons);
-                builder.setAdapter(listAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Timber.e(String.valueOf(i));
-                        if (isUser && i==0){
-                            Timber.e(String.valueOf(isUser));
-                            deleteRequest(requestId);
-                            return;
-                        }
-                        if (i==0){
-                            whatsAppUser(phoneNumber);
-                        }
-                        else
-                            if (i==1){
-                                messageUser(phoneNumber);
-                            }
-                        else
-                            if (i==2){
-                                callUser(phoneNumber);
-                            }
-                    }
-                });
+                if (i == 0) {
+                    whatsAppUser(phoneNumber);
+                } else if (i == 1) {
+                    messageUser(phoneNumber);
+                } else if (i == 2) {
+                    callUser(phoneNumber);
+                }
+            });
 Dialog dialog=builder.create();
 dialog.show();
 
-            }
         });
 
 
@@ -192,24 +173,18 @@ Commons.getInstance().sendMessage("hello",phoneNumber,RequestsActivity.this);
         new UploadUtils().deleteRequest(requestId, new DeleteCallBacks() {
             @Override
             public void onDelete() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dialog.isShowing())dialog.dismiss();
-                        Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_LONG).show();
-                        recreate();
-                    }
+                runOnUiThread(() -> {
+                    if (dialog.isShowing())dialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_LONG).show();
+                    recreate();
                 });
             }
 
             @Override
             public void onError(String message) {
-runOnUiThread(new Runnable() {
-    @Override
-    public void run() {
-        if (dialog.isShowing())dialog.dismiss();
-        new ItemUtils().showMessageDialog(RequestsActivity.this, message);
-    }
+runOnUiThread(() -> {
+    if (dialog.isShowing())dialog.dismiss();
+    new ItemUtils().showMessageDialog(RequestsActivity.this, message);
 });
             }
         });
@@ -218,51 +193,42 @@ runOnUiThread(new Runnable() {
 
     private void postRequest(String request) {
         dialog.show();
-      getUser(new CompleteCallBacks() {
-          @Override
-          public void onComplete(Object... objects) {
-              User user=(User)objects[0];
-              String itemId=ItemUtils.generateItemId();
-              Request request1=Request.getInstance()
-                      .withRequestId(itemId)
-                      .withUserId(user.getUserId())
-                      .withRequestItem(request)
-                      .withUserName(user.getUserName())
-                      .withUserPhone(user.getPhoneNumber())
-                      .build();
-              new UploadUtils().postRequest(request1, new UploadCallBacks() {
-                  @Override
-                  public void onUploadSuccess() {
-                      runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                              if (dialog.isShowing())dialog.dismiss();
-                              Toast.makeText(getApplicationContext(),"Posted",Toast.LENGTH_LONG).show();
-                              Notification notification=new Notification(itemId,"0","requests",request,null);
-                              new FirebaseUtils().postAPushNotification(notification);
-                              recreate();
-                          }
-                      });
+      getUser(objects -> {
+          User user=(User)objects[0];
+          String itemId=ItemUtils.generateItemId();
+          Request request1=Request.getInstance()
+                  .withRequestId(itemId)
+                  .withUserId(user.getUserId())
+                  .withRequestItem(request)
+                  .withUserName(user.getUserName())
+                  .withUserPhone(user.getPhoneNumber())
+                  .build();
+          new UploadUtils().postRequest(request1, new UploadCallBacks() {
+              @Override
+              public void onUploadSuccess() {
+                  runOnUiThread(() -> {
+                      if (dialog.isShowing()) dialog.dismiss();
+                      Toast.makeText(getApplicationContext(), "Posted", Toast.LENGTH_LONG).show();
+                      Notification notification = new Notification(itemId, "0", "requests", request, null);
+                      new FirebaseUtils().postAPushNotification(notification);
+                      recreate();
+                  });
 
-                  }
+              }
 
-                  @Override
-                  public void onProgressUpdated(int newValue) {
+              @Override
+              public void onProgressUpdated(int newValue) {
 
-                  }
+              }
 
-                  @Override
-                  public void onError(String message) {
-                      runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                              if (dialog.isShowing())dialog.dismiss();
-                              new ItemUtils().showMessageDialog(RequestsActivity.this, message);
-                          }
-                      });
-                  }
-              });
-          }
+              @Override
+              public void onError(String message) {
+                  runOnUiThread(() -> {
+                      if (dialog.isShowing()) dialog.dismiss();
+                      new ItemUtils().showMessageDialog(RequestsActivity.this, message);
+                  });
+              }
+          });
       });
     }
 
@@ -270,29 +236,23 @@ runOnUiThread(new Runnable() {
         new UploadUtils().fetchRequests(new CompleteCallBacks() {
             @Override
             public void onComplete(Object... objects) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                       requestList.clear();
-                       List<Request> requests= (List<Request>) objects[0];
-                       for (Request request:requests){
-                           Timber.e(request.getRequestItem());
-                       }
-                       requestList.addAll(requests);
-                       adapter.notifyDataSetChanged();
-                       if (dialog.isShowing())dialog.dismiss();
-                    }
+                runOnUiThread(() -> {
+                   requestList.clear();
+                   List<Request> requests= (List<Request>) objects[0];
+                   for (Request request:requests){
+                       Timber.e(request.getRequestItem());
+                   }
+                   requestList.addAll(requests);
+                   adapter.notifyDataSetChanged();
+                   if (dialog.isShowing())dialog.dismiss();
                 });
             }
 
             @Override
             public void onFailure(String error) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                   if (dialog.isShowing())dialog.dismiss();
-                   new ItemUtils().showMessageDialog(RequestsActivity.this, error);
-                    }
+                runOnUiThread(() -> {
+               if (dialog.isShowing())dialog.dismiss();
+               new ItemUtils().showMessageDialog(RequestsActivity.this, error);
                 });
             }
         });
@@ -381,24 +341,16 @@ runOnUiThread(new Runnable() {
         TextInputEditText requestEdit=view.findViewById(R.id.inputText);
 
         Button sendButton=view.findViewById(R.id.send);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(requestEdit.getText().toString())){
-                    String request=requestEdit.getText().toString();
-                    if (dialog.isShowing())dialog.dismiss();
-                    postRequest(request);
-                }
+        sendButton.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(requestEdit.getText().toString())){
+                String request=requestEdit.getText().toString();
+                if (dialog.isShowing())dialog.dismiss();
+                postRequest(request);
             }
         });
 
         Button cancel=view.findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+        cancel.setOnClickListener(v -> dialog.cancel());
 
         dialog.show();
     }

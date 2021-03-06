@@ -36,8 +36,8 @@ import timber.log.Timber;
 
 public class Commons {
     private static Commons commons;
-    public static List<View> listOfViews = new ArrayList<>();
-    public static int previousIndex = 0;
+    public static final List<View> listOfViews = new ArrayList<>();
+    public static final int previousIndex = 0;
 
     public static Commons getInstance() {
         if (commons == null) {
@@ -146,22 +146,22 @@ new ItemUtils().showMessageDialog(activity,"Could not fetch your location");
         context.startActivity(intent);
     }
 
-    public void openWhatsApp(Context context, String userphone) throws UnsupportedEncodingException {
-        userphone = Tagger.getInternationalNumber(userphone);
+    public void openWhatsApp(Context context, String userPhone) throws UnsupportedEncodingException {
+        userPhone = Tagger.getInternationalNumber(userPhone);
         String message = URLEncoder.encode("Hello , there", "UTF-8");
-        String url = "https://wa.me/" + userphone + "?text=" + message;
+        String url = "https://wa.me/" + userPhone + "?text=" + message;
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
     }
 
-    public void callUser(Context context, String userphone) {
+    public void callUser(Context context, String userPhone) {
         Timber.e("callUser");
-        Timber.e(userphone);
+        Timber.e(userPhone);
 
         try {
             Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:" + userphone));
+            intent.setData(Uri.parse("tel:" + userPhone));
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
                 ActivityCompat.requestPermissions(((AppCompatActivity)context),new String[]{Manifest.permission.CALL_PHONE},Constants.PERMISSION_CALL_PHONE);

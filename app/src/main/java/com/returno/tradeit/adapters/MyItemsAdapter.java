@@ -49,12 +49,7 @@ public MyItemsAdapter(Context context, List<Item> list, RecyclerCallBacks listen
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.items_recycler_item,parent,false);
         final ViewHolder viewHolder= new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view,viewHolder.getAdapterPosition());
-            }
-        });
+        view.setOnClickListener(view1 -> listener.onItemClick(view1,viewHolder.getAdapterPosition()));
         return viewHolder;
     }
 
@@ -77,29 +72,15 @@ public MyItemsAdapter(Context context, List<Item> list, RecyclerCallBacks listen
             holder.counterView.setVisibility(View.VISIBLE);
             int extra=ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(item.getItemImage())).size();
             holder.counterView.setText(String.format(Locale.getDefault(),"+%d", extra));
-            Thread thread=new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            RotateAnimation rotateAnimation=new RotateAnimation(0,180, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-                            rotateAnimation.setDuration(1000);
-                            rotateAnimation.setRepeatCount(Animation.INFINITE);
-                            //rotateAnimation.setInterpolator(new LinearInterpolator());
-                            holder. counterView.startAnimation(rotateAnimation);
-                        }
-                    });
-
-                }
-            });
+            Thread thread=new Thread(() -> ((AppCompatActivity)context).runOnUiThread(() -> {
+                RotateAnimation rotateAnimation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotateAnimation.setDuration(1000);
+                rotateAnimation.setRepeatCount(Animation.INFINITE);
+                //rotateAnimation.setInterpolator(new LinearInterpolator());
+                holder.counterView.startAnimation(rotateAnimation);
+            }));
             thread.start();
-            holder.counterView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ItemUtils.showMultipleImages(ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(item.getItemImage())),context);
-                }
-            });
+            holder.counterView.setOnClickListener(v -> ItemUtils.showMultipleImages(ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(item.getItemImage())),context));
         }
 
         holder.favView.setVisibility(View.GONE);
@@ -113,9 +94,18 @@ public MyItemsAdapter(Context context, List<Item> list, RecyclerCallBacks listen
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView itemName,itemDescription,itemPrice,imageurl,itemPosterId,itemDbId,itemId,tagsView,counterView,categoryView;
-        ImageView favView;
-        SimpleDraweeView imageView;
+        final TextView itemName;
+        final TextView itemDescription;
+        final TextView itemPrice;
+        final TextView imageurl;
+        final TextView itemPosterId;
+        TextView itemDbId;
+        final TextView itemId;
+        final TextView tagsView;
+        final TextView counterView;
+        final TextView categoryView;
+        final ImageView favView;
+        final SimpleDraweeView imageView;
         ViewHolder(View itemview){
             super(itemview);
 

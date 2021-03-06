@@ -64,30 +64,22 @@ public class FragmentPrivacy extends Fragment {
         Button agree = view.findViewById(R.id.agree);
         Button decline = view.findViewById(R.id.decline);
 
-        agree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PreferenceManager.getInstance().storeBooleanValue(Constants.POLICY_ACCEPTED,true,getActivity());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayouts,new FragmentSafety()).commit();
+        agree.setOnClickListener(v -> {
+            PreferenceManager.getInstance().storeBooleanValue(Constants.POLICY_ACCEPTED,true,getActivity());
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayouts,new FragmentSafety()).commit();
 
 
-            }
         });
 
-        decline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.exit(0);
-            }
-        });
+        decline.setOnClickListener(v -> System.exit(0));
         return view;
     }
 
 }
 
 class MyClient extends WebViewClient{
-    Context context;
-    LinearProgressIndicator progressBar;
+    final Context context;
+    final LinearProgressIndicator progressBar;
     public MyClient(LinearProgressIndicator progressBar, Context context){
         this.context=context;
         this.progressBar=progressBar;

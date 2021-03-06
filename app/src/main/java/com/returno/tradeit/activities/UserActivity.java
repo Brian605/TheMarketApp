@@ -4,19 +4,23 @@ package com.returno.tradeit.activities;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,14 +30,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,8 +52,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.returno.tradeit.R;
 import com.returno.tradeit.adapters.NotificationsAdapter;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
-import com.returno.tradeit.callbacks.CompressionCallBacks;
-import com.returno.tradeit.callbacks.LocationCallBacks;
 import com.returno.tradeit.utils.Commons;
 import com.returno.tradeit.utils.Constants;
 import com.returno.tradeit.utils.FirebaseUtils;
@@ -72,17 +70,14 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class UserActivity extends AppCompatActivity {
     private String UserImage="none";
     private String UserLocation="Not Set Yet";
     private String UserId;
     private TextView locationText;
 private AppCompatRatingBar ratingBar;
-private CircleImageView userImageView,whatsappView,messageView,callView;
-private ValueEventListener listener,listener1,imageListener,locationlistener,ratingListener,listener2,messageListener;
+private CircleImageView userImageView;
+    private ValueEventListener listener,listener1,imageListener,locationlistener,ratingListener,listener2,messageListener;
 private static final int GALLERY_REQUEST=1;
 private String downloadUrl;
     private Uri filePath;
@@ -112,9 +107,9 @@ private Dialog dialog;
         ratingBar = findViewById(R.id.ratingbar);
         userImageView = findViewById(R.id.userImage);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        messageView=findViewById(R.id.message);
-        whatsappView=findViewById(R.id.whatsapp);
-        callView=findViewById(R.id.call);
+        CircleImageView messageView = findViewById(R.id.message);
+        CircleImageView whatsappView = findViewById(R.id.whatsApp);
+        CircleImageView callView = findViewById(R.id.call);
 
          nameText.setText(String.format("Am %s You can use any of the links below to contact me", userName));
         phoneText.setText(userPhone);
@@ -123,50 +118,55 @@ private Dialog dialog;
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
 
         ratingBar.setNumStars(5);
-        Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(getResources().getColor(R.color.colorwhite), PorterDuff.Mode.SRC_ATOP);
+        Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_ATOP);
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
 if (fromUser){
-    totalRating+=(int)rating;
+totalRating+=(int)rating;
 
-    Toast.makeText(getApplicationContext(),"New Rating "+totalRating,Toast.LENGTH_LONG).show();
-    updateRating(totalRating);
+Toast.makeText(getApplicationContext(),"New Rating "+totalRating,Toast.LENGTH_LONG).show();
+updateRating(totalRating);
 }
 
+        });
+
+        messageView.setOnClickListener(view -> Commons.getInstance().sendMessage("Hello",userPhone,UserActivity.this));
+
+        whatsappView.setOnClickListener(v -> {
+            try {
+                Commons.getInstance().openWhatsApp(UserActivity.this,userPhone);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
         });
 
-        messageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Commons.getInstance().sendMessage("Hello",userPhone,UserActivity.this);
-            }
-        });
-
-        whatsappView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Commons.getInstance().openWhatsApp(UserActivity.this,userPhone);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        callView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Commons.getInstance().callUser(UserActivity.this,userPhone);
-            }
-        });
+        callView.setOnClickListener(v -> Commons.getInstance().callUser(UserActivity.this,userPhone));
         dialog=new Dialog(UserActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
        dialog.setContentView(R.layout.progressdialog);
          fetchUserImage();
+
+         userImageView.setOnClickListener(v -> {
+             BitmapDrawable drawable=(BitmapDrawable)userImageView.getDrawable();
+             Bitmap bitmap=drawable.getBitmap();
+
+             View layout= LayoutInflater.from(UserActivity.this).inflate(R.layout.user_profile_image_zoom,null,false);
+         AlertDialog.Builder builder=new AlertDialog.Builder(UserActivity.this);
+         CircleImageView circleImageView=layout.findViewById(R.id.image);
+         circleImageView.setImageBitmap(bitmap);
+             RelativeLayout root=layout.findViewById(R.id.root);
+             root.setBackground(new ColorDrawable(Color.TRANSPARENT));
+         builder.setView(layout);
+         if (dialog.isShowing())dialog.dismiss();
+         Dialog dialog1=builder.create();
+         if (dialog1.getWindow()!=null){
+             dialog1.getWindow().getAttributes().windowAnimations=R.style.ZoomingDialogAnims;
+             dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+         }
+         dialog1.show();
+
+         });
 
     }
 
@@ -310,18 +310,12 @@ if (fromUser){
     private void changeLocation() {
         AlertDialog.Builder builder=new AlertDialog.Builder(UserActivity.this);
         builder.setMessage("Your current GPS Location will be fetched automatically. You may need to enable GPS");
-        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                continueRequest();
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(),"You have cancelled the operation",Toast.LENGTH_LONG).show();
-            }
+        builder.setPositiveButton("Continue", (dialog, which) -> {
+            dialog.dismiss();
+            continueRequest();
+        }).setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(),"You have cancelled the operation",Toast.LENGTH_LONG).show();
         });
         Dialog dialog=builder.create();
         dialog.show();
@@ -334,19 +328,18 @@ if (fromUser){
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         Timber.e("granted");
-                        Commons.getInstance().getLocation(UserActivity.this, new LocationCallBacks() {
-                            @Override
-                            public void onLocation(String location) {
-                                Timber.e(location);
-                                cityName=location;
-                                updateLocation();
-                            }
+                        Commons.getInstance().getLocation(UserActivity.this, location -> {
+                            Timber.e(location);
+                            cityName=location;
+                            updateLocation();
                         });
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-return;
+                        if (response.isPermanentlyDenied()){
+                            new ItemUtils().showMessageDialog(getApplicationContext(), "Permission for "+response.getPermissionName()+" is denied");
+                        }
 
                     }
 
@@ -354,12 +347,9 @@ return;
                     public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
 AlertDialog.Builder builder=new AlertDialog.Builder(getApplicationContext());
 builder.setMessage("TradeIt needs this permission to access your location, For full functionality, the app should be allowed this permission");
-builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-        token.continuePermissionRequest();
-    }
+builder.setPositiveButton("Continue", (dialog, which) -> {
+    dialog.dismiss();
+    token.continuePermissionRequest();
 });
 Dialog dialog=builder.create();
 dialog.show();
@@ -375,13 +365,10 @@ dialog.show();
         locationlistener=new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                reference.child(Constants.USER_LOCATION).setValue(cityName).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        reference.removeEventListener(locationlistener);
-                        new ItemUtils().showMessageDialog(UserActivity.this,"Success");
-                        fetchLocation();
-                    }
+                reference.child(Constants.USER_LOCATION).setValue(cityName).addOnSuccessListener(aVoid -> {
+                    reference.removeEventListener(locationlistener);
+                    new ItemUtils().showMessageDialog(UserActivity.this,"Success");
+                    fetchLocation();
                 });
 
             }
@@ -401,12 +388,7 @@ dialog.show();
             filePath = data.getData();
 
             Timber.e(getUriFromContent(filePath));
-            Reducer.compressImage(UserActivity.this, Collections.singletonList(getUriFromContent(filePath)), new CompressionCallBacks() {
-                @Override
-                public void complete(List<File> fileList) {
-                    uploadProfile(fileList.get(0).getAbsolutePath());
-                }
-            });
+            Reducer.compressImage(UserActivity.this, Collections.singletonList(getUriFromContent(filePath)), fileList -> uploadProfile(fileList.get(0).getAbsolutePath()));
 
         }
     }
@@ -436,22 +418,16 @@ dialog.show();
         StorageReference reference= FirebaseStorage.getInstance().getReference("Profile").child(System.currentTimeMillis()+"."+getExtension(filePath));
         UploadTask uploadTask=reference.putFile(Uri.fromFile(new File(imagePath)));
 
-        Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()){
+        Task<Uri> uriTask=uploadTask.continueWithTask(task -> {
+            if (!task.isSuccessful()){
 new ItemUtils().showMessageDialog(UserActivity.this, task.getException().getMessage());
 return null;
-                }
-                return reference.getDownloadUrl();
             }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()){
-                    downloadUrl=task.getResult().toString();
-                    updateImageUrl();
-                }
+            return reference.getDownloadUrl();
+        }).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                downloadUrl=task.getResult().toString();
+                updateImageUrl();
             }
         });
     }
@@ -462,12 +438,7 @@ DatabaseReference reference=FirebaseDatabase.getInstance().getReference(Constant
 listener1=new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        reference.child(Constants.USER_IMAGE).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                fetchUserImage();
-            }
-        });
+        reference.child(Constants.USER_IMAGE).setValue(downloadUrl).addOnSuccessListener(aVoid -> fetchUserImage());
         reference.removeEventListener(listener1);
         dialog.dismiss();
     }

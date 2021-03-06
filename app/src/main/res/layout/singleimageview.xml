@@ -25,9 +25,9 @@
             android:layout_alignParentEnd="true"
             app:elevation="10dp"
             android:id="@+id/deleteImage"
-            app:civ_border_color="@color/loginheader"
+            app:civ_border_color="@color/login_header"
             app:civ_border_width="2dp"
-            app:civ_circle_background_color="@color/colorwhite"/>
+            app:civ_circle_background_color="@color/color_white"/>
         <TextView
             android:layout_width="100dp"
             android:layout_height="5dp"

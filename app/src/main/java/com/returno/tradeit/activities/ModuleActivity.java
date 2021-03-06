@@ -23,7 +23,7 @@ public class ModuleActivity extends AppCompatActivity {
 
         //views
         Toolbar toolbar = findViewById(R.id.toolbar);
-        TabLayout tabLayout = findViewById(R.id.tablayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         viewPager=findViewById(R.id.viewpager);
 
         //settoolbar
@@ -32,7 +32,7 @@ public class ModuleActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("The Market");
         }
         if (toolbar.getOverflowIcon()!=null){
-            toolbar.getOverflowIcon().setColorFilter(getResources().getColor(R.color.colorwhite), PorterDuff.Mode.SRC_ATOP);
+            toolbar.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_ATOP);
         }
         //tabsArray
         String[] tabNames=getResources().getStringArray(R.array.tab_names);
@@ -73,12 +73,6 @@ public class ModuleActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // recreate();
     }
 
     @Override

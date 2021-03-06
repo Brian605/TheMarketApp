@@ -24,8 +24,8 @@
         android:layout_height="10dp"
         android:id="@+id/progress"
         android:layout_below="@id/header"
-        app:indicatorColor="@color/loginheader"
-        app:trackColor="@color/loginheader"
+        app:indicatorColor="@color/login_header"
+        app:trackColor="@color/login_header"
         app:trackThickness="10dp"
         style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
 
@@ -45,7 +45,7 @@
                android:gravity="center"
                android:text="@string/i_agree"
                android:textColor="@color/whiteTransparent"
-               app:backgroundTint="@color/loginheader"
+               app:backgroundTint="@color/login_header"
                app:cornerRadius="10dp" />
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/decline"
@@ -57,7 +57,7 @@
         android:gravity="center"
         android:text="@string/i_decline"
         android:textColor="@color/whiteTransparent"
-        app:backgroundTint="@color/loginheader"
+        app:backgroundTint="@color/login_header"
         app:cornerRadius="10dp"
         tools:ignore="RelativeOverlap" />
 </RelativeLayout>

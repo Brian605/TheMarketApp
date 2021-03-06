@@ -28,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.returno.tradeit.R;
 import com.returno.tradeit.adapters.ItemRecyclerAdapter;
 import com.returno.tradeit.callbacks.CounterCallBacks;
-import com.returno.tradeit.callbacks.DownloadCallBacks;
 import com.returno.tradeit.callbacks.FetchCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
 import com.returno.tradeit.local.DatabaseManager;
@@ -58,7 +57,7 @@ public class CategoryViewActivity extends AppCompatActivity  {
         setContentView(R.layout.categories_activity);
 
 
-        TextView categ = findViewById(R.id.categorytext);
+        TextView categoryText = findViewById(R.id.categoryText);
         Toolbar toolbar = findViewById(R.id.toolbar);
         FloatingActionButton floatingActionButton = findViewById(R.id.addNew);
         setSupportActionBar(toolbar);
@@ -79,14 +78,9 @@ public class CategoryViewActivity extends AppCompatActivity  {
         if (category == null) {
             return;
         }
-        categ.setText(category);
+        categoryText.setText(category);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoAddNew();
-            }
-        });
+        floatingActionButton.setOnClickListener(v -> gotoAddNew());
 
 
         tradeItList = new ArrayList<>();
@@ -108,8 +102,8 @@ public class CategoryViewActivity extends AppCompatActivity  {
 
             @Override
             public void onLongClick(View view, int position) {
-                TextView categView=view.findViewById(R.id.itemCategory);
-                ItemUtils.share(view,CategoryViewActivity.this,categView.getText().toString());
+                TextView categoryView=view.findViewById(R.id.itemCategory);
+                ItemUtils.share(view,CategoryViewActivity.this,categoryView.getText().toString());
 
             }
         });
@@ -117,13 +111,6 @@ public class CategoryViewActivity extends AppCompatActivity  {
         recyclerView.setAdapter(adapter);
 
         checkCounts();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //onStateNotSaved();
 
     }
 
@@ -148,7 +135,7 @@ new UploadUtils().getOnlineItemsCount(category, new CounterCallBacks() {
 
     @Override
     public void onError(String message) {
-
+new ItemUtils().showMessageDialog(getApplicationContext(),message);
     }
 });
 
@@ -167,12 +154,7 @@ new UploadUtils().getOnlineItemsCount(category, new CounterCallBacks() {
 new UploadUtils().fetchItems(category, difference, new FetchCallBacks() {
     @Override
     public void fetchComplete(List<Item> itemList) {
-ItemUtils.storeFileFromOnlineUrl(CategoryViewActivity.this, itemList, new DownloadCallBacks() {
-    @Override
-    public void onComplete(String dirs) {
-        setAdapter();
-    }
-});
+ItemUtils.storeFileFromOnlineUrl(CategoryViewActivity.this, itemList, dirs -> setAdapter());
     }
 
     @Override
@@ -241,7 +223,7 @@ if (dialog.isShowing()){
            finish();
         }
        if (id==R.id.logout){
-          //signout user
+          //sign out user
            FirebaseAuth.getInstance().signOut();
            startActivity(new Intent(this,LoginActivity.class));
        }else

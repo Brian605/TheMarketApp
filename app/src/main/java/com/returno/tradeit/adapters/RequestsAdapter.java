@@ -21,10 +21,12 @@ import java.util.List;
 
 import timber.log.Timber;
 
+@SuppressWarnings("unchecked")
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> implements Filterable {
-private Context context;
-private List<Request> requestList,filteredList;
-private RecyclerCallBacks listener;
+private final Context context;
+private List<Request> requestList;
+    private final List<Request> filteredList;
+private final RecyclerCallBacks listener;
 
     public RequestsAdapter(Context context, List<Request> requestList, RecyclerCallBacks listener) {
         this.context = context;
@@ -38,12 +40,7 @@ private RecyclerCallBacks listener;
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.request_item,parent,false);
         ViewHolder viewHolder=new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(view,viewHolder.getAdapterPosition());
-            }
-        });
+        view.setOnClickListener(v -> listener.onItemClick(view,viewHolder.getAdapterPosition()));
         return viewHolder;
     }
 
@@ -65,7 +62,11 @@ holder.usernameView.setText(request.getUserName());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView usernameView,userphoneView,userIdView,requestIdView,requestItemView;
+        final TextView usernameView;
+        final TextView userphoneView;
+        final TextView userIdView;
+        final TextView requestIdView;
+        final TextView requestItemView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userIdView=itemView.findViewById(R.id.userId);

@@ -26,7 +26,7 @@ public class ModuleActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         viewPager=findViewById(R.id.viewpager);
 
-        //settoolbar
+        //set toolbar
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
             getSupportActionBar().setTitle("The Market");

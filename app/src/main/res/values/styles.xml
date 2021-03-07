@@ -28,10 +28,7 @@
         <item name="colorControlActivated">@color/login_header</item>
 
     </style>
-<style name="TransparentDialog" parent="Theme.AppCompat.Light.Dialog">
-    <item name="background">@color/white_full_transparent</item>
-    <item name="android:background">@color/white_full_transparent</item>
-</style>
+
     <style name="InputOutlineStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/login_header</item>
         <item name="boxStrokeWidth">2dp</item>
@@ -43,7 +40,7 @@
        <item name="colorControlHighlight">@color/login_header</item>
     </style>
 
-    <style name="ZoomingDialogAnims">
+    <style name="ZoomingDialogAnim">
         <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>

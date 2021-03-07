@@ -40,7 +40,7 @@ public class FragmentWelcome extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (!PreferenceManager.getInstance().isFirstTimeLaunch(getActivity()) && PreferenceManager.getInstance().isBoleanValueTrue(Constants.POLICY_ACCEPTED,getActivity())){
+        if (!PreferenceManager.getInstance().isFirstTimeLaunch(getActivity()) && PreferenceManager.getInstance().isBooleanValueTrue(Constants.POLICY_ACCEPTED,getActivity())){
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }
     }

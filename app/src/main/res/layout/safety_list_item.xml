@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/lightbulb_on_outline"
+        android:src="@drawable/light_bulb_on_outline"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/image_of_a_light_bulb"
         android:id="@+id/bulb"/>

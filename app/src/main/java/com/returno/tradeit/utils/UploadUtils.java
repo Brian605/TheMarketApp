@@ -204,7 +204,7 @@ fetchCallBacks.fetchError(anError.getMessage());
     //</editor-fold>
 */
 
-    //<editor-fold defaultstate="collapsed" desc="Delete an item from the online database as well as its imges">
+    //<editor-fold defaultstate="collapsed" desc="Delete an item from the online database as well as its images">
     public void deleteItem(String image, String itemId, DeleteCallBacks listener){
         AndroidNetworking.post(Urls.ITEM_DELETE_URL)
                 .addBodyParameter(Constants.ITEM_ID,itemId)

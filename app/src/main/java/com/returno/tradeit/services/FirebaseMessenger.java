@@ -27,16 +27,16 @@ public class FirebaseMessenger extends FirebaseMessagingService {
 
         //TODO: Fetch the last notification data
     }
-    private void sendNotification(String notiBody, String notiTitle) {
+    private void sendNotification(String notificationBody, String notificationTitle) {
 
         Bitmap icon= BitmapFactory.decodeResource(getResources(),R.drawable.logo1);
         NotificationCompat.Builder builder= new NotificationCompat.Builder(this, getResources().getString(R.string.app_name))
                 .setAutoCancel(true)
-                .setContentTitle(notiTitle)
+                .setContentTitle(notificationTitle)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(getResources().getColor(R.color.login_header))
                 .setLargeIcon(icon)
-                .setContentText(notiBody)
+                .setContentText(notificationBody)
                 .setContentInfo("The Market Goods. Click to view");
 
         NotificationManager manager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);

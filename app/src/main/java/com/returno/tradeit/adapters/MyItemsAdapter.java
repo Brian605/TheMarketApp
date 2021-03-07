@@ -106,20 +106,20 @@ public MyItemsAdapter(Context context, List<Item> list, RecyclerCallBacks listen
         final TextView categoryView;
         final ImageView favView;
         final SimpleDraweeView imageView;
-        ViewHolder(View itemview){
-            super(itemview);
+        ViewHolder(View itemView){
+            super(itemView);
 
-            itemName=itemview.findViewById(R.id.itemTitle);
-            itemDescription=itemview.findViewById(R.id.itemDescription);
-            itemPrice=itemview.findViewById(R.id.itemPrice);
-            imageurl=itemview.findViewById(R.id.itemImageUrl);
-            imageView=itemview.findViewById(R.id.itemImage);
-            itemPosterId=itemview.findViewById(R.id.postUserId);
-            itemId=itemview.findViewById(R.id.itemId);
-            favView=itemview.findViewById(R.id.favorite);
-            tagsView=itemview.findViewById(R.id.tagsView);
-            counterView=itemview.findViewById(R.id.counterText);
-            categoryView=itemview.findViewById(R.id.itemCategory);
+            itemName=itemView.findViewById(R.id.itemTitle);
+            itemDescription=itemView.findViewById(R.id.itemDescription);
+            itemPrice=itemView.findViewById(R.id.itemPrice);
+            imageurl=itemView.findViewById(R.id.itemImageUrl);
+            imageView=itemView.findViewById(R.id.itemImage);
+            itemPosterId=itemView.findViewById(R.id.postUserId);
+            itemId=itemView.findViewById(R.id.itemId);
+            favView=itemView.findViewById(R.id.favorite);
+            tagsView=itemView.findViewById(R.id.tagsView);
+            counterView=itemView.findViewById(R.id.counterText);
+            categoryView=itemView.findViewById(R.id.itemCategory);
 
             imageView.setActivated(true);
 

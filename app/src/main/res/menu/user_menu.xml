@@ -9,7 +9,7 @@
 
     <item
         android:title="@string/change_profile_picture"
-        android:id="@+id/profilechange"
+        android:id="@+id/profileChange"
         android:icon="@drawable/ic_account_circle"
         app:iconTint="@color/login_header"/>
 

@@ -1,6 +1,5 @@
 package com.returno.tradeit.adapters;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +31,12 @@ public NotificationsAdapter( List<String> list){
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_item,parent,false);
         final ViewHolder viewHolder=new ViewHolder(view);
         view.setOnClickListener(view1 -> {
-           // listener.itemclick(view,viewHolder.getAdapterPosition());
+
         });
         return viewHolder;
     }
 
-    @SuppressLint("LogNotTimber")
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 holder.messageView.setText(list.get(position));
@@ -59,11 +58,11 @@ final TextView messageView;
 final LinearLayout linearLayout;
 
 
-ViewHolder(View itemview){
-    super(itemview);
-    linearLayout=itemview.findViewById(R.id.root);
-    messageView=itemview.findViewById(R.id.message);
-    dateView=itemview.findViewById(R.id.date);
+ViewHolder(View itemView){
+    super(itemView);
+    linearLayout=itemView.findViewById(R.id.root);
+    messageView=itemView.findViewById(R.id.message);
+    dateView=itemView.findViewById(R.id.date);
 
 }
 

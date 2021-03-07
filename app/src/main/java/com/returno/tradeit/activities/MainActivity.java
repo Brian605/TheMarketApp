@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpShowCase() {
-     if (PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_MAIN_FIRST_LAUNCH,this)){
+     if (PreferenceManager.getInstance().isBooleanValueTrue(Constants.IS_MAIN_FIRST_LAUNCH,this)){
 
          showCase(views.get(0), objects -> {
              if (!views.isEmpty()){

@@ -197,15 +197,15 @@ public class ItemUtils {
                 boolean success = favFile.mkdirs();
             }
 
-            File newfavFile = new File(favFile.getAbsolutePath() + "/" + favoritesFile);
+            File newFavFile = new File(favFile.getAbsolutePath() + "/" + favoritesFile);
 
-            if (newfavFile.exists()) {
-                boolean deleted = newfavFile.delete();
-                boolean created = newfavFile.createNewFile();
+            if (newFavFile.exists()) {
+                boolean deleted = newFavFile.delete();
+                boolean created = newFavFile.createNewFile();
             } else {
-                boolean created = newfavFile.createNewFile();
+                boolean created = newFavFile.createNewFile();
             }
-            FileOutputStream outputStream = new FileOutputStream(newfavFile);
+            FileOutputStream outputStream = new FileOutputStream(newFavFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(items);
 
@@ -233,13 +233,13 @@ public class ItemUtils {
 
             }
 
-            File newfavFile = new File(favFile.getAbsolutePath() + "/" + favoritesFile);
+            File newFavFile = new File(favFile.getAbsolutePath() + "/" + favoritesFile);
 
-            if (newfavFile.exists()) {
-                boolean deleted = newfavFile.delete();
+            if (newFavFile.exists()) {
+                boolean deleted = newFavFile.delete();
             }
-            boolean created = newfavFile.createNewFile();
-            FileOutputStream outputStream = new FileOutputStream(newfavFile);
+            boolean created = newFavFile.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(newFavFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(items);
 
@@ -263,15 +263,15 @@ public class ItemUtils {
                 boolean success = favFile.mkdirs();
                    }
 
-            File newfavFile = new File(favFile.getAbsolutePath() + "/" + favoritesFile);
+            File newFavFile = new File(favFile.getAbsolutePath() + "/" + favoritesFile);
 
-            if (!newfavFile.exists()) {
-                boolean isOk = newfavFile.createNewFile();
+            if (!newFavFile.exists()) {
+                boolean isOk = newFavFile.createNewFile();
             }
 
-            FileInputStream inputStream = new FileInputStream(newfavFile);
+            FileInputStream inputStream = new FileInputStream(newFavFile);
 
-            if (newfavFile.length()<=0){
+            if (newFavFile.length()<=0){
                 return Collections.emptyList();
             }
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
@@ -377,7 +377,7 @@ Timber.e(imagesList.get(0));
                 .setSpeedRange(0.1f, 0.25f)
                 .setRotationSpeedRange(90, 180)
                 .setInitialRotationRange(0, 360)
-                .oneShot(view.findViewById(R.id.emiter), 100);
+                .oneShot(view.findViewById(R.id.emitter), 100);
 
 
         new Handler().postDelayed(() -> {

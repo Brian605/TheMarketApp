@@ -3,6 +3,8 @@ package com.returno.tradeit.activities;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,8 +127,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showPermissionInfo() {
-        if (!PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_LOGIN_FIRST_LAUNCH,getApplicationContext())){
-            requestPermissions();
+        if (!PreferenceManager.getInstance().isBooleanValueTrue(Constants.IS_LOGIN_FIRST_LAUNCH,getApplicationContext())){
+           requestPermissions();
             return;
         }
         LayoutInflater inflater=LayoutInflater.from(LoginActivity.this);
@@ -138,14 +140,12 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setCancelable(false);
 
         MaterialButton bt = view1.findViewById(R.id.ok);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (dialog.isShowing())dialog.dismiss();
-                PreferenceManager.getInstance().storeBooleanValue(Constants.IS_LOGIN_FIRST_LAUNCH,true,getApplicationContext());
-                requestPermissions();
-            }
+        bt.setOnClickListener(v -> {
+            if (dialog.isShowing())dialog.dismiss();
+            PreferenceManager.getInstance().storeBooleanValue(Constants.IS_LOGIN_FIRST_LAUNCH,true,getApplicationContext());
+            requestPermissions();
         });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 dialog.show();
 
 

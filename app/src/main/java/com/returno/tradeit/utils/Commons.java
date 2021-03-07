@@ -23,13 +23,10 @@ import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.yayandroid.locationmanager.configuration.PermissionConfiguration;
 import com.yayandroid.locationmanager.listener.LocationListener;
 
-import org.jetbrains.annotations.TestOnly;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;

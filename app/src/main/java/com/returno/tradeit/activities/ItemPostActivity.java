@@ -163,7 +163,7 @@ public class ItemPostActivity extends AppCompatActivity  {
                     return;
                 }
 
-                //Request storage permisssion
+                //Request storage permission
                 if (ContextCompat.checkSelfPermission(ItemPostActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -264,8 +264,7 @@ progressView.setText(String.format(Locale.getDefault(),"Uploading %d %%", newVal
 
                 circleImageView.setOnClickListener(v -> {
                     selectedItemsLayout.removeView(view);
-                    TextView textView1 = view.findViewById(R.id.uriHolder);
-                    String uri = textView1.getText().toString();
+                    String uri = uriView.getText().toString();
                     int currentPosition = pathList.indexOf(uri);
                     pathList.remove(uri);
 

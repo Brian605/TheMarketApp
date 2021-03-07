@@ -16,20 +16,19 @@ public class LinkerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
                 .addOnSuccessListener(this, pendingDynamicLinkData -> {
-                    Uri deeplink;
+                    Uri deepLink;
                     if (pendingDynamicLinkData!=null){
-                        deeplink=pendingDynamicLinkData.getLink();
+                        deepLink=pendingDynamicLinkData.getLink();
 
-                        //Log.e("pendinglink",pendingDynamicLinkData.toString());
-                        assert deeplink != null;
-                        String itemid=deeplink.getQueryParameter(Constants.ITEM_ID);
-                        String userid=deeplink.getQueryParameter(Constants.USER_ID);
-                        String title=deeplink.getQueryParameter(Constants.ITEM_TITLE);
-                        String descrip=deeplink.getQueryParameter(Constants.ITEM_DESCRIPTION);
-                        String image=deeplink.getQueryParameter(Constants.ITEM_IMAGE);
-                        String price=deeplink.getQueryParameter(Constants.ITEM_PRICE);
-                        String category=deeplink.getQueryParameter(Constants.ITEM_CATEGORY);
-                        String tags=deeplink.getQueryParameter(Constants.ITEM_TAG);
+                        assert deepLink != null;
+                        String itemid=deepLink.getQueryParameter(Constants.ITEM_ID);
+                        String userid=deepLink.getQueryParameter(Constants.USER_ID);
+                        String title=deepLink.getQueryParameter(Constants.ITEM_TITLE);
+                        String descrip=deepLink.getQueryParameter(Constants.ITEM_DESCRIPTION);
+                        String image=deepLink.getQueryParameter(Constants.ITEM_IMAGE);
+                        String price=deepLink.getQueryParameter(Constants.ITEM_PRICE);
+                        String category=deepLink.getQueryParameter(Constants.ITEM_CATEGORY);
+                        String tags=deepLink.getQueryParameter(Constants.ITEM_TAG);
 
                         Intent intent=new Intent(LinkerActivity.this,SingLeItemActivity.class);
                         intent.putExtra(Constants.POSTER_ID,userid);

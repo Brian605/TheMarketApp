@@ -55,7 +55,7 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/darkback"
+        android:background="@drawable/dark_back"
         android:textAlignment="center"
         android:minHeight="200dp"
         android:paddingBottom="20dp"
@@ -67,7 +67,7 @@
             android:padding="5dp"
             android:textColor="@color/login_header"
             android:fontFamily="@font/inconsolata"
-            android:id="@+id/userprev"
+            android:id="@+id/userPreview"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_alignParentStart="true"
@@ -84,7 +84,7 @@
             android:layout_marginStart="10dp"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/userImage"
-            android:layout_below="@+id/userprev"
+            android:layout_below="@+id/userPreview"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
@@ -129,7 +129,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/darkback"
+            android:background="@drawable/dark_back"
            android:layout_marginTop="20dp">
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
             android:layout_marginStart="10dp"
             android:padding="5dp"
             app:drawableStartCompat="@drawable/ic_phone"
-            android:id="@+id/phoneprev"
+            android:id="@+id/phonePreview"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:textColor="@color/login_header"
@@ -151,7 +151,7 @@
             android:layout_margin="10dp"
             android:textColor="@color/whiteTransparent"
             android:text="@string/_0748267133"
-            android:layout_below="@+id/phoneprev"
+            android:layout_below="@+id/phonePreview"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
@@ -163,7 +163,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/darkback"
+            android:background="@drawable/dark_back"
             android:layout_marginTop="20dp">
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -175,7 +175,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="10dp"
-            android:id="@+id/locationprev"
+            android:id="@+id/locationPreview"
             android:textColor="@color/login_header"
             android:fontFamily="@font/benardmtcondensed"
            />
@@ -184,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/whiteTransparent"
-            android:layout_below="@+id/locationprev"
+            android:layout_below="@+id/locationPreview"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="@string/location"
@@ -196,7 +196,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/darkback"
+            android:background="@drawable/dark_back"
             android:layout_marginTop="20dp">
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -209,7 +209,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
-            android:id="@+id/ratingprev"
+            android:id="@+id/ratingPreview"
             android:fontFamily="@font/benardmtcondensed"
            />
 
@@ -221,10 +221,10 @@
             android:isIndicator="false"
             android:layout_centerHorizontal="true"
             android:theme="@style/RatingBarStyle"
-            android:layout_below="@+id/ratingprev"
+            android:layout_below="@+id/ratingPreview"
             android:stepSize="1"
             style="@style/RatingBar"
-            android:id="@+id/ratingbar"/>
+            android:id="@+id/ratingBar"/>
 
         </RelativeLayout>
     </LinearLayout>

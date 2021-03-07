@@ -89,7 +89,7 @@ AlertDialog.Builder builder;
 
 private int DbId;
 static int status=0;
-private BroadcastReceiver sentStatus,deleveredStatus;
+private BroadcastReceiver sentStatus, deliveredStatus;
 private ValueEventListener listener,listener1;
 private List<String>tagList;
 private RecyclerView recyclerView,moreRecycler;
@@ -222,7 +222,7 @@ reference.removeEventListener(listener);
     }
 
     private void showTutorial() {
-        if (!PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_SINGLE_FIRST_LAUNCH,this)){
+        if (!PreferenceManager.getInstance().isBooleanValueTrue(Constants.IS_SINGLE_FIRST_LAUNCH,this)){
             return;
         }
         ShowcaseView.Builder builder = new ShowcaseView.Builder(this);
@@ -332,7 +332,7 @@ reference.removeEventListener(listener);
                   .RESULT_OK  :s="Message Sent" ;
              break;
              case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                 s="Genereic failure";
+                 s="Generic failure";
                  break;
                  default:s="Sms Not Sent";
                  break;
@@ -342,7 +342,7 @@ reference.removeEventListener(listener);
             }
         };
 
-        deleveredStatus=new BroadcastReceiver() {
+        deliveredStatus =new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String s;
@@ -351,7 +351,7 @@ reference.removeEventListener(listener);
                             .RESULT_OK  :s="Message Sent" ;
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        s="Genereic failure";
+                        s="Generic failure";
                         break;
                     default:s="Sms Not Sent";
                         break;
@@ -361,13 +361,13 @@ reference.removeEventListener(listener);
         };
 
         registerReceiver(sentStatus,new IntentFilter(Constants.SENT_STATUS));
-        registerReceiver(deleveredStatus,new IntentFilter(Constants.RECEIVED_STATUS));
+        registerReceiver(deliveredStatus,new IntentFilter(Constants.RECEIVED_STATUS));
     }
 
     public void onPause(){
         super.onPause();
         unregisterReceiver(sentStatus);
-        unregisterReceiver(deleveredStatus);
+        unregisterReceiver(deliveredStatus);
         if (dialog!=null && dialog.isShowing() ){
             dialog.dismiss();
         }

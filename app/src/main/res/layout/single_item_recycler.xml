@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/priceback"
+                android:background="@drawable/price_back"
                 android:gravity="center"
                 android:fontFamily="@font/inconsolataexpandedbold"
                 android:text="@string/ksh_500"
@@ -94,7 +94,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/emiter"
+                android:id="@+id/emitter"
                 android:layout_gravity="center"
                 android:visibility="gone"/>
         </RelativeLayout>

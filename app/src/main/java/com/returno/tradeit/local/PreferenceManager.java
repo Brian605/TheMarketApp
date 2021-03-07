@@ -18,7 +18,7 @@ public class PreferenceManager {
     public PreferenceManager(){
 
     }
-    public boolean isBoleanValueTrue(String key,Context context){
+    public boolean isBooleanValueTrue(String key, Context context){
         SharedPreferences preferences =context.getSharedPreferences(Constants.SHARED_PREFERENCE,Context.MODE_PRIVATE);
         return preferences.getBoolean(key,true);
     }

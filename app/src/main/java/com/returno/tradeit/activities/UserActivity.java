@@ -77,7 +77,7 @@ public class UserActivity extends AppCompatActivity {
     private TextView locationText;
 private AppCompatRatingBar ratingBar;
 private CircleImageView userImageView;
-    private ValueEventListener listener,listener1,imageListener,locationlistener,ratingListener,listener2,messageListener;
+    private ValueEventListener listener,listener1,imageListener, locationListener,ratingListener,listener2,messageListener;
 private static final int GALLERY_REQUEST=1;
 private String downloadUrl;
     private Uri filePath;
@@ -104,7 +104,7 @@ private Dialog dialog;
         TextView nameText = findViewById(R.id.username);
         TextView phoneText = findViewById(R.id.phone);
         locationText = findViewById(R.id.location);
-        ratingBar = findViewById(R.id.ratingbar);
+        ratingBar = findViewById(R.id.ratingBar);
         userImageView = findViewById(R.id.userImage);
         Toolbar toolbar = findViewById(R.id.toolbar);
         CircleImageView messageView = findViewById(R.id.message);
@@ -161,7 +161,7 @@ updateRating(totalRating);
          if (dialog.isShowing())dialog.dismiss();
          Dialog dialog1=builder.create();
          if (dialog1.getWindow()!=null){
-             dialog1.getWindow().getAttributes().windowAnimations=R.style.ZoomingDialogAnims;
+             dialog1.getWindow().getAttributes().windowAnimations=R.style.ZoomingDialogAnim;
              dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
          }
          dialog1.show();
@@ -246,7 +246,7 @@ updateRating(totalRating);
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.user_menu,menu);
-        MenuItem item=menu.findItem(R.id.profilechange);
+        MenuItem item=menu.findItem(R.id.profileChange);
         MenuItem menuItem=menu.findItem(R.id.location);
 
         if (!new FirebaseUtils().isCurrentUser(UserId)){
@@ -264,7 +264,7 @@ updateRating(totalRating);
         if (item.getItemId()==R.id.location){
             changeLocation();
         }else
-            if (item.getItemId()==R.id.profilechange){
+            if (item.getItemId()==R.id.profileChange){
                 pickImage();
             }
         else
@@ -362,11 +362,11 @@ dialog.show();
     private void updateLocation() {
         if (!dialog.isShowing())dialog.dismiss();
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USERS_DIR).child(UserId);
-        locationlistener=new ValueEventListener() {
+        locationListener =new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 reference.child(Constants.USER_LOCATION).setValue(cityName).addOnSuccessListener(aVoid -> {
-                    reference.removeEventListener(locationlistener);
+                    reference.removeEventListener(locationListener);
                     new ItemUtils().showMessageDialog(UserActivity.this,"Success");
                     fetchLocation();
                 });
@@ -378,7 +378,7 @@ dialog.show();
 
             }
         };
-        reference.addListenerForSingleValueEvent(locationlistener);
+        reference.addListenerForSingleValueEvent(locationListener);
     }
 
     @Override

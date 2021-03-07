@@ -27,7 +27,7 @@
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
     <string name="shoes_and_footwear">Shoes and Footwear</string>
-    <string name="clothes_and_body_wear">Clothes and Bodywear</string>
+    <string name="clothes_and_body_wear">Clothes and Body Wear</string>
     <string name="a_wide_range_of_products">A wide Range of Products</string>
     <string name="phones">Phones and Electronics</string>
     <string name="item">Item</string>
@@ -94,7 +94,7 @@
     <string name="input_phone">Input Phone</string>
     <string name="input_password">Input Password</string>
     <string name="retype_password">Retype Password</string>
-    <string name="hello_there">Hello There...,</string>
+    <string name="hello_there">Hello There…,</string>
     <string name="enter_the_market">Enter The Market</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome_to_the_market">Welcome to The Market!</string>

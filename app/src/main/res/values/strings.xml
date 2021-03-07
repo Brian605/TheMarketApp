@@ -108,4 +108,13 @@
     <string name="flipper_image">Flipper Image</string>
     <string name="fab_icon">fab_icon</string>
     <string name="none">none</string>
+    <string name="permission_header">This app uses the following permissions. Click \'allow\' to grant them</string>
+    <string name="storage">Storage</string>
+    <string name="inorder_to_create_app_databases_and_store_item_images_locally">Inorder to create app databases and store item images locally. The app will NOT interfere with your files</string>
+    <string name="phone_state">Phone State</string>
+    <string name="phone_state_explanation">This will enable the app to know whether there\'s an internet connectivity</string>
+    <string name="location_explanation">This allows the phone to fetch your location inorder to help prevent fraud and malice</string>
+    <string name="phone_calls">Phone Calls</string>
+    <string name="calls_explanation">This allows users of the app to call each other. The app will NOT record calls</string>
+    <string name="ok">OK</string>
 </resources>

@@ -20,11 +20,13 @@
         android:layout_margin="5dp"
         android:textColor="@color/login_header"
         android:gravity="center"
+        android:textIsSelectable="true"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/username"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textIsSelectable="true"
        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_below="@+id/username"
         android:autoLink="all"

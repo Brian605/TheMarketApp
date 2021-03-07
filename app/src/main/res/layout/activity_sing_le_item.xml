@@ -62,6 +62,7 @@
                 android:layout_marginStart="30dp"
                 android:id="@+id/singTitle"
                 android:text="@string/item"
+                android:textIsSelectable="true"
                 android:textColor="#fff"/>
         </com.google.android.material.appbar.MaterialToolbar>
 </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -99,6 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/singDesc"
+        android:textIsSelectable="true"
         android:textColor="@color/black"
         android:fontFamily="@font/opensans"
         android:autoLink="all"
@@ -162,7 +164,8 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:fitsSystemWindows="true"
-            android:background="@color/login_header"
+            app:backgroundTint="@color/login_header"
+           app:hideOnScroll="true"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
      <com.google.android.material.bottomnavigation.BottomNavigationView
          android:layout_width="match_parent"
@@ -170,9 +173,10 @@
          android:id="@+id/nav_view"
          app:menu="@menu/bottom_nav_menu"
          app:itemIconTint="@color/color_white"
-         android:background="@color/login_header"
+         app:backgroundTint="@color/login_header"
          android:foregroundGravity="center"
          android:layout_marginEnd="10dp"
+         app:itemBackground="@color/login_header"
          app:itemTextColor="@color/black"
          app:itemTextAppearanceActive="@style/TextAppearance.MaterialComponents.Headline5"
          app:labelVisibilityMode="labeled"

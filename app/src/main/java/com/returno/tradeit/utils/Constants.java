@@ -64,4 +64,5 @@ public class Constants {
     public static final String POLICY_ACCEPTED = "policy_accepted";
     public static final String PRODUCTS_CHANNEL = "products";
     public static final String IS_SINGLE_FIRST_LAUNCH = "is_single_first_launch";
+    public static final String IS_LOGIN_FIRST_LAUNCH = "is_login_first_launch";
 }

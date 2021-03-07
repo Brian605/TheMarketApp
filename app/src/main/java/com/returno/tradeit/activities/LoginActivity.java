@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,8 +28,12 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.returno.tradeit.R;
+import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.utils.Constants;
+import com.returno.tradeit.utils.ItemUtils;
 import com.returno.tradeit.utils.Tagger;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -51,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         Button register = findViewById(R.id.LoginRegister);
         TextView reset = findViewById(R.id.LoginReset);
 
-        requestPermissions();
+        showPermissionInfo();
         //Add event listeners
         login.setOnClickListener(view -> {
 
@@ -119,16 +124,45 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void showPermissionInfo() {
+        if (!PreferenceManager.getInstance().isBoleanValueTrue(Constants.IS_LOGIN_FIRST_LAUNCH,getApplicationContext())){
+            requestPermissions();
+            return;
+        }
+        LayoutInflater inflater=LayoutInflater.from(LoginActivity.this);
+        View view1=inflater.inflate(R.layout.permission_information_dialog,null,false);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setView(view1);
+        dialog=builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
+        MaterialButton bt = view1.findViewById(R.id.ok);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog.isShowing())dialog.dismiss();
+                PreferenceManager.getInstance().storeBooleanValue(Constants.IS_LOGIN_FIRST_LAUNCH,true,getApplicationContext());
+                requestPermissions();
+            }
+        });
+dialog.show();
+
+
+    }
+
     private void requestPermissions() {
-        //TODO: Show Permission Information
+
+
+
         Dexter.withActivity(LoginActivity.this)
-                .withPermissions(Manifest.permission.SEND_SMS,Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_SMS,Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+                .withPermissions(Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.isAnyPermissionPermanentlyDenied()){
+                            new ItemUtils().showMessageDialog(getApplicationContext(), StringUtils.join(report.getDeniedPermissionResponses()));
                         finishAffinity();}
                     }
 

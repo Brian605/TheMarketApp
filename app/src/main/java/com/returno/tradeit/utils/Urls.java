@@ -12,4 +12,5 @@ public class Urls {
     public static final String DELETE_REQUEST_URL =BASE_URL+"delete_request.php";
     public static final String FCM_URL ="https://fcm.googleapis.com/fcm/send";
     public static final String API_KEY_URL =BASE_URL+"get_api_key.php";
+    public static final String SINGLE_ITEM_FETCH_URL =BASE_URL+"fetch_single_item.php";
 }

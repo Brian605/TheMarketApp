@@ -31,5 +31,19 @@ public class ExampleUnitTest {
         System.out.println(ItemUtils.generateItemId());
     }
 
+    @Test
+    public void generate_uuid(){
+        int before=0;
+        for (int i=0;i<20;i++){
+            int rand=(int)(System.nanoTime() & 0xffff);
+            if (before==rand){
+                System.out.println("Equal");
+                continue;
+            }
+            System.out.println(rand);
+            before=rand;
+        }
+    }
+
 
 }

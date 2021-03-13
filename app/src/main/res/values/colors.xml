@@ -23,4 +23,5 @@
     <color name="toolbar_bg">@color/login_header</color>
     <color name="done">@color/color_white</color>
     <color name="permission_alert_color">@color/login_header</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>

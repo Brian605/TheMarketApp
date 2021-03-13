@@ -40,7 +40,6 @@ import com.returno.tradeit.adapters.RequestsAdapter;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
 import com.returno.tradeit.callbacks.DeleteCallBacks;
 import com.returno.tradeit.callbacks.UploadCallBacks;
-import com.returno.tradeit.models.Notification;
 import com.returno.tradeit.models.Request;
 import com.returno.tradeit.models.User;
 import com.returno.tradeit.utils.Commons;
@@ -59,8 +58,7 @@ import timber.log.Timber;
 
 @SuppressWarnings("unchecked")
 public class RequestsActivity extends AppCompatActivity {
-
-
+    
     private List<Request>requestList;
     private RequestsAdapter adapter;
 
@@ -209,8 +207,7 @@ runOnUiThread(() -> {
                   runOnUiThread(() -> {
                       if (dialog.isShowing()) dialog.dismiss();
                       Toast.makeText(getApplicationContext(), "Posted", Toast.LENGTH_LONG).show();
-                      Notification notification = new Notification(itemId, "0", "requests", request, null);
-                      new FirebaseUtils().postAPushNotification(notification);
+                     //TODO: Post a notification
                       recreate();
                   });
 

@@ -36,16 +36,20 @@ public class FirebaseUtils {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public void postAPushNotification(@NotNull Notification notification){
+    public void postAPushNotification(@NotNull Notification notification, String itemId){
         Thread thread=new Thread(() -> {
 
             JSONObject payLoad=new JSONObject();
             JSONObject notificationObject=new JSONObject();
+            JSONObject dataPart=new JSONObject();
             try {
                 payLoad.put("to","/topics/"+Constants.PRODUCTS_CHANNEL);
-                notificationObject.put("title","New Product Posted");
-                notificationObject.put("body",notification.getTitle()+" Ksh."+notification.getPrice());
+                notificationObject.put("title",notification.getTitle());
+                notificationObject.put("body",notification.getBody());
+                dataPart.put(Constants.ITEM_CATEGORY,notification.getCategory());
+                dataPart.put(Constants.ITEM_ID,itemId);
                 payLoad.put("notification",notificationObject);
+                payLoad.put("data",dataPart);
 
                 getApiKey(new CompleteCallBacks(){
                     @Override

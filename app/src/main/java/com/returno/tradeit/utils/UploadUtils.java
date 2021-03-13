@@ -53,8 +53,8 @@ public class UploadUtils {
                              && response.getString("post").equals("success")){
 
                 */
-                            Notification notification=new Notification(item.getItemId(),item.getItemPrice()+"".trim(),Constants.PRODUCTS_CHANNEL,item.getItemName(),null);
-                           new FirebaseUtils().postAPushNotification(notification);
+                            Notification notification=new Notification("New Item Posted",item.getItemName()+" Ksh."+item.getItemPrice(),item.getItemCategory());
+                            new FirebaseUtils().postAPushNotification(notification,item.getItemId());
 
                             callBacks.onUploadSuccess();
                         } catch (Exception e) {
@@ -158,7 +158,51 @@ fetchCallBacks.fetchError(anError.getMessage());
                 });
     }
     //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Gets all items in a certain category">
+    public void fetchItemsById(String itemId, FetchCallBacks fetchCallBacks){
+        AndroidNetworking.post(Urls.SINGLE_ITEM_FETCH_URL)
+                .addBodyParameter(Constants.ITEM_ID,itemId)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Timber.e(response.toString());
+                        try {
+                            List<Item>items=new ArrayList<>();
+                            for (int i=0;i<response.length();i++){
+                                JSONObject object=response.getJSONObject(i);
+                                String itemId=object.getString(Constants.ITEM_ID) ;
+                                String itemName=object.getString(Constants.ITEM_TITLE);
+                                String description=object.getString(Constants.ITEM_DESCRIPTION);
+                                String itemPrice=object.getString(Constants.ITEM_PRICE);
+                                String itemCategory=object.getString(Constants.ITEM_CATEGORY);
+                                String itemTags=object.getString(Constants.ITEM_TAG);
+                                String itemImages=object.getString(Constants.ITEM_IMAGE);
+                                String posterId=object.getString(Constants.USER_ID);
+
+                                items.add(new Item(itemId,itemName,description,Integer.parseInt(itemPrice),itemTags,itemImages,posterId,itemCategory));
+                            }
+
+                            fetchCallBacks.fetchComplete(items);
+
+                        }catch (JSONException e){
+                            onError(new ANError(e));
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        fetchCallBacks.fetchError(anError.getMessage());
+                    }
+                });
+    }
+    //</editor-fold>
+
+
 /*
+
 
     //<editor-fold defaultstate="collapsed" desc="Unsafe OkHttpClient to force insecure connections">
     public static OkHttpClient getUnsafeClient() {
@@ -277,6 +321,14 @@ listener.onFailure(anError.getMessage());
                     public void onResponse(String response) {
                         if (response.equals("success")){
                             callBacks.onUploadSuccess();
+                            String body;
+                            if (request.getRequestItem().length()>16){
+                                body=request.getRequestItem().substring(0,17);
+                            }else {
+                                body=request.getRequestItem();
+                            }
+                            Notification notification=new Notification("Item Requests",body,"requests");
+                            new FirebaseUtils().postAPushNotification(notification,request.getRequestId());
                         }else {
                             onError(new ANError(response));
                         }

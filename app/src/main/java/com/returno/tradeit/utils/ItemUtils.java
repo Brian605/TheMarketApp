@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agrawalsuneet.dotsloader.loaders.PullInLoader;
@@ -141,6 +142,7 @@ public class ItemUtils {
 
     }
 
+    @VisibleForTesting
     public static String saveProfileImage(Context context, String file) {
         String images = Constants.PROFILE_IMAGE_DIR;
         String name = System.currentTimeMillis() + ".PNG";
@@ -175,6 +177,7 @@ public class ItemUtils {
         return null;
     }
 
+    //<editor-fold desc="Check if item is in favorites" defaultstate="collapsed">
     public static boolean isItemInFavorites(String id) {
         List<String> items = getLastFavoritesList();
         for (String s : items) {
@@ -184,7 +187,9 @@ public class ItemUtils {
         }
         return false;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Add an item to favorites list" defaultstate="collapsed">
     public static void addToFavorites(String itemId) {
         List<String> items = getLastFavoritesList();
         items.add(itemId);
@@ -218,7 +223,9 @@ public class ItemUtils {
             e.printStackTrace();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Remove an Item from favorites" defaultstate="collapsed">
     public static void removeFromFavorites(String item) {
         List<String> items = getLastFavoritesList();
         items.remove(item);
@@ -252,7 +259,9 @@ public class ItemUtils {
             e.printStackTrace();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Get Last serialized favorites list" defaultstate="collapsed">
     public static List<String> getLastFavoritesList() {
         List<String> itemList;
         String filePath = Constants.ROOT_DIRECTORY_LOCAL + "Files";
@@ -289,7 +298,9 @@ public class ItemUtils {
 
 
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Share an Item" defaultstate="collapsed">
     public static void share(View view, Context context,String category) {
         TextView uidView, itemImageView, itemTitleView, itemDescView, itemPriceView, itemIdView, tagsView;
 
@@ -342,14 +353,17 @@ Timber.e(imagesList.get(0));
                         Timber.e(task.getException());
                     }
                 });
-        //Uri uri=dynamicLink.getUri();
+
 
 
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Split a uri into sub uris" defaultstate="collapsed">
     public static String getLocalImageUri(String completeUri) {
         return completeUri.split("___")[0];
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Go to single item image view">
     public static void goToSingleView(View view, Context context, String category, String mode) {

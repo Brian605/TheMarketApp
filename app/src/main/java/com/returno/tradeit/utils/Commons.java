@@ -46,8 +46,9 @@ public class Commons {
         return commons;
     }
 
-
-
+    public int generateRequestCode(){
+        return (int)(System.nanoTime() & 0xffff);
+    }
     public void getLocation(AppCompatActivity activity, LocationCallBacks callBacks) {
 
         LocationConfiguration configuration=new LocationConfiguration.Builder()

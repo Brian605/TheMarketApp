@@ -39,9 +39,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.returno.tradeit.R;
 import com.returno.tradeit.adapters.CategoriesRecyclerAdapter;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
+import com.returno.tradeit.local.DatabaseManager;
 import com.returno.tradeit.local.PreferenceManager;
 import com.returno.tradeit.models.CategoryItem;
 import com.returno.tradeit.utils.Constants;
+import com.returno.tradeit.utils.FirebaseUtils;
+import com.returno.tradeit.utils.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
         categoryItems = new ArrayList<>();
 
+        adapter = new CategoriesRecyclerAdapter(getApplicationContext(), categoryItems, (view, position) -> gotoSingleCategory(view));
+        recyclerView.setAdapter(adapter);
+
         views.addAll(Arrays.asList(options, pickView));
         mainTutorial.put(options,"Click here for more \n 1. Main -> View favorites,Your items , messages, go to your profile \n" +
                 "2. Log out Now -> To log out of your account, you can log in anytime later \n" +
@@ -112,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
+        if (!FirebaseUtils.isInternetAvailable()){
+            setupAdapter();
+            return;
+        }
+
         Thread thread = new Thread(() -> {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Categories");
             reference.addValueEventListener(new ValueEventListener() {
@@ -119,12 +130,22 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         CategoryItem categoryItem = dataSnapshot1.getValue(CategoryItem.class);
-                        categoryItems.add(categoryItem);
+
+                        new FirebaseUtils().downLoadFile(categoryItem.getPost_url(), new CompleteCallBacks() {
+                            @Override
+                            public void onComplete(Object... objects) {
+DatabaseManager manager=new DatabaseManager(getApplicationContext()).open();
+manager.insertCategory(categoryItem);
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+new ItemUtils().showMessageDialog(getApplicationContext(),error);
+                            }
+                        });
 
                     }
-
-                    adapter = new CategoriesRecyclerAdapter(getApplicationContext(), categoryItems, (view, position) -> gotoSingleCategory(view));
-                    recyclerView.setAdapter(adapter);
+setupAdapter();
 
                     if (dialog.isShowing()) {
                         dialog.dismiss();
@@ -142,6 +163,14 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
 
 
+    }
+
+    private void setupAdapter() {
+        DatabaseManager manager =new DatabaseManager(this).open();
+        categoryItems.clear();
+        categoryItems.addAll(manager.getProductCategories());
+        manager.close();
+        adapter.notifyDataSetChanged();
     }
 
     private void setUpShowCase() {

@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.returno.tradeit.callbacks.CompleteCallBacks;
+import com.returno.tradeit.models.CategoryItem;
 import com.returno.tradeit.models.Item;
 import com.returno.tradeit.utils.Constants;
 
@@ -29,7 +30,6 @@ public class DatabaseManager {
        this.helper=new DBHelper(this.context);
        try {
            this.database=this.helper.getWritableDatabase();
-          // this.database.enableWriteAheadLogging();
        }catch (IllegalStateException e){
            this.database=this.helper.getWritableDatabase();
        }
@@ -39,6 +39,36 @@ public class DatabaseManager {
 
     public void close(){
        this.helper.close();
+    }
+
+
+    public void insertCategory(CategoryItem item){
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(Constants.ITEM_TITLE,item.getPost_title());
+        contentValues.put(Constants.ITEM_DESCRIPTION,item.getPost_desc());
+        contentValues.put(Constants.IMAGE_URL,item.getPost_url());
+
+        this.database.insert(DBHelper.CATEGORY_TABLE,null,contentValues);
+    }
+
+    public List<CategoryItem>getProductCategories() {
+        List<CategoryItem> categoryItems = new ArrayList<>();
+        String query = "SELECT * FROM " + DBHelper.CATEGORY_TABLE;
+        Cursor cursor = this.database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String categoryTitle=cursor.getString(cursor.getColumnIndex(Constants.ITEM_TITLE));
+                String desc=cursor.getString(cursor.getColumnIndex(Constants.ITEM_DESCRIPTION));
+                String url=cursor.getString(cursor.getColumnIndex(Constants.IMAGE_URL));
+
+                categoryItems.add(new CategoryItem(categoryTitle,desc,url));
+
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        return categoryItems;
     }
 
    public void insertItems(Item item,String category){
@@ -53,7 +83,6 @@ public class DatabaseManager {
      contentValues.put(Constants.ITEM_TAG,item.getItemTag());
 
      this.database.insert(DBHelper.ITEM_TABLE,null,contentValues);
-
 
    }
 

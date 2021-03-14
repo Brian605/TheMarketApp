@@ -7,13 +7,17 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.returno.tradeit.callbacks.CompleteCallBacks;
+import com.returno.tradeit.callbacks.FileCallBacks;
 import com.returno.tradeit.models.Notification;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -136,4 +140,19 @@ public class FirebaseUtils {
         return (int)f;
     }
 
+    public void downLoadFile(String url, CompleteCallBacks callBacks){
+        StorageReference storageReference= FirebaseStorage.getInstance().getReferenceFromUrl(url);
+        String name=storageReference.getName();
+        new Commons().createItemDirectory(new FileCallBacks() {
+            @Override
+            public void onDirectoryCreated(String dir) {
+new Commons().createNewFile(dir + "/" + name, new FileCallBacks() {
+    @Override
+    public void onFileCreated(File file) {
+storageReference.getFile(file).addOnSuccessListener(taskSnapshot -> callBacks.onComplete("success")).addOnFailureListener(e -> callBacks.onFailure(e.getMessage())).addOnCanceledListener(() -> callBacks.onFailure("Download interrupted by user"));
+    }
+});
+            }
+        });
+    }
 }

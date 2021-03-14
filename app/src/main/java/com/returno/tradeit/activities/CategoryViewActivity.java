@@ -81,8 +81,7 @@ public class CategoryViewActivity extends AppCompatActivity  {
         categoryText.setText(category);
 
         floatingActionButton.setOnClickListener(v -> gotoAddNew());
-
-
+        
         tradeItList = new ArrayList<>();
         recyclerView = findViewById(R.id.category_recycler);
         recyclerView.setHasFixedSize(true);

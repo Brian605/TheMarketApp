@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.returno.tradeit.callbacks.FileCallBacks;
 import com.returno.tradeit.callbacks.LocationCallBacks;
 import com.yayandroid.locationmanager.LocationManager;
 import com.yayandroid.locationmanager.configuration.DefaultProviderConfiguration;
@@ -23,6 +24,7 @@ import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.yayandroid.locationmanager.configuration.PermissionConfiguration;
 import com.yayandroid.locationmanager.listener.LocationListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -136,13 +138,6 @@ new ItemUtils().showMessageDialog(activity,"Could not fetch your location");
         return matcher.matches();
     }
 
-    public View viewGetNextView() {
-        if (previousIndex >= listOfViews.size() - 1) {
-            return null;
-        }
-        return listOfViews.get(previousIndex + 1);
-    }
-
     public void sendMessage(final String sms, String phone, Context context) {
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phone));
         intent.putExtra("sms_body", sms);
@@ -176,5 +171,29 @@ new ItemUtils().showMessageDialog(activity,"Could not fetch your location");
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void createItemDirectory(FileCallBacks callBacks){
+        File dir = new File(Constants.ROOT_DIRECTORY_LOCAL+"Categories" );
+
+        if (!dir.exists()){
+            dir.mkdirs();
+        }
+        callBacks.onDirectoryCreated(dir.getAbsolutePath());
+    }
+
+    public void createNewFile(String name,FileCallBacks fileCallBacks){
+File file=new File(name);
+if (!file.exists()){
+    try {
+        if (file.createNewFile()){
+            fileCallBacks.onFileCreated(file);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return;
+}
+fileCallBacks.onFileCreated(file);
+    }
 
 }

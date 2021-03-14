@@ -43,7 +43,7 @@ private final RecyclerCallBacks listener;
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 CategoryItem categoryItem =list.get(position);
 holder.categoryName.setText(categoryItem.getPost_title());
-holder.categoryId.setText(categoryItem.getDesc());
+holder.categoryId.setText(categoryItem.getPost_desc());
 Glide.with(context).load(categoryItem.getPost_url()).into(holder.imageView);
 
     }

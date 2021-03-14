@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.returno.tradeit.utils.Constants;
 
-import timber.log.Timber;
-
 public class DBHelper extends SQLiteOpenHelper {
 
     static final String TITLE="title";
@@ -23,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String TABLE_NAME="chats";
 
     static final String USERS_TABLE="TABLE_USERS";
+    static final String CATEGORY_TABLE="Category_Table";
 
     private static final int DB_VERSION=2;
 
@@ -35,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database){
 
         try {
-            String CREATE_ITEM_TABLE = "create table if not exists " + ITEM_TABLE + "(" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            String CREATE_ITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + ITEM_TABLE + "(" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     USER_ID + " TEXT NOT NULL," + ITEM_ID + " TEXT NOT NULL," + TITLE + " TEXT NOT NULL," + DESCRIPTION + " TEXT NOT NULL," + IMAGE + "" +
                     " TEXT NOT NULL," + PRICE + " TEXT NOT NULL," + CATEG + " TEXT NOT NULL,"+Constants.ITEM_TAG+" TEXT NOT NULL)";
 
@@ -46,8 +45,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     Constants.USER_IMAGE + " TEXT NOT NULL )";
 
             database.execSQL(CREATE_USERS_TABLE);
-            Timber.e("Table created");
-            //database.close();
+
+            String CREATE_CATEGORY_TABLE= "CREATE TABLE IF NOT EXISTS " + CATEGORY_TABLE + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                      Constants.ITEM_TITLE + " TEXT NOT NULL ," + Constants.ITEM_DESCRIPTION + " TEXT NOT NULL, " +
+                    Constants.IMAGE_URL + " TEXT NOT NULL )";
+
+            database.execSQL(CREATE_CATEGORY_TABLE);
+
         }catch (Exception e){
             e.printStackTrace();
         }

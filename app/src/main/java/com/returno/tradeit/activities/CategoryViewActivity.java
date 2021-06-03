@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +31,10 @@ import com.returno.tradeit.adapters.ItemRecyclerAdapter;
 import com.returno.tradeit.callbacks.CounterCallBacks;
 import com.returno.tradeit.callbacks.FetchCallBacks;
 import com.returno.tradeit.callbacks.RecyclerCallBacks;
+import com.returno.tradeit.fragments.FragmentPrivacy;
 import com.returno.tradeit.local.DatabaseManager;
 import com.returno.tradeit.models.Item;
+import com.returno.tradeit.utils.Commons;
 import com.returno.tradeit.utils.Constants;
 import com.returno.tradeit.utils.ItemUtils;
 import com.returno.tradeit.utils.UploadUtils;
@@ -233,6 +236,14 @@ if (dialog.isShowing()){
            }else
                if (id==R.id.refresh){
                  this.recreate();
+               }
+               else
+               if (id==R.id.termsMenu){
+                   Commons.from="categ";
+                   FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+                   transaction.replace(R.id.relativeL,new FragmentPrivacy());
+                   transaction.commit();
+                   transaction.addToBackStack(null);
                }
            else {
                super.onOptionsItemSelected(item);

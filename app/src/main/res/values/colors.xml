@@ -24,4 +24,5 @@
     <color name="done">@color/color_white</color>
     <color name="permission_alert_color">@color/login_header</color>
     <color name="transparent">@android:color/transparent</color>
+    <color name="grey">#9A9797</color>
 </resources>

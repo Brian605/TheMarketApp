@@ -15,11 +15,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +35,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.agrawalsuneet.dotsloader.loaders.CircularDotsLoader;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -248,18 +254,28 @@ updateRating(totalRating);
         getMenuInflater().inflate(R.menu.user_menu,menu);
         MenuItem item=menu.findItem(R.id.profileChange);
         MenuItem menuItem=menu.findItem(R.id.location);
+        MenuItem menuItem1=menu.findItem(R.id.messages);
+        MenuItem rePort=menu.findItem(R.id.reportUser);
 
         if (!new FirebaseUtils().isCurrentUser(UserId)){
             item.setEnabled(false);
             item.setVisible(false);
             menuItem.setEnabled(false);
             menuItem.setVisible(false);
+            menuItem1.setEnabled(false);
+            menuItem1.setVisible(false);
+        }else {
+            rePort.setVisible(false);
+            rePort.setEnabled(false);
         }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+if (item.getItemId()==R.id.reportUser){
+            reportUser();
+        }
 
         if (item.getItemId()==R.id.location){
             changeLocation();
@@ -269,16 +285,18 @@ updateRating(totalRating);
             }
         else
             if (item.getItemId()==R.id.messages){
-               Dialog dialog=new Dialog(UserActivity.this,R.style.CalendarTheme);
+               Dialog dialog=new Dialog(UserActivity.this);
                dialog.setContentView(R.layout.fragment_notice);
                dialog.setCanceledOnTouchOutside(false);
+                CircularDotsLoader circularDotsLoader=dialog.findViewById(R.id.progress);
+                circularDotsLoader.setVisibility(View.VISIBLE);
                dialog.show();
                 RecyclerView recyclerView=dialog.findViewById(R.id.recycler);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 recyclerView.setHasFixedSize(true);
 
                 List<String> notificationList=new ArrayList<>();
-                DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Messages").child(new FirebaseUtils().getCurrentUserId());
+                DatabaseReference reference=FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_MESSAGES).child(new FirebaseUtils().getCurrentUserId());
                 messageListener=new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -286,7 +304,14 @@ updateRating(totalRating);
                            notificationList.add(dataSnapshot.child(Constants.KEY_MESSAGE).getValue().toString());
                        }
                        reference.removeEventListener(messageListener);
+                       if (notificationList.isEmpty()){
+                           Snackbar.make(recyclerView,"You have No Messages",Snackbar.LENGTH_LONG)
+                                   .setBackgroundTint(getResources().getColor(R.color.black))
+                                   .setTextColor(getResources().getColor(R.color.login_header))
+                           .show();
+                       }
                        recyclerView.setAdapter(new NotificationsAdapter(notificationList));
+                       circularDotsLoader.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -299,6 +324,43 @@ updateRating(totalRating);
             }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reportUser() {
+        Dialog builder=new Dialog(UserActivity.this);
+        builder.setContentView(R.layout.input_dialog);
+
+        TextInputEditText requestEdit=builder.findViewById(R.id.inputText);
+        TextInputLayout holder=builder.findViewById(R.id.inputHolder);
+        holder.setHint("Input your complaint");
+
+        Button sendButton=builder.findViewById(R.id.send);
+        sendButton.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(requestEdit.getText().toString())){
+                String request=requestEdit.getText().toString();
+               DatabaseReference reference=FirebaseDatabase.getInstance().getReference("user_reports").push();
+
+               reference.child(Constants.USER_ID).setValue(UserId);
+               reference.child(Constants.POSTER_ID).setValue(new FirebaseUtils().getCurrentUserId());
+               reference.child(Constants.KEY_MESSAGE).setValue(request)
+                       .addOnSuccessListener(aVoid -> {
+Toast.makeText(getApplicationContext(),"Report Submitted for Review", Toast.LENGTH_LONG)
+    .show();
+if (builder.isShowing())builder.dismiss();
+                       });
+
+            }
+        });
+
+        Button cancel=builder.findViewById(R.id.cancel);
+        cancel.setOnClickListener(v -> builder.dismiss());
+
+        int width=(int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        int height=(int)(getResources().getDisplayMetrics().heightPixels*0.40);
+        assert builder.getWindow()!=null;
+        builder.getWindow().setLayout(width,height);
+
+        builder.show();
     }
 
     private void pickImage() {

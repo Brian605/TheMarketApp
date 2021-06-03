@@ -40,6 +40,7 @@ public class Commons {
     private static Commons commons;
     public static final List<View> listOfViews = new ArrayList<>();
     public static final int previousIndex = 0;
+    public static String from="begin";
 
     public static Commons getInstance() {
         if (commons == null) {

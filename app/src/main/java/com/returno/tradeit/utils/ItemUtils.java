@@ -93,6 +93,7 @@ public class ItemUtils {
                                 itemCopy.setItemImage(itemNewImageUri);
                                 DatabaseManager manager = new DatabaseManager(context).open();
                                 manager.insertItems(itemCopy, itemCopy.getItemCategory());
+                                manager.close();
                                 counter++;
                                 if (counter == size) {
                                     callBacks.onComplete(null);
@@ -142,6 +143,7 @@ public class ItemUtils {
 
     }
 
+    //<editor-fold desc="Save User's profile image" defaultstate="collapsed">
     @VisibleForTesting
     public static String saveProfileImage(Context context, String file) {
         String images = Constants.PROFILE_IMAGE_DIR;
@@ -176,6 +178,7 @@ public class ItemUtils {
 
         return null;
     }
+//</editor-fold>
 
     //<editor-fold desc="Check if item is in favorites" defaultstate="collapsed">
     public static boolean isItemInFavorites(String id) {

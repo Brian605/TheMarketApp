@@ -18,4 +18,10 @@
         android:id="@+id/messages"
         android:icon="@drawable/ic_message"
         app:iconTint="@color/login_header"/>
+
+    <item
+        android:title="@string/report_user"
+        android:id="@+id/reportUser"
+        android:icon="@drawable/ic_baseline_privacy_tip_24"
+        app:iconTint="@color/login_header"/>
 </menu>

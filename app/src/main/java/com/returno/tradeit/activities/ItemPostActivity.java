@@ -140,7 +140,7 @@ public class ItemPostActivity extends AppCompatActivity  {
         // </editor-fold>
 
 
-        //< editor-fold desc=" posting the image and details to firebase to Firebase">
+        //<editor-fold defaultstate="collapsed" desc=" posting the image and details to firebase to Firebase">
         postBtn.setOnClickListener(view -> {
             //Views
             PostTitle = titleEdit.getText().toString().trim();
@@ -182,6 +182,7 @@ public class ItemPostActivity extends AppCompatActivity  {
             }//end check fields
 
         });
+        // </editor-fold>
 
     }
 
@@ -230,7 +231,8 @@ progressView.setText(String.format(Locale.getDefault(),"Uploading %d %%", newVal
         });
 
     }
-    //<editor-fold desc="Getting the image from gallery">
+
+    //<editor-fold defaultstate="collapsed" desc="Getting the image from gallery">
 
     @SuppressLint("InflateParams")
     @Override
@@ -277,6 +279,7 @@ progressView.setText(String.format(Locale.getDefault(),"Uploading %d %%", newVal
                 });
             }
 
+            imageBtn.setImageURI(Uri.fromFile(new File(pathList.get(0))));
             imageBtn.setScaleType(ImageView.ScaleType.CENTER_CROP);
             hintView.setVisibility(View.GONE);
         }

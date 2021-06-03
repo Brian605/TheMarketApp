@@ -117,4 +117,5 @@
     <string name="phone_calls">Phone Calls</string>
     <string name="calls_explanation">This allows users of the app to call each other. The app will NOT record calls</string>
     <string name="ok">OK</string>
+    <string name="report_user">Report User</string>
 </resources>

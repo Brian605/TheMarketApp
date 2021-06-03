@@ -23,7 +23,8 @@
     <item
         android:title="@string/terms_and_conditions"
         android:orderInCategory="400"
-        android:icon="@drawable/clipboard_account_outline"/>
+        android:icon="@drawable/ic_baseline_privacy_tip_24"
+        android:id="@+id/termsMenu"/>
     <item
         android:id="@+id/refresh"
         android:title="@string/refresh"

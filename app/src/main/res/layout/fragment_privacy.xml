@@ -1,39 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/coordinator"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentPrivacy">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/price_back"
-        android:textColor="@color/whiteTransparent"
-        android:minHeight="?actionBarSize"
-        android:drawableStart="@drawable/ic_baseline_privacy_tip_24"
-        android:text="@string/terms_and_privacy_policy"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/header"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        android:gravity="center"/>
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:id="@+id/progress"
-        android:layout_below="@id/header"
-        app:indicatorColor="@color/login_header"
-        app:trackColor="@color/login_header"
-        app:trackThickness="10dp"
-        style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/progress" />
+        android:layout_height="match_parent"/>
 
            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                android:id="@+id/agree"
@@ -42,7 +20,7 @@
                android:layout_alignParentStart="true"
                android:layout_alignParentBottom="true"
                android:layout_margin="20dp"
-               android:gravity="center"
+               android:layout_gravity="bottom|start"
                android:text="@string/i_agree"
                android:textColor="@color/whiteTransparent"
                app:backgroundTint="@color/login_header"
@@ -54,10 +32,22 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
-        android:gravity="center"
+        android:layout_gravity="bottom|end"
         android:text="@string/i_decline"
         android:textColor="@color/whiteTransparent"
         app:backgroundTint="@color/login_header"
         app:cornerRadius="10dp"
         tools:ignore="RelativeOverlap" />
-</RelativeLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/login_header"
+        android:textColor="@color/whiteTransparent"
+        android:minHeight="?actionBarSize"
+        android:drawableStart="@drawable/ic_baseline_privacy_tip_24"
+        android:text="@string/terms_and_privacy_policy"
+        android:id="@+id/header"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_gravity="start|top"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

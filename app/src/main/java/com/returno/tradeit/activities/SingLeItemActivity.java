@@ -29,7 +29,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +39,9 @@ import com.bumptech.glide.Glide;
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,7 +83,8 @@ public class SingLeItemActivity extends AppCompatActivity {
     private String imageUrisVar;
     private String itemTags;
 
-    private TextView posterNameView,counterView;
+    private TextView counterView;
+   private MaterialButton posterNameView;
 
 private Dialog dialog=null;
 AlertDialog.Builder builder;
@@ -106,7 +108,7 @@ private List<Item> itemList;
         TextView itemPriceView = findViewById(R.id.singPrice);
         ImageView itemImageView = findViewById(R.id.singImage);
         counterView=findViewById(R.id.counterText);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
         counterView.setVisibility(View.GONE);
 
         recyclerView=findViewById(R.id.recycler);
@@ -131,6 +133,16 @@ private List<Item> itemList;
         itemTags=intent.getStringExtra(Constants.ITEM_TAG);
         String requestMode=intent.getStringExtra(Constants.MODE);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+Intent intent1=new Intent(SingLeItemActivity.this,CategoryViewActivity.class);
+intent1.putExtra(Constants.ITEM_CATEGORY,Category);
+intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(intent1);
+finish();
+            }
+        });
         setCounter();
 if (requestMode!=null && requestMode.equals(Constants.MODE_LINK)){
 List<String> images =ItemUtils.getExtraImagesUri(ItemUtils.getExtraImagesString(imageUrisVar));

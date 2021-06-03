@@ -11,6 +11,7 @@
         app:hintTextColor="@color/black"
         android:hint="@string/type_here"
         app:endIconMode="custom"
+        android:id="@+id/inputHolder"
         app:endIconDrawable="@drawable/pen_plus"
         app:endIconTint="@color/login_header"
         app:startIconTint="@color/login_header"

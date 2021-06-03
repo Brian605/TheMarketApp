@@ -4,12 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.FragmentWelcome">
+    tools:context=".fragments.FragmentWelcome"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <com.google.android.material.imageview.ShapeableImageView
+  <pl.droidsonroids.gif.GifImageView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:src="@drawable/logo1"/>
+      android:src="@drawable/kineman"
+      android:layout_gravity="center_horizontal"
+      />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"

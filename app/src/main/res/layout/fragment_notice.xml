@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <com.agrawalsuneet.dotsloader.loaders.CircularDotsLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+        android:id="@+id/progress"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        app:loader_firstShadowColor="@color/lessGreen"
+        app:loader_secondShadowColor="@color/darkGrey"
+        app:loader_defaultColor="@color/login_header"
+        app:loader_selectedColor="@color/grey"
+        app:loader_bigCircleRadius="50dp"
+        app:loader_showRunningShadow="true"
+
+        />
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_marginTop="10dp"
@@ -15,4 +30,4 @@
 
 </androidx.recyclerview.widget.RecyclerView>
 
-</LinearLayout>
+</RelativeLayout>
